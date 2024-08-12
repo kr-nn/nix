@@ -1,0 +1,18 @@
+[DELL0A20:00 0488:101A Touchpad]
+clickMethodAreas=false
+clickMethodClickfinger=true
+disableWhileTyping=true
+middleEmulation=false
+naturalScroll=true
+tapAndDrag=false
+tapToClick=false
+
+[PIXA3854:00 093A:0274 Touchpad]
+clickMethodAreas=false
+clickMethodClickfinger=true
+middleEmulation=false
+naturalScroll=true
+pointerAcceleration=0.8
+tapAndDrag=false
+tapToClick=false
+

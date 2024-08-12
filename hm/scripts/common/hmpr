@@ -1,0 +1,73 @@
+# CONSTS
+export HMGENERATIONPATH=$HOME/.config/home-manager/.hmgeneration
+export HMPROFILEPATH=$HOME/.config/home-manager/.hmprofile
+export HMGENERATION=$(head -n 1 $HMGENERATIONPATH)
+export SPECIALIZATIONS="$HMGENERATION/specialisation"
+export HMPROFILE=0
+
+show_help(){
+  echo Usage: $0 [ profilename bootstrap default]
+  echo ""
+  echo "profilename: Any specialisation profile you've created in home-manager"
+  echo "bootstrap: will create or overwrite whatever profile you have currently"
+  echo "default: sets the profile to the parent generation you last created/activated"
+}
+
+save_profile() {
+  echo $1 > $HMPROFILEPATH
+}
+
+activate_profile() {
+  local profile=$1
+  if [ "$profile" = "default" ]; then
+      echo "Activating: default"
+      $HMGENERATION/activate
+      echo "Activated: default"
+
+  elif [ -z $profile ]; then
+      echo "profile not selected"
+      exit 1
+
+  else
+      if [ -d "$SPECIALIZATIONS/$profile" ]; then
+          echo "Activating: $profile"
+          $SPECIALIZATIONS/$profile/activate
+          echo "Activated: $profile"
+      else
+          echo "Something went wrong please do a home-manager switch and bootstrap a new profile."
+          exit 1
+      fi
+  fi
+}
+
+bootstrap_profile() {
+  profiles=$(ls -1 "$SPECIALIZATIONS") && profiles="default"$'\n'"$profiles"
+  selected_profile=$(echo "$profiles" | fzf --prompt="Select a profile: ")
+  save_profile $selected_profile
+  activate_profile $selected_profile
+}
+
+if [ "$1" = "-h" ]; then
+  show_help
+  exit
+fi
+
+# main
+if [ -z "$HMGENERATION" ]; then
+    echo "There is no home generation set. Do a home-manager switch and boostrap a profile."
+    exit 1
+fi
+
+if ! [ -d $SPECIALIZATIONS ]; then
+    echo "Something went wrong, we can't find the specialisations from the parent hmgeneration. Check that $HMGENERATIONPATH exists."
+    exit 1
+fi
+
+if [ $# -eq 0 ] || [ "$1" = "bootstrap" ]; then
+    bootstrap_profile
+else
+    save_profile $1
+    activate_profile $1
+fi
+
+

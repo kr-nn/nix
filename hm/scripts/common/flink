@@ -1,0 +1,9 @@
+link=$1
+indent=""
+link=$(readlink "$link")
+echo "$link"
+while [ -L "$link" ]; do
+    link=$(readlink "$link")
+    indent="$indent    "
+    echo "$indent -> $link"
+done

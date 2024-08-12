@@ -1,0 +1,46 @@
+[KFileDialog Settings]
+Recent Files[$e]=synching-autostart,file:$HOME/.local/bin/synching-autostart
+Recent URLs[$e]=file:$HOME/.local/,file:$HOME/,file:$HOME/.local/bin/
+detailViewIconSize=16
+
+[KPropertiesDialog]
+2256x1504 screen: Height=529
+2256x1504 screen: Width=583
+
+[MainWindow]
+1128x752 screen: Height=645
+1128x752 screen: Width=1015
+1128x752 screen: Window-Maximized=true
+1128x752 screen: XPosition=113
+1128x752 screen: YPosition=72
+1920x1080 screen: Window-Maximized=true
+1920x1080 screen: XPosition=275
+1920x1080 screen: YPosition=125
+2 screens: Window-Maximized=true
+2 screens: XPosition=2404
+2 screens: YPosition=204
+2256x1504 screen: Height=1436
+2256x1504 screen: Width=1128
+2256x1504 screen: Window-Maximized=true
+2256x1504 screen: XPosition=564
+2256x1504 screen: YPosition=68
+3 screens: Height=704
+3 screens: Width=1028
+3 screens: Window-Maximized=true
+3 screens: XPosition=2336
+3 screens: YPosition=334
+4 screens: Height=1012
+4 screens: Width=1920
+4 screens: Window-Maximized=true
+4 screens: XPosition=618
+4 screens: YPosition=436
+DP-10 DP-11 DP-9 eDP-1=eDP-1
+DP-3=DP-3
+DP-3 DVI-I-1-1 DVI-I-2-2=DP-3
+DP-3 eDP-1=eDP-1
+DVI-I-1-1 DVI-I-2-2=DVI-I-2-2
+MenuBar=Disabled
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAAAACNAAAAWcAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+ToolBarsMovable=Disabled
+eDP-1=eDP-1

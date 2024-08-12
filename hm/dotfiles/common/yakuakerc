@@ -1,0 +1,21 @@
+[Appearance]
+HideSkinBorders=true
+Translucency=true
+
+[Behavior]
+OpenAfterStart=true
+
+[Desktop Entry]
+DefaultProfile=Stylix.profile
+
+[Dialogs]
+FirstRun=false
+
+[Shortcuts]
+toggle-window-state=none
+
+[Window]
+Height=100
+KeepOpen=false
+KeepOpenAfterLastSessionCloses=true
+Width=100
