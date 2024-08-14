@@ -24,7 +24,20 @@ let
 
   # PKGS =============================================================
   packagesGui = { home.packages = with pkgs; [
+    # docs
     obsidian onlyoffice-bin
+    # vivaldi
+    vivaldi vivaldi-ffmpeg-codecs widevine-cdm
+    # System Packages
+    kdePackages.partitionmanager
+    # Social
+    vesktop telegram-desktop signal-desktop
+    # admin things
+    bitwarden-desktop rustdesk yakuake
+    # Fonts
+    fira-code-nerdfont
+    # entertainment
+    mpv
   ]; };
 
   # Plasma ===========================================================
@@ -111,6 +124,9 @@ in
 
       # Terminal Apps
       bitwarden-cli glow
+
+
+
 
       # Neovim
       zip unzip gcc cargo neovim
