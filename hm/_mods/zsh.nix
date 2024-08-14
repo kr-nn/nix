@@ -17,12 +17,12 @@ let # ==========================================================================
 # You may have different results or requirements
 # You can include --exclude /path/name to not search certain folders
 
-# low perf search
+# low perf search # not always up to date
 lrootsearch="locate /";
 lpwdsearch="locate $PWD";
 lhomesearch="locate $HOME";
-
-# High perf search
+# time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd
+# High perf search # always up to date
 # Search files and directories
 rootsearch="{fd . / --max-depth 1 --hidden; fd --type d . / --max-depth 1 --hidden | parallel fd . {} --hidden}";
 pwdsearch="{fd . $PWD --max-depth 1 --hidden; fd --type d . $PWD --max-depth 1 --hidden | parallel fd . {} --hidden}";
@@ -47,7 +47,7 @@ dhomesearch="{fd --type d . $HOME --max-depth 1 --hidden; fd --type d . $HOME --
     };
 
   zsh-ssh = pkgs.fetchgit {
-      url = "https://github.com/kylernocturnalnerd/zsh-ssh";
+      url = "https://github.com/kr-nn/zsh-ssh";
       rev = "e14ecc35e916a644d2ba025c41791631463c2e8d";
       sha256 = "0xa2m59qaqh7niz290il1b1vnmwfbbprbkyfgxrswybw7nzg5m1n";
     };
@@ -95,6 +95,7 @@ in # ===========================================================================
       hmbu="home-manager build";
 
       # convenience
+      fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
       src="source ${zdir}/.zshrc";
       sshrc="$EDITOR ~/.ssh/config";
       ll="eza -lhg --group-directories-first";
@@ -104,7 +105,6 @@ in # ===========================================================================
       ff="fastfetch";
       cat="bat -p";
       myip="curl api.ipify.org";
-      py="python3";
       cl="clear";
       cheat = "curl cheat.sh/$1";
     };
@@ -127,18 +127,10 @@ in # ===========================================================================
         # Configures !! to automatically execute
         unsetopt HIST_VERIFY
 
-#        # Loads hmprofile/generation
-#        if [ -d ~/.hmgeneration ]; then
-#          source ~/.hmgeneration
-#        fi
-#
-#        if [ -d ~/.hmprofile ]; then
-#          source ~/.hmprofile
-#        fi
-
         ### ================================================================================================================================================
         ### Custom widget ==================================================================================================================================
         ### open file with xdg-open ========================================================================================================================
+        ### Ctrl + o =======================================================================================================================================
         ### ================================================================================================================================================
 
         fzf_open_file() {
@@ -156,6 +148,7 @@ in # ===========================================================================
         ### ================================================================================================================================================
         ### Custom widget ==================================================================================================================================
         ### edit file with $EDITOR =========================================================================================================================
+        ### Ctrl + e =======================================================================================================================================
         ### ================================================================================================================================================
 
         fzf_edit_file() {
@@ -174,11 +167,7 @@ in # ===========================================================================
   };
 
   home.packages = with pkgs; [
-    fzf
     oh-my-zsh
-    fd
-    parallel
-    ctpv
     zsh
   ];
 
@@ -187,17 +176,14 @@ in # ===========================================================================
     "${omz_custom_plugins_path}fzf-tab".source = fzf-tab;
     "${omz_custom_plugins_path}zsh-ssh".source = zsh-ssh;
     "${omz_custom_plugins_path}nix-shell".source = nix-shell;
-    "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ../../hm/dotfiles/common/oh-my-zsh/agnoster-nix.zsh-theme;
+    "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ../../hm/dotfiles/oh-my-zsh/agnoster-nix.zsh-theme;
   };
 
   home.sessionVariables = {
-    LANG="C.UTF-8";
+    # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
     ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
     FZF_DEFAULT_COMMAND=rootsearch;
-    FZF_DEFAULT_OPTS="
-  --preview 'ctpv {}'
-  --height=100%
-  --reverse";
+    FZF_DEFAULT_OPTS=" --preview 'ctpv {}' --height=100% --reverse";
 
     HYPHEN_INSENSITIVE="true";
     COMPLETION_WAITING_DOTS="true";

@@ -11,8 +11,8 @@ let
   # For laptops that can use the trackpad and gestures (X11 only)
   touchpadInput = {
     home.file = {
-      "${config.home.homeDirectory}/.config/touchegg/touchegg.conf".source = ./dotfiles/common/touchegg.conf;
-      "${config.home.homeDirectory}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/touchpadxlibinputrc";
+      "${config.home.homeDirectory}/.config/touchegg/touchegg.conf".source = ./dotfiles/touchegg.conf;
+      "${config.home.homeDirectory}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/touchpadxlibinputrc";
     };
   };
 
@@ -36,7 +36,7 @@ let
         Theme=FrameWorkx200";
 
       "${config.home.homeDirectory}/.local/share/plasma/look-and-feel".source = pkgs.fetchgit {
-        url = "https://github.com/kylernocturnalnerd/Frame.Work_SplashScreen-KDE"; # Stolen from https://github.com/NL-TCH/Frame.Work_SplashScreen-KDE 
+        url = "https://github.com/kr-nn/Frame.Work_SplashScreen-KDE"; # Stolen from https://github.com/NL-TCH/Frame.Work_SplashScreen-KDE 
         rev = "87e4c601fb6eedceb92a127f96ff50cc836883bb";                          # Credit to their Awesome work
         sha256 = "1vnpvsa47a5vxr044r4zladz660xz867kc518j298l940s39s1lk";
       };
@@ -45,12 +45,12 @@ let
 
   plasmaDotfiles = {
     home.file = {
-      "${config.home.homeDirectory}/.config/yakuakerc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/yakuakerc";
-      #"${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/systemsettingsrc";
-      #"${config.home.homeDirectory}/.config/kiorc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/kiorc";
-      #"${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/kglobalshortcutsrc";
-      #"${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/mimeapps.list";
-      "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/common/khotkeysrc";
+      "${config.home.homeDirectory}/.config/yakuakerc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/yakuakerc";
+      #"${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/systemsettingsrc";
+      #"${config.home.homeDirectory}/.config/kiorc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kiorc";
+      #"${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kglobalshortcutsrc";
+      #"${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/mimeapps.list";
+      "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/khotkeysrc";
     };
   };
 
@@ -69,7 +69,6 @@ in
   imports = [
       ../theme/_theme.nix
       ./_mods/zsh.nix
-      ./_mods/neovim.nix
     ];
 
     # LEGOS =======================================================================
@@ -103,16 +102,25 @@ in
       extraConfig = {
         credential.helper = "store"; # Use git-credentials
         safe.directory = "/etc/nixos"; }; };
+
   # Packages =========================================================
     home.packages = with pkgs; [
-      # Shell
-      tmux bat eza ripgrep bitwarden-cli age git curl nmap fastfetch usbutils pciutils htop age
+
+      # Shell tools
+      tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop
+
+      # Terminal Apps
+      bitwarden-cli glow
+
+      # Neovim
+      zip unzip gcc cargo neovim
+
       # Nix things
       nix-prefetch-git
       (pkgs.writeShellScriptBin "flink"
-       (builtins.readFile ./scripts/common/flink) )
+       (builtins.readFile ./scripts/flink) )
       (pkgs.writeShellScriptBin "hmpr"
-       (builtins.readFile ./scripts/common/hmpr) )
+       (builtins.readFile ./scripts/hmpr) )
       (pkgs.writeShellScriptBin "nr" ''
         nix run nixpkgs#"$1" -- ''${@:2}'')
       (pkgs.writeShellScriptBin "ns" ''
@@ -121,7 +129,15 @@ in
         nix run nixpkgs#"$1" --impure -- ''${@:2}'')
       (pkgs.writeShellScriptBin "nsi" ''
         nix shell nixpkgs#"$1" --impure -- ''${@:2}'')
+
     ];
+
+  # DOTFILES =========================================================
+    home.file = {
+      # Neovim
+      "${config.home.homeDirectory}/.config/nvim/init.lua".source = ../hm/dotfiles/nvim/init.lua;
+      "${config.home.homeDirectory}/.config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/nvim/lazy-lock.json";
+    };
 
   # ENV ==============================================================
     home.sessionVariables = {
