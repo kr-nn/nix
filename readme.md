@@ -43,21 +43,29 @@ main
 Using this code we can run `hmpr developmode` and the profile switcher will activate the developmode profile
 
 # TODO
-- [X] secrets management
+- [ ] secrets management
+    - Make bitwarden deploy a home-manager activation
 - [X] fingerprint sddm
 - [X] make syncthing start when logged in
 - [X] make displaylink run conditionally without the lockscreen problem & remember monitor config
 - [X] move modules to inside homes/hosts depending on if they're a nixos/home-manager module
+- [X] move zcomp
+- [X] configure zsh history
+- [X] add displaylink driver as a declared resource # This was done in hosts
+- [X] Make specialisations more centralised
+- [ ] Migrate to nixvim
+    - [ ] inventory plugins I use from kickstart
+    - [ ] inventory my customizations
+    - [ ] cleanup extras I don't use anymore
+    - [ ] Stylix nixvim???
 - [ ] Add to nix
     - [X] touchegg
-    - [ ] dolphin
-    - [ ] vivaldi
-    - [ ] konsole/yakuake
+    - [ ] dolphin # Look at plasma-manager
+    - [ ] vivaldi # investigate Default overwritable dotfiles for chromeium
+    - [X] konsole/yakuake
     - [X] khotkeys
-    - [ ] plasmashell
-- [ ] move zcomp
-- [ ] configure zsh history
-- [ ] add displaylink driver as a declared resource
+    - [ ] plasmashell # Look at plasma-manager
+- [ ] make a minified home-manager with only 2 profiles for small systems (don't need to have as many profiles)
 
 # home-manager deploy
 ### Brief
@@ -82,4 +90,5 @@ place this key in one of these places:
 ~/.ssh/age.key
 ```
 you can then use, age, agenix, home-manager switch as needed.
-Do not forget to delete this key
+Do not forget to delete this key (it's removed during deploy/activation)
+
