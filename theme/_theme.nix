@@ -1,21 +1,11 @@
 { config, pkgs, lib, ... }:
 let
 
-  # Return AttrSet ======================================================
-  main = {
-    specialisation.Default-plasmax.configuration = lib.mkMerge [ emberRose Dark FiraMono { stylix.enable = true; }];
-    specialisation.Default-plasmax-laptop.configuration = lib.mkMerge [ emberRose Dark FiraMono { stylix.enable = true; }];
-
-    specialisation.Work-plasmax-laptop.configuration = lib.mkMerge [ parrotSec Dark FiraMono { stylix.enable = true; }];
-    specialisation.Work-plasmax.configuration = lib.mkMerge [ parrotSec Dark FiraMono { stylix.enable = true; } ];
-
-    stylix.image = lib.mkDefault nixos.stylix.image;
-  };
-
+  themes = {
   # Defaults ============================================================
 
   Dark = { stylix.polarity = "dark"; };
-  Light = { stylix.polarity = "light"; };
+  #Light = { stylix.polarity = "light"; };
 
   FiraMono = { stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; }; };
 
@@ -38,30 +28,31 @@ let
 
   # Spicy ===============================================================
 
-  ### Degen weeb shit, pink, black and white
-  #animeFeet = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/1p/wallhaven-1peygv.jpg";
-  #  sha256 = "0zn89k6ipzk27vf11f9hqkzx0nk3b0nabs796mip2jf7d7cjmp1q"; }; };
+  ## Degen weeb shit, pink, black and white
+  animeFeet = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/1p/wallhaven-1peygv.jpg";
+    sha256 = "0zn89k6ipzk27vf11f9hqkzx0nk3b0nabs796mip2jf7d7cjmp1q"; }; };
 
   ## A dark greyscale image with a beautiful women adorning voluptuous breasts
-  #classyTiddie = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/d6/wallhaven-d62llg.jpg";
-  #  sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; }; };
+  classyTiddie = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/d6/wallhaven-d62llg.jpg";
+    sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; }; };
 
   ## Pink and Black pasties
-  #pinkPasties = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
-  #  sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; }; };
+  pinkPasties = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
+    sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; }; };
 
   ## tattood suicide girl in bathtub: Apr 24th 2024 vaneskka Gushwater
-  #suicideGirl = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/m3/wallhaven-m362lm.jpg";
-  #  sha256 = "0p2rls33jii573mzzc7ywkw0v0i0phkxfdxb3bmdh7glqavci7ba"; }; };
+  suicideGirl = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/m3/wallhaven-m362lm.jpg";
+    sha256 = "0p2rls33jii573mzzc7ywkw0v0i0phkxfdxb3bmdh7glqavci7ba"; }; };
 
   ## A Very spicy Shego cosplay with green black and grey colorscheme
-  #spicyShego = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/l8/wallhaven-l8ogop.jpg";
-  #  sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; }; };
+  spicyShego = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/l8/wallhaven-l8ogop.jpg";
+    sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; }; };
+  };
 
 # ====================================================================
 
@@ -139,4 +130,4 @@ let
   #};
 
 in
-main
+themes
