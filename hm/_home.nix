@@ -89,32 +89,32 @@ in
 
     # Profiles =======================================================
     #specialisation.Default.configuration = lib.mkMerge [  ]; # This is already the parent configuration
-    specialisation.Default-plasmax-shego.configuration                = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.spicyShego plasma x11 ];
-    specialisation.Default-plasmax-vanessa.configuration              = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.suicideGirl plasma x11 ];
-    specialisation.Default-plasmax-classytiddy.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.classyTiddie plasma x11 ];
-    specialisation.Default-plasmax-animefeet.configuration            = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.animeFeet plasma x11 ];
-    specialisation.Default-plasmax-pinkpasties.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.pinkPasties plasma x11 ];
-    specialisation.Default-plasmax.configuration                      = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.emberRose plasma x11 ];
-    specialisation.Default-plasmax-laptop.configuration               = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.emberRose plasma x11 touchpadInput framework-splash ];
-    specialisation.Default-plasmax-laptop-shego.configuration         = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.spicyShego plasma x11 touchpadInput framework-splash ];
-    specialisation.Default-plasmax-laptop-vanessa.configuration       = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.suicideGirl plasma x11 touchpadInput framework-splash ];
-    specialisation.Default-plasmax-laptop-classytiddy.configuration   = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.classyTiddie plasma x11 touchpadInput framework-splash ];
-    specialisation.Default-plasmax-laptop-animefeet.configuration     = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.animeFeet plasma x11 touchpadInput framework-splash ];
-    specialisation.Default-plasmax-laptop-pinkpasties.configuration   = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.pinkPasties plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-shego.configuration                = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.spicyShego plasma x11 ];
+    specialisation.Default-plasmax-vanessa.configuration              = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.suicideGirl plasma x11 ];
+    specialisation.Default-plasmax-classytiddy.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.classyTiddie plasma x11 ];
+    specialisation.Default-plasmax-animefeet.configuration            = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.animeFeet plasma x11 ];
+    specialisation.Default-plasmax-pinkpasties.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.pinkPasties plasma x11 ];
+    specialisation.Default-plasmax.configuration                      = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.emberRose plasma x11 ];
+    specialisation.Default-plasmax-laptop.configuration               = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.emberRose plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-laptop-shego.configuration         = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.spicyShego plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-laptop-vanessa.configuration       = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.suicideGirl plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-laptop-classytiddy.configuration   = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.classyTiddie plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-laptop-animefeet.configuration     = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.animeFeet plasma x11 touchpadInput framework-splash ];
+    specialisation.Default-plasmax-laptop-pinkpasties.configuration   = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.pinkPasties plasma x11 touchpadInput framework-splash ];
 
     specialisation.Work.configuration                                 = lib.mkMerge [ work ];
-    specialisation.Work-plasmax-shego.configuration                   = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.spicyShego plasma x11 ];
-    specialisation.Work-plasmax-vanessa.configuration                 = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.suicideGirl plasma x11 ];
-    specialisation.Work-plasmax-classytiddy.configuration             = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.classyTiddie plasma x11 ];
-    specialisation.Work-plasmax-animefeet.configuration               = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.animeFeet plasma x11 ];
-    specialisation.Work-plasmax-pinkpasties.configuration             = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.pinkPasties plasma x11 ];
-    specialisation.Work-plasmax.configuration                         = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.emberRose plasma x11 ];
-    specialisation.Work-plasmax-laptop.configuration                  = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.emberRose plasma x11 touchpadInput framework-splash ];
-    specialisation.Work-plasmax-laptop-shego.configuration            = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.spicyShego plasma x11 touchpadInput framework-splash ];
-    specialisation.Work-plasmax-laptop-vanessa.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.suicideGirl plasma x11 touchpadInput framework-splash ];
-    specialisation.Work-plasmax-laptop-classytiddy.configuration      = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.classyTiddie plasma x11 touchpadInput framework-splash ];
-    specialisation.Work-plasmax-laptop-animefeet.configuration        = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.animeFeet plasma x11 touchpadInput framework-splash ];
-    specialisation.Work-plasmax-laptop-pinkpasties.configuration      = lib.mkMerge [ { stylix.enable = true; } themes.FiraMono themes.Dark themes.pinkPasties plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-shego.configuration                   = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.spicyShego plasma x11 ];
+    specialisation.Work-plasmax-vanessa.configuration                 = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.suicideGirl plasma x11 ];
+    specialisation.Work-plasmax-classytiddy.configuration             = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.classyTiddie plasma x11 ];
+    specialisation.Work-plasmax-animefeet.configuration               = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.animeFeet plasma x11 ];
+    specialisation.Work-plasmax-pinkpasties.configuration             = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.pinkPasties plasma x11 ];
+    specialisation.Work-plasmax.configuration                         = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.emberRose plasma x11 ];
+    specialisation.Work-plasmax-laptop.configuration                  = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.emberRose plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-laptop-shego.configuration            = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.spicyShego plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-laptop-vanessa.configuration          = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.suicideGirl plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-laptop-classytiddy.configuration      = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.classyTiddie plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-laptop-animefeet.configuration        = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.animeFeet plasma x11 touchpadInput framework-splash ];
+    specialisation.Work-plasmax-laptop-pinkpasties.configuration      = lib.mkMerge [ { stylix.enable = true; } themes.noskin-yakuake-dark themes.FiraMono themes.Dark themes.pinkPasties plasma x11 touchpadInput framework-splash ];
 
     specialisation.test.configuration                                 = lib.mkMerge [ x11 ];
 

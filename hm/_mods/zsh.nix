@@ -90,7 +90,7 @@ in # ===========================================================================
       # home-manager
       hm="home-manager";
       hmcd="cd ~/.config/home-manager/";
-      hmrc="$EDITOR ~/.config/home-manager/hm/_home.nix";
+      hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
       hmsw="home-manager switch";
       hmbu="home-manager build";
 
@@ -103,7 +103,7 @@ in # ===========================================================================
       lla="eza -lhag --group-directories-first";
       la="eza -ag --group-directories-first";
       ff="fastfetch";
-      cat="bat -p";
+      cat="ctpv";
       myip="curl api.ipify.org";
       cl="clear";
       cheat = "curl cheat.sh/$1";
@@ -124,6 +124,12 @@ in # ===========================================================================
     };
 
     initExtra =  ''
+        ### fzf-tab
+        zstyle ':completion:*:git-checkout:*' sort true
+        zstyle ':completion:*' menu no
+        zstyle ':fzf-tab:complete:*' fzf-preview 'ctpv $realpath'
+        zstyle ':fzf-tab:*' fzf-flags '--height=100%'
+
         # Configures !! to automatically execute
         unsetopt HIST_VERIFY
 
@@ -198,9 +204,6 @@ in # ===========================================================================
 
     # Ctrl + T pastes the selected path to the CLI where your cursor is
     FZF_CTRL_T_COMMAND=homesearch;
-    #export FZF_CTRL_T_OPTS=""
-    #   --preview 'batcat --color=always {} 2> /dev/null'
-    #   --bind 'ctrl-/:change-preview-window(hidden|)'"
 
     # ALT + C cd's to the selected entry
     # By Default it searches your current Directory and cd's to the directory you select

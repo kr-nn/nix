@@ -1,5 +1,7 @@
 [Appearance]
 HideSkinBorders=true
+Skin=noskin
+SkinInstalledWithKns=true
 Translucency=true
 
 [Behavior]
@@ -11,7 +13,13 @@ DefaultProfile=Stylix.profile
 [Dialogs]
 FirstRun=false
 
+[KFileDialog Settings]
+detailViewIconSize=16
+
 [Shortcuts]
+new-session=Ctrl+Shift+N
+next-session=Ctrl+Shift+L
+previous-session=Ctrl+Shift+H
 toggle-window-state=none
 
 [Window]
