@@ -1,17 +1,7 @@
 [Added Associations]
-x-scheme-handler/bitwarden=Bitwarden.desktop;
-x-scheme-handler/tg=org.telegram.desktop.desktop;
-x-scheme-handler/sgnl=signal-desktop.desktop;signal.desktop;
-x-scheme-handler/signalcaptcha=signal-desktop.desktop;signal.desktop;
-x-scheme-handler/msteams=teams-for-linux.desktop
-x-scheme-handler/eclipse+command=_nix_store_2xyq1mgcpib9shzwdv6k62zqamrpmg8b-dbeaver-bin-24.0.5_opt_dbeaver_.desktop
-x-scheme-handler/insomnia=Insomnia.desktop;
+x-scheme-handler/sgnl=signal-desktop.desktop;
+x-scheme-handler/signalcaptcha=signal-desktop.desktop;
 
 [Default Applications]
-x-scheme-handler/bitwarden=Bitwarden.desktop
-x-scheme-handler/tg=org.telegram.desktop.desktop
 x-scheme-handler/sgnl=signal-desktop.desktop
 x-scheme-handler/signalcaptcha=signal-desktop.desktop
-x-scheme-handler/msteams=teams-for-linux.desktop
-x-scheme-handler/eclipse+command=_nix_store_2xyq1mgcpib9shzwdv6k62zqamrpmg8b-dbeaver-bin-24.0.5_opt_dbeaver_.desktop
-x-scheme-handler/insomnia=Insomnia.desktop
