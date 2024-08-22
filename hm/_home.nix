@@ -295,7 +295,7 @@ zshDefault = {
       lla="eza -lhag --group-directories-first";
       la="eza -ag --group-directories-first";
       ff="fastfetch";
-      cat="ctpv";
+      cat="bat -p";
       myip="curl api.ipify.org";
       cl="clear";
       cheat = "curl cheat.sh/$1";
@@ -367,34 +367,8 @@ zshDefault = {
         AGEPATH="/run/user/$UID/age.key"
         BWPATH="/run/user/$UID/bwsession"
 
-        ensure_validsession() {
-          sessionstate=$(bw status --session "$1" | jq .status)
-          if [ "$sessionstate" = "\"locked\"" ]; then
-            session=$(bw unlock --raw)
-            echo $session > $BWPATH
-          fi
-          echo "$1"
-        }
-
-        #bw_login() {
-        #  bw config server https://vaultwarden.nocturnalnerd.xyz
-        #  while [ -z "$session" ]; do
-        #    session=$(bw login --raw)
-        #  done
-        #  echo $session > $BWPATH
-        #  echo $session
-        #}
-
-        #bw_unlock() {
-        #  while [ -z $session ]; do
-        #    session=$(bw unlock --raw)
-        #  done
-        #  echo $session > $BWPATH
-        #  echo $session
-        #}
-
         if [ -n $BW_SESSION ]; then
-          :
+          echo $BW_SESSION > $BWPATH
         elif [ -f $BWPATH ]; then
           session=$(head -n 1 $BWPATH)
         else
@@ -564,8 +538,6 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
   sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
 }; };
 
-
-
 ### ==================================================================================================
 ### ==================================================================================================
 ### ==================================================================================================
@@ -675,7 +647,7 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
       Color={{base07-rgb-r}},{{base07-rgb-g}},{{base07-rgb-b}}
       [General]
       Description=Stylix
-      Opacity=0.75
+      Opacity=0.85
       Wallpaper=
       "
       populated_template=$(echo "$mustache_template" \
