@@ -2,7 +2,6 @@
 let
 
 main = lib.mkMerge [ Default activeProfiles activations ];
-
 ### ==========================================================================
 ### ==========================================================================
 ### ==========================================================================
@@ -123,7 +122,7 @@ packagesGui = { home.packages = with pkgs; [
 
 packagesDefault = { home.packages = with pkgs; [
   # Shell tools
-  tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop
+  tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop jq
   # Terminal Apps
   bitwarden-cli glow
   # Neovim
@@ -363,6 +362,62 @@ zshDefault = {
         }
         zle -N fzf_edit_file_widget fzf_edit_file
         bindkey '^e' fzf_edit_file_widget 
+
+        ### Vaultwarden init =================================================================================================================================
+        AGEPATH="/run/user/$UID/age.key"
+        BWPATH="$HOME/.ssh/bwsession"
+
+        ensure_validsession() {
+          sessionstate=$(bw status --session "$1" | jq .status)
+          if [ "$sessionstate" = "\"locked\"" ]; then
+            session=$(bw unlock --raw)
+            echo $session > $BWPATH
+            echo $session
+          fi
+          echo "$1"
+        }
+
+        bw_login() {
+          bw config server https://vaultwarden.nocturnalnerd.xyz
+          echo "Login to Vault:"
+          while [ -z "$session" ]; do
+            session=$(bw login --raw)
+          done
+          echo $session > $BWPATH
+          return $session
+        }
+
+        bw_unlock() {
+          echo "Unlock Vault:"
+          while [ -z $session ]; do
+            session=$(bw unlock --raw)
+          done
+          echo $session > $BWPATH
+          return $session
+        }
+
+        if [ -n $BW_SESSION ]; then
+          session=$(ensure_validsession "$BW_SESSION")
+        elif [ -f $BWPATH ]; then
+          bpathsession=$(head -n 1 $BWPATH)
+          session=$(ensure_validsession "$bpathsession")
+        else
+          STATUS=$(bw status | jq .status)
+          if [ "$STATUS" = "\"unauthenticated\"" ]; then
+            session=$(bw_login)
+          elif [ "$STATUS" = "\"locked\"" ]; then
+            session=$(bw_unlock)
+          fi
+        fi
+        export BW_SESSION="$session"
+
+        if ! [ -f $AGEPATH ]; then
+          echo $(bw get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
+        fi
+
+        if ! [ -L ~/.ssh/age.key ]; then
+          ln -s $AGEPATH ~/.ssh/age.key
+        fi
         '';
   };
 
