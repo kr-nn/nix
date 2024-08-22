@@ -74,6 +74,11 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 ### =============================================================
 ###_Config
 
+# Vars =============================================================
+userUid = builtins.readFile (pkgs.runCommand "get-uid" {} ''
+  echo $(id -u) > $out
+'');
+
 # SECRETS ==========================================================
 secretsDefault = {
   age.identityPaths = [
@@ -262,6 +267,8 @@ zdir = "${config.xdg.dataHome}/zsh";
 zshDefault = {
   programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
+    zprof.enable = true;
+    syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
     dotDir = ".local/share/zsh";
     enable = true;
@@ -367,8 +374,8 @@ zshDefault = {
         AGEPATH="/run/user/$UID/age.key"
         BWPATH="/run/user/$UID/bwsession"
 
-        if [ -n $BW_SESSION ]; then
-          echo $BW_SESSION > $BWPATH
+        if [ -n "$BW_SESSION" ]; then
+          :
         elif [ -f $BWPATH ]; then
           session=$(head -n 1 $BWPATH)
         else
@@ -390,6 +397,15 @@ zshDefault = {
         if ! [ -L ~/.ssh/age.key ]; then
           ln -s $AGEPATH ~/.ssh/age.key
         fi
+
+        ### run on all commands =============================================================================================================================
+        reloadBW(){
+          if [ -f /run/user/$UID/bwsession ]; then
+            export BW_SESSION=$(cat /run/user/$UID/bwsession)
+          fi
+        }
+        precmd_functions+=(reloadBW)
+
         '';
   };
 
@@ -555,6 +571,39 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
 ###_Activations
 
   activations = {
+
+    home.activation.secretsInit = lib.hm.dag.entryAfter ["linkGeneration"] ''
+      PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.bitwarden-cli}/bin"
+      export AGEPATH="/run/user/$UID/age.key"
+      export BWPATH="/run/user/$UID/bwsession"
+      export STATUS=$(bw status | jq .status)
+
+      if [ -f $BWPATH ]; then
+        :
+      else
+        echo "Deploying Secrets"
+        if [ "$STATUS" = "\"unauthenticated\"" ]; then
+          bw config server https://vaultwarden.nocturnalnerd.xyz
+          session=$(bw login --raw)
+          echo $session > $BWPATH
+        elif [ "$STATUS" = "\"locked\"" ]; then
+          session=$(bw unlock --raw)
+          echo $session > $BWPATH
+        else
+          echo "Something went wrong - couldn't get a session for vaultwarden"
+        fi
+
+        if ! [ -f $AGEPATH ] && [ -n "$session" ]; then
+          echo $(bw --session $session get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
+        fi
+
+        if ! [ -L ~/.ssh/age.key ] && [ -f $AGEPATH ]; then
+          ln -s $AGEPATH ~/.ssh/age.key
+        fi
+      fi
+      systemctl --user start agenix.service
+    '';
+
     home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
       PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
       export HMGENERATIONPATH="$HOME/.config/home-manager/.hmgeneration"
@@ -574,6 +623,7 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
             hmpr bootstrap
           elif [ -n $HMPROFILE ]; then
             hmpr $HMPROFILE
+            exit
           fi
         else
           echo "HMPROFILE does not exist, bootstrapping..."
