@@ -363,51 +363,49 @@ zshDefault = {
         zle -N fzf_edit_file_widget fzf_edit_file
         bindkey '^e' fzf_edit_file_widget 
 
-        ### Vaultwarden init =================================================================================================================================
+        ### Vaultwarden init ===============================================================================================================================
         AGEPATH="/run/user/$UID/age.key"
-        BWPATH="$HOME/.ssh/bwsession"
+        BWPATH="/run/user/$UID/bwsession"
 
         ensure_validsession() {
           sessionstate=$(bw status --session "$1" | jq .status)
           if [ "$sessionstate" = "\"locked\"" ]; then
             session=$(bw unlock --raw)
             echo $session > $BWPATH
-            echo $session
           fi
           echo "$1"
         }
 
-        bw_login() {
-          bw config server https://vaultwarden.nocturnalnerd.xyz
-          echo "Login to Vault:"
-          while [ -z "$session" ]; do
-            session=$(bw login --raw)
-          done
-          echo $session > $BWPATH
-          return $session
-        }
+        #bw_login() {
+        #  bw config server https://vaultwarden.nocturnalnerd.xyz
+        #  while [ -z "$session" ]; do
+        #    session=$(bw login --raw)
+        #  done
+        #  echo $session > $BWPATH
+        #  echo $session
+        #}
 
-        bw_unlock() {
-          echo "Unlock Vault:"
-          while [ -z $session ]; do
-            session=$(bw unlock --raw)
-          done
-          echo $session > $BWPATH
-          return $session
-        }
+        #bw_unlock() {
+        #  while [ -z $session ]; do
+        #    session=$(bw unlock --raw)
+        #  done
+        #  echo $session > $BWPATH
+        #  echo $session
+        #}
 
         if [ -n $BW_SESSION ]; then
-          session=$(ensure_validsession "$BW_SESSION")
+          :
         elif [ -f $BWPATH ]; then
-          bpathsession=$(head -n 1 $BWPATH)
-          session=$(ensure_validsession "$bpathsession")
+          session=$(head -n 1 $BWPATH)
         else
           STATUS=$(bw status | jq .status)
           if [ "$STATUS" = "\"unauthenticated\"" ]; then
-            session=$(bw_login)
+            bw config server https://vaultwarden.nocturnalnerd.xyz
+            session=$(bw login --raw)
           elif [ "$STATUS" = "\"locked\"" ]; then
-            session=$(bw_unlock)
+            session=$(bw unlock --raw)
           fi
+          echo $session > $BWPATH
         fi
         export BW_SESSION="$session"
 
