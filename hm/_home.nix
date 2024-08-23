@@ -82,7 +82,6 @@ userUid = builtins.readFile (pkgs.runCommand "get-uid" {} ''
 # SECRETS ==========================================================
 secretsDefault = {
   age.identityPaths = [
-    "${config.home.homeDirectory}/.run/age.key"      # temporary storage for deployments
     "${config.home.homeDirectory}/.ssh/id_ed25519"   # main ssh key
     "${config.home.homeDirectory}/.ssh/age.key" ];}; # backup master key
 
@@ -368,33 +367,39 @@ zshDefault = {
           fi
         }
         zle -N fzf_edit_file_widget fzf_edit_file
-        bindkey '^e' fzf_edit_file_widget 
+        bindkey '^e' fzf_edit_file_widget
 
         ### Vaultwarden init ===============================================================================================================================
         AGEPATH="/run/user/$UID/age.key"
         BWPATH="/run/user/$UID/bwsession"
 
-        if [ -n "$BW_SESSION" ]; then
-          :
-        elif [ -f $BWPATH ]; then
-          session=$(head -n 1 $BWPATH)
-        else
-          STATUS=$(bw status | jq .status)
-          if [ "$STATUS" = "\"unauthenticated\"" ]; then
-            bw config server https://vaultwarden.nocturnalnerd.xyz
-            session=$(bw login --raw)
-          elif [ "$STATUS" = "\"locked\"" ]; then
-            session=$(bw unlock --raw)
+        while [ -z "$session" ]; do
+          if [ -n "$BW_SESSION" ]; then
+            session=$BW_SESSION
+          elif [ -f $BWPATH ]; then
+            session=$(head -n 1 $BWPATH)
+          else
+            STATUS=$(bw status | jq .status)
+            if [ "$STATUS" = "\"unauthenticated\"" ]; then
+              bw config server https://vaultwarden.nocturnalnerd.xyz
+              session=$(bw login --raw)
+            elif [ "$STATUS" = "\"locked\"" ]; then
+              session=$(bw unlock --raw)
+            else
+              echo "Something went wrong - couldn't get a session for vaultwarden"
+              exit 1
+            fi
           fi
-          echo $session > $BWPATH
-        fi
+        done
+
+        echo $session > $BWPATH
         export BW_SESSION="$session"
 
-        if ! [ -f $AGEPATH ]; then
+        if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
           echo $(bw get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
         fi
 
-        if ! [ -L ~/.ssh/age.key ]; then
+        if ! [ -L ~/.ssh/age.key ] && ! [ -f ~/.ssh/age.key ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
           ln -s $AGEPATH ~/.ssh/age.key
         fi
 
@@ -572,36 +577,61 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
 
   activations = {
 
-    home.activation.secretsInit = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
       PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.bitwarden-cli}/bin"
       export AGEPATH="/run/user/$UID/age.key"
       export BWPATH="/run/user/$UID/bwsession"
-      export STATUS=$(bw status | jq .status)
+      session=""
+      if ! [ -d ~/.ssh ]; then
+        mkdir ~/.ssh
+	chmod 700 ~/.ssh
+      fi
 
-      if [ -f $BWPATH ]; then
-        :
-      else
-        echo "Deploying Secrets"
+      cleanup() {
+        if [ -f $BWPATH ]; then
+          rm -rf $BWPATH
+        fi
+        if [ -f $AGEPATH ]; then
+          rm -rf $AGEPATH
+        fi
+        if [ -L ~/.ssh/age.key ]; then
+          unlink ~/.ssh/age.key
+        fi
+      }
+
+      cleanup
+      echo "Deploying Secrets"
+      export STATUS=$(bw status | jq .status)
+      while [ -z "$session" ]; do
         if [ "$STATUS" = "\"unauthenticated\"" ]; then
           bw config server https://vaultwarden.nocturnalnerd.xyz
+          echo "Login to Vault:"
           session=$(bw login --raw)
-          echo $session > $BWPATH
         elif [ "$STATUS" = "\"locked\"" ]; then
+          echo "Unlock Vault:"
           session=$(bw unlock --raw)
-          echo $session > $BWPATH
+        elif [ "$STATUS" = "\"unlocked\"" ]; then
+          echo "Already unlocked no need to unlock vault"
+          echo $BW_SESSION
+          session=$BW_SESSION
         else
           echo "Something went wrong - couldn't get a session for vaultwarden"
+          cleanup
+          exit 1
         fi
+        echo $session > $BWPATH
+      done
 
-        if ! [ -f $AGEPATH ] && [ -n "$session" ]; then
-          echo $(bw --session $session get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
-        fi
+      echo $(bw --session $session get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
 
-        if ! [ -L ~/.ssh/age.key ] && [ -f $AGEPATH ]; then
-          ln -s $AGEPATH ~/.ssh/age.key
-        fi
+      if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+        ln -s $AGEPATH ~/.ssh/age.key
+      else
+        echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
+        cleanup
+        exit 1
       fi
-      systemctl --user start agenix.service
+
     '';
 
     home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
