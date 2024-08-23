@@ -266,7 +266,6 @@ zdir = "${config.xdg.dataHome}/zsh";
 zshDefault = {
   programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
-    zprof.enable = true;
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
     dotDir = ".local/share/zsh";
