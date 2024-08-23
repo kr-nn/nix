@@ -407,7 +407,7 @@ zshDefault = {
           if [ -f /run/user/$UID/bwsession ]; then
             export BW_SESSION=$(cat /run/user/$UID/bwsession)
           fi
-          if [ $(eza -lha /run/user/$UID/agenix | wc -l) -eq 0 ]; then
+          if ! [ -d /run/user/$UID/agenix ] || [ $(eza -lha /run/user/$UID/agenix | wc -l) -eq 0 ]; then
             systemctl --user start agenix
           fi
         }
