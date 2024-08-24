@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-stable, lib, ... }:
 let
 
 main = lib.mkMerge [ Default activeProfiles activations ];
@@ -118,7 +118,7 @@ packagesGui = { home.packages = with pkgs; [
   # Social
   vesktop telegram-desktop signal-desktop
   # admin things
-  bitwarden-desktop rustdesk yakuake
+  bitwarden-desktop pkgs-stable.rustdesk yakuake
   # Fonts
   fira-code-nerdfont
   # Entertainment
@@ -153,7 +153,6 @@ envDefault = {
 
 meta = { # Things home-manager needs to do the things I need
   programs.home-manager.enable = true;
-  nixpkgs.config.allowUnfree = true;
 };
 
 ### ===========================================================================
