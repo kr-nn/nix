@@ -175,7 +175,6 @@ meta = { # Things home-manager needs to do the things I need
 dotfilesPlasma = {
   home.file = {
     "${config.home.homeDirectory}/.config/yakuakerc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/yakuakerc";
-    "${config.home.homeDirectory}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/touchpadxlibinputrc";
     "${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/systemsettingsrc";
     "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kglobalshortcutsrc";
     "${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/mimeapps.list";
