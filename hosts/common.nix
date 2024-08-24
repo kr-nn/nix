@@ -2,6 +2,11 @@
 {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.auto-optimise-store = true;
+  nix.optimise.automatic = true;
+  nix.optimise.dates = [ "weekly" ];
+  nix.gc.automatic = true;
+  nix.gc.dates = "weekly";
 
   # Networking
   networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ]; # ephemeral port range
