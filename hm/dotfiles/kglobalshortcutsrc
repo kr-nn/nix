@@ -304,7 +304,7 @@ toggle do not disturb=none,,Toggle do not disturb
 
 [plasmawindowed]
 _k_friendly_name=plasmawindowed
-activate widget 3=Meta+Shift+C,none,Activate Color Picker Widget
+activate widget 3=Ctrl+Shift+C,none,Activate Color Picker Widget
 
 [systemsettings.desktop]
 _k_friendly_name=System Settings
