@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, pkgs-bleeding, ... }:
 
 {
   ## Imports =================================================================
@@ -11,6 +11,8 @@
       ../_mods/syncthing.nix
       ../_mods/zerotier.nix
     ];
+
+  environment.systemPackages = [ pkgs.fwupd pkgs-bleeding.framework-tool ];
 
   ## Bootloader ==============================================================
   boot.loader.systemd-boot.enable = true;

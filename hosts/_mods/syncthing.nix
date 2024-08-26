@@ -18,9 +18,6 @@
         "vault".id = "SFVOF3W-MSEE5ME-XWB4Q7Q-EZMGMGG-7LVD6FW-LLINHCE-IJNQFU7-BRLJUAQ";
       };
       folders = {
-        "/home/kyle/Projects".devices = ["vault"];
-      };
-      folders = {
         "/home/kyle/Knowledge".devices = ["vault"];
       };
     };
