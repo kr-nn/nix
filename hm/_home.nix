@@ -18,42 +18,23 @@ main = lib.mkMerge [ Default activeProfiles activations ];
 ### ==========================================================================
 ###_Profiles
 
-# collections
-plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma ];
-x11 = lib.mkMerge [ packagesGui dotfilesTouchegg];
+# puzzle pieces
+plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark ];
+x11 = lib.mkMerge [ packagesGui ];
 work = lib.mkMerge [ gitWork ];
+laptop = lib.mkMerge [ dotfilesTouchegg ];
+gui-enabled = lib.mkMerge [];
+
+# Devices
+framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
 
 Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
-
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
-  #specialisation.Default.configuration                                 = lib.mkMerge [ Default ]; # This is already the parent generation
-  specialisation.Default-plasmax.configuration                      = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeEmberRose plasma x11 ];
-  specialisation.Default-plasmax-laptop.configuration               = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themePinkPasties plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Default-plasmax-shego.configuration                = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSpicyShego plasma x11 ];
-  #specialisation.Default-plasmax-vanessa.configuration              = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSuicideGirl plasma x11 ];
-  #specialisation.Default-plasmax-classytiddy.configuration          = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeClassyTiddie plasma x11 ];
-  #specialisation.Default-plasmax-animefeet.configuration            = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeAnimeFeet plasma x11 ];
-  #specialisation.Default-plasmax-pinkpasties.configuration          = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themePinkPasties plasma x11 ];
-  #specialisation.Default-plasmax-laptop-shego.configuration         = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSpicyShego plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Default-plasmax-laptop-vanessa.configuration       = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSuicideGirl plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Default-plasmax-laptop-classytiddy.configuration   = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeClassyTiddie plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Default-plasmax-laptop-animefeet.configuration     = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeAnimeFeet plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Default-plasmax-laptop-pinkpasties.configuration   = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themePinkPasties plasma x11 dotfilesTouchegg ksplashFramework ];
 
-  specialisation.Work.configuration                                 = lib.mkMerge [ work ];
-  specialisation.Work-plasmax.configuration                         = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeParrotSec plasma x11 work ];
-  specialisation.Work-plasmax-laptop.configuration                  = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeParrotSec plasma x11 dotfilesTouchegg ksplashFramework work ];
-  #specialisation.Work-plasmax-shego.configuration                   = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSpicyShego plasma x11 ];
-  #specialisation.Work-plasmax-vanessa.configuration                 = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSuicideGirl plasma x11 ];
-  #specialisation.Work-plasmax-classytiddy.configuration             = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeClassyTiddie plasma x11 ];
-  #specialisation.Work-plasmax-animefeet.configuration               = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeAnimeFeet plasma x11 ];
-  #specialisation.Work-plasmax-pinkpasties.configuration             = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themePinkPasties plasma x11 ];
-  #specialisation.Work-plasmax-laptop.configuration                  = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeEmberRose plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Work-plasmax-laptop-shego.configuration            = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSpicyShego plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Work-plasmax-laptop-vanessa.configuration          = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeSuicideGirl plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Work-plasmax-laptop-classytiddy.configuration      = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeClassyTiddie plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Work-plasmax-laptop-animefeet.configuration        = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themeAnimeFeet plasma x11 dotfilesTouchegg ksplashFramework ];
-  #specialisation.Work-plasmax-laptop-pinkpasties.configuration      = lib.mkMerge [ { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark themePinkPasties plasma x11 dotfilesTouchegg ksplashFramework ];
+  # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
+  specialisation.Work.configuration                                  = lib.mkMerge [ work ];
+  specialisation.framework.configuration                             = lib.mkMerge [ themeSpicyShego framework ];
+  specialisation.framework-work.configuration                        = lib.mkMerge [ themeParrotSec framework work ];
 
   #specialisation.test.configuration                                 = lib.mkMerge [ x11 ];
 };
