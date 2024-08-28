@@ -257,7 +257,8 @@ zshDefault = {
       # nixos configs
       no="nixos-rebuild";
       nocd="cd /etc/nixos";
-      norc="$EDITOR /etc/nixos/hosts/$(cat /etc/hostname)/configuration.nix";
+      norc="nocd && $EDITOR /etc/nixos/hosts/$(cat /etc/hostname)/configuration.nix && cd -";
+      noll="ll /etc/nixos";
       nosw="sudo nixos-rebuild switch";
       note="sudo nixos-rebuild test";
       nobo="sudo nixos-rebuild boot";
@@ -266,6 +267,7 @@ zshDefault = {
       # home-manager
       hm="home-manager";
       hmcd="cd ~/.config/home-manager/";
+      hmll="ll ~/.config/home-manager/";
       hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
       hmsw="home-manager switch";
       hmbu="home-manager build";
