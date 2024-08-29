@@ -23,7 +23,6 @@ plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } y
 x11 = lib.mkMerge [ packagesGui ];
 work = lib.mkMerge [ gitWork ];
 laptop = lib.mkMerge [ dotfilesTouchegg ];
-gui-enabled = lib.mkMerge [];
 
 # Devices
 framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
@@ -33,10 +32,10 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
   specialisation.Work.configuration                                  = lib.mkMerge [ work ];
-  specialisation.framework.configuration                             = lib.mkMerge [ themeSpicyShego framework ];
-  specialisation.framework-work.configuration                        = lib.mkMerge [ themeParrotSec framework work ];
+  specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themeSpicyShego) framework ];
+  specialisation.framework-work.configuration                        = lib.mkMerge [ (genTheme themeParrotSec) framework work ];
 
-  #specialisation.test.configuration                                 = lib.mkMerge [ x11 ];
+  specialisation.test.configuration                                  = lib.mkMerge [ ];
 };
 
 ### =============================================================
@@ -54,11 +53,6 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 ### =============================================================
 ### =============================================================
 ###_Config
-
-# Vars =============================================================
-userUid = builtins.readFile (pkgs.runCommand "get-uid" {} ''
-  echo $(id -u) > $out
-'');
 
 # SECRETS ==========================================================
 secretsDefault = {
@@ -81,7 +75,7 @@ gitDefault = {
     userName = lib.mkDefault "kyle";
     userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
     extraConfig = {
-      credential.helper = "store"; # Use git-credentials
+      credential.helper = "store";
       safe.directory = "/etc/nixos"; };};};
 
 # Packages =========================================================
@@ -480,47 +474,58 @@ polarityDark = { stylix.polarity = "dark"; };
 fontFiraMono = { stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; }; };
 
 # Wallpapers/colorschemes =============================================
+
+genTheme = wallpaper: {
+  stylix.image = wallpaper;
+  home.file.".config/kscreenlockerrc".text = ''
+    [Greeter]
+    Wallpaper=org.kde.image
+    WallpaperPlugin=org.kde.image
+    Image=file://${wallpaper}
+  '';
+};
+
 ## nixos
-themeNixos = { stylix.image = pkgs.fetchurl {
+themeNixos = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/pk/wallhaven-pkrqze.png";
-  sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly"; }; };
+  sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly"; };
 
 ## rose embers
-themeEmberRose = { stylix.image = pkgs.fetchurl {
+themeEmberRose = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/lq/wallhaven-lqmzkq.jpg";
-  sha256 = "1fsja8fk86b8n971gmfw963f338s6z7yf5706a3sfn94ly22hw0b"; }; };
+  sha256 = "1fsja8fk86b8n971gmfw963f338s6z7yf5706a3sfn94ly22hw0b"; };
 
 ## Parrotsyec green
-themeParrotSec = { stylix.image = pkgs.fetchurl {
+themeParrotSec = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/gj/wallhaven-gj2rod.jpg";
-  sha256 = "017n6f9f2q0zyy5dca197qg7h1wkkq9qm08fyx09p0hk1ajmz0r3"; }; };
+  sha256 = "017n6f9f2q0zyy5dca197qg7h1wkkq9qm08fyx09p0hk1ajmz0r3"; };
 
 # Spicy ===============
 
 ## Degen weeb shit, pink, black and white
-themeAnimeFeet = { stylix.image = pkgs.fetchurl {
+themeAnimeFeet = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/1p/wallhaven-1peygv.jpg";
-  sha256 = "0zn89k6ipzk27vf11f9hqkzx0nk3b0nabs796mip2jf7d7cjmp1q"; }; };
+  sha256 = "0zn89k6ipzk27vf11f9hqkzx0nk3b0nabs796mip2jf7d7cjmp1q"; };
 
 ## A dark greyscale image with a beautiful women adorning voluptuous breasts
-themeClassyTiddie = { stylix.image = pkgs.fetchurl {
+themeClassyTiddie = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/d6/wallhaven-d62llg.jpg";
-  sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; }; };
+  sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; };
 
 ## Pink and Black pasties
-themePinkPasties = { stylix.image = pkgs.fetchurl {
+themePinkPasties = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
-  sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; }; };
+  sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; };
 
 ## tattood suicide girl in bathtub: Apr 24th 2024 vaneskka Gushwater
-themeSuicideGirl = { stylix.image = pkgs.fetchurl {
+themeSuicideGirl = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/m3/wallhaven-m362lm.jpg";
-  sha256 = "0p2rls33jii573mzzc7ywkw0v0i0phkxfdxb3bmdh7glqavci7ba"; }; };
+  sha256 = "0p2rls33jii573mzzc7ywkw0v0i0phkxfdxb3bmdh7glqavci7ba"; };
 
 ## A Very spicy Shego cosplay with green black and grey colorscheme
-themeSpicyShego = { stylix.image = pkgs.fetchurl {
+themeSpicyShego = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/l8/wallhaven-l8ogop.jpg";
-  sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; }; };
+  sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; };
 
 # App skins ==========================================================
 ## Yakuake Skin
