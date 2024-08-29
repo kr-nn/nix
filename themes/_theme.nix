@@ -2,12 +2,23 @@
 let
 
   # Return AttrSet ======================================================
+  wallpaper = nixos.stylix.image;
   main = {
     stylix.enable = true;
-    stylix.image = pinkPasties.stylix.image;
+    stylix.image = wallpaper;
     stylix.fonts = FiraMono.stylix.fonts;
     stylix.polarity = "dark";
+
+    environment.systemPackages = [
+      (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+        [General]
+        background=${wallpaper}
+        type=image
+      '')
+    ];
   };
+
+
 
   # Fonts ===============================================================
   FiraMono = { stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; }; };
@@ -15,9 +26,9 @@ let
   # Papers ==============================================================
 
   ### nixos
-  #nixos = { stylix.image = pkgs.fetchurl {
-  #  url = "https://w.wallhaven.cc/full/pk/wallhaven-pkrqze.png";
-  #  sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly"; }; };
+  nixos = { stylix.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/pk/wallhaven-pkrqze.png";
+    sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly"; }; };
 
   ### rose embers
   #emberRose = { stylix.image = pkgs.fetchurl {
@@ -42,9 +53,9 @@ let
   #  sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; }; };
 
   ## Pink and Black pasties
-  pinkPasties = { stylix.image = pkgs.fetchurl {
-    url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
-    sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; }; };
+  #pinkPasties = { stylix.image = pkgs.fetchurl {
+  #  url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
+  #  sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; }; };
 
   ## tattood suicide girl in bathtub: Apr 24th 2024 vaneskka Gushwater
   #suicideGirl = { stylix.image = pkgs.fetchurl {
