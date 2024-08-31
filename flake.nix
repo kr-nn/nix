@@ -33,9 +33,11 @@
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
+      agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
       pkgs-unstable = import nixpkgs-unstable {inherit system; config.allowUnfree = true; };
       pkgs-bleeding = import nixpkgs-bleeding {inherit system; config.allowUnfree = true; };
       pkgs-stable = import nixpkgs-stable {inherit system; config.allowUnfree = true; };
+      common-modules = [ stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
     in {
 
   # HOMES ========================================================================
@@ -45,19 +47,15 @@
       extraSpecialArgs = { inherit pkgs-stable; inherit pkgs-bleeding; };
       modules = [
         ./hm/kyle.nix
-        stylix.homeManagerModules.stylix
-        agenix.homeManagerModules.default
-      ];
+      ] ++ common-modules;
     };
 
     homeConfigurations."krobinson" = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs-unstable;
-      extraSpecialArgs = { inherit pkgs-stable; };
+      extraSpecialArgs = { inherit pkgs-stable; inherit pkgs-bleeding; };
       modules = [
         ./hm/krobinson.nix
-        stylix.homeManagerModules.stylix
-        agenix.homeManagerModules.default
-      ];
+      ] ++ common-modules;
     };
   };
 }
