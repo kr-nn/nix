@@ -275,7 +275,7 @@ zshDefault = {
       # convenience
       fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
       src="source ${zdir}/.zshrc";
-      sshrc="$EDITOR ~/.ssh/config";
+      sshrc="cd ~/.config/home-manager/secrets && agenix -e sshconfig.age && cd -";
       ll="eza -lhg --group-directories-first";
       l="eza -g --group-directories-first";
       lla="eza -lhag --group-directories-first";
