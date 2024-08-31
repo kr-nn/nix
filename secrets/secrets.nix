@@ -4,4 +4,6 @@ let
 in
 {
   "git.age".publicKeys = [ age ssh ];
+  "sshconfig.age".publicKeys = [ age ssh ];
+  "id_ed25519.age".publicKeys = [ age ];
 }

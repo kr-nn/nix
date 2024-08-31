@@ -27,7 +27,7 @@ laptop = lib.mkMerge [ dotfilesTouchegg ];
 # Devices
 framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
 
-Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
+Default = lib.mkMerge [ zshDefault sshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
@@ -77,6 +77,12 @@ gitDefault = {
     extraConfig = {
       credential.helper = "store";
       safe.directory = "/etc/nixos"; };};};
+
+sshDefault = {
+  age.secrets.id.file = ../secrets/id_ed25519.age;
+  age.secrets.sshconfig.file = ../secrets/sshconfig.age;
+  age.secrets.id.path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+  age.secrets.sshconfig.path = "${config.home.homeDirectory}/.ssh/config"; };
 
 # Packages =========================================================
 packagesPlasma = {
