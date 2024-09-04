@@ -78,6 +78,8 @@ gitDefault = {
       credential.helper = "store";
       safe.directory = "/etc/nixos"; };};};
 
+# SSH ==============================================================
+
 sshDefault = {
   age.secrets.id.file = ../secrets/id_ed25519.age;
   age.secrets.sshconfig.file = ../secrets/sshconfig.age;
@@ -103,7 +105,7 @@ packagesGui = { home.packages = with pkgs; [
   # Fonts
   fira-code-nerdfont
   # Entertainment
-  mpv feishin ];};
+  mpv feishin steam ];};
 
 packagesDefault = { home.packages = with pkgs; [
   # Shell tools
