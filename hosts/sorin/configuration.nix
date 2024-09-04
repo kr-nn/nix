@@ -10,6 +10,7 @@
       ../_mods/plasma.nix
       ../_mods/syncthing.nix
       ../_mods/zerotier.nix
+      ../_mods/displaylink.nix
     ];
 
   environment.systemPackages = [ pkgs.fwupd pkgs-bleeding.framework-tool ];
