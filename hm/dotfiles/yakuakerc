@@ -24,6 +24,6 @@ toggle-window-state=none
 
 [Window]
 Height=100
-KeepOpen=false
 KeepOpenAfterLastSessionCloses=true
+ToggleToFocus=true
 Width=100
