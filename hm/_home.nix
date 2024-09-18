@@ -35,7 +35,7 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
   specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themeSpicyShego) framework ];
   specialisation.framework-work.configuration                        = lib.mkMerge [ (genTheme themeParrotSec) framework work ];
 
-  specialisation.test.configuration                                  = lib.mkMerge [ ];
+  #specialisation.test.configuration                                  = lib.mkMerge [ ];
 };
 
 ### =============================================================
