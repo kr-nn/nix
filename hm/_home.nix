@@ -286,7 +286,6 @@ zshDefault = {
       cat="bat -p";
       myip="curl api.ipify.org";
       cl="clear";
-      cheat = "curl cheat.sh/$1";
     };
 
     oh-my-zsh = { enable = true; theme = "agnoster-nix"; plugins = [
