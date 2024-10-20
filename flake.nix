@@ -13,7 +13,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # Stylix
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.05";
 
   };
 

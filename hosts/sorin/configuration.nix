@@ -28,6 +28,7 @@
   hardware.bluetooth.enable = true;
 
   ## Specific Drivers ========================================================
+  services.fprintd.enable = false;
   hardware.ckb-next.enable = true;
   services.touchegg.enable = true;
 
