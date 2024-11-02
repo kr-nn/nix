@@ -492,42 +492,17 @@ genTheme = wallpaper: {
   '';
 };
 
-## nixos
-themeNixos = pkgs.fetchurl {
-  url = "https://w.wallhaven.cc/full/pk/wallhaven-pkrqze.png";
-  sha256 = "07zl1dlxqh9dav9pibnhr2x1llywwnyphmzcdqaby7dz5js184ly"; };
-
-## rose embers
-themeEmberRose = pkgs.fetchurl {
-  url = "https://w.wallhaven.cc/full/lq/wallhaven-lqmzkq.jpg";
-  sha256 = "1fsja8fk86b8n971gmfw963f338s6z7yf5706a3sfn94ly22hw0b"; };
-
-## Parrotsyec green
+## Parrotsec green
 themeParrotSec = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/gj/wallhaven-gj2rod.jpg";
   sha256 = "017n6f9f2q0zyy5dca197qg7h1wkkq9qm08fyx09p0hk1ajmz0r3"; };
 
 # Spicy ===============
 
-## Degen weeb shit, pink, black and white
-themeAnimeFeet = pkgs.fetchurl {
-  url = "https://w.wallhaven.cc/full/1p/wallhaven-1peygv.jpg";
-  sha256 = "0zn89k6ipzk27vf11f9hqkzx0nk3b0nabs796mip2jf7d7cjmp1q"; };
-
-## A dark greyscale image with a beautiful women adorning voluptuous breasts
-themeClassyTiddie = pkgs.fetchurl {
-  url = "https://w.wallhaven.cc/full/d6/wallhaven-d62llg.jpg";
-  sha256 = "1yvp346s9bvqjwn9jviccml13qp3ny075w7xrnzba09xvlmpbv2m"; };
-
 ## Pink and Black pasties
 themePinkPasties = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
   sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; };
-
-## tattood suicide girl in bathtub: Apr 24th 2024 vaneskka Gushwater
-themeSuicideGirl = pkgs.fetchurl {
-  url = "https://w.wallhaven.cc/full/m3/wallhaven-m362lm.jpg";
-  sha256 = "0p2rls33jii573mzzc7ywkw0v0i0phkxfdxb3bmdh7glqavci7ba"; };
 
 ## A Very spicy Shego cosplay with green black and grey colorscheme
 themeSpicyShego = pkgs.fetchurl {
@@ -607,7 +582,7 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
           session=$(bw unlock --raw)
         elif [ "$STATUS" = "\"unlocked\"" ]; then
           echo "Already unlocked no need to unlock vault"
-          echo $BW_SESSION
+          echo "current key: $BW_SESSION"
           session=$BW_SESSION
         else
           echo "Something went wrong - couldn't get a session for vaultwarden"
