@@ -245,6 +245,7 @@ omz_custom_themes_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/themes/
 zdir = "${config.xdg.dataHome}/zsh";
 
 zshDefault = {
+  programs.carapace = { enable = true; enableZshIntegration = true; };
   programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
     syntaxHighlighting.enable = true;
@@ -289,16 +290,15 @@ zshDefault = {
     };
 
     oh-my-zsh = { enable = true; theme = "agnoster-nix"; plugins = [
-        "vi-mode"
         "aliases"
-        "git"
         "fzf"
+        "fzf-tab"
+        "nix-shell"
         "sudo"
         "themes"
+        "vi-mode"
         "virtualenv"
-        "fzf-tab"
         "zsh-ssh"
-        "nix-shell"
       ];
     };
 
@@ -401,6 +401,7 @@ zshDefault = {
   home.packages = with pkgs; [
     oh-my-zsh
     zsh
+    python313
   ];
 
   home.file = {
