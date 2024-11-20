@@ -35,26 +35,28 @@
     let
       system = "x86_64-linux";
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
-      pkgs-signal = import nixpkgs-signal {inherit system; config.allowUnfree = true; };
-      pkgs-unstable = import nixpkgs-unstable {inherit system; config.allowUnfree = true; };
-      pkgs-bleeding = import nixpkgs-bleeding {inherit system; config.allowUnfree = true; };
-      pkgs-stable = import nixpkgs-stable {inherit system; config.allowUnfree = true; };
+      standardOptions = { inherit system; config.allowUnfree = true; };
+      allPkgs = {
+        pkgs-signal = import nixpkgs-signal standardOptions;
+        pkgs-unstable = import nixpkgs-unstable standardOptions;
+        pkgs-bleeding = import nixpkgs-bleeding standardOptions;
+        pkgs-stable = import nixpkgs-stable standardOptions; };
       common-modules = [ stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
     in {
 
   # HOMES ========================================================================
 
     homeConfigurations."kyle" = home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs-unstable;
-      extraSpecialArgs = { inherit pkgs-signal; inherit pkgs-stable; inherit pkgs-bleeding; };
+      pkgs = allPkgs.pkgs-unstable;
+      extraSpecialArgs = { inherit allPkgs; };
       modules = [
         ./hm/kyle.nix
       ] ++ common-modules;
     };
 
     homeConfigurations."krobinson" = home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs-unstable;
-      extraSpecialArgs = { inherit pkgs-signal; inherit pkgs-stable; inherit pkgs-bleeding; };
+      pkgs = allPkgs.pkgs-unstable;
+      extraSpecialArgs = { inherit allPkgs; };
       modules = [
         ./hm/krobinson.nix
       ] ++ common-modules;
