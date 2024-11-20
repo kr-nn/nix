@@ -307,6 +307,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-signal": {
+      "locked": {
+        "lastModified": 1732120437,
+        "narHash": "sha256-r0PeePwcqofEUJBSx9FWfTOcWjFmQQm8KxdyQHbICOU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c3f9d32635e9a96570619922ed6e9cfa3417e668",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1724316499,
@@ -344,6 +360,7 @@
         "agenix": "agenix",
         "home-manager": "home-manager_2",
         "nixpkgs-bleeding": "nixpkgs-bleeding",
+        "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "stylix": "stylix"
