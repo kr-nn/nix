@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-bleeding, pkgs-stable, lib, ... }:
+{ config, pkgs, pkgs-bleeding, pkgs-stable, pkgs-signal, lib, ... }:
 let
 
 main = lib.mkMerge [ Default activations ];
@@ -99,7 +99,7 @@ packagesGui = { home.packages = with pkgs; [
   # System Packages
   kdePackages.partitionmanager
   # Social
-  vesktop telegram-desktop pkgs-bleeding.signal-desktop
+  vesktop telegram-desktop pkgs-signal.signal-desktop
   # admin things
   bitwarden-desktop pkgs-stable.rustdesk yakuake
   # Fonts

@@ -4,6 +4,7 @@
   inputs = {
 
     # NIXPKGS
+    nixpkgs-signal.url = "github:nixos/nixpkgs/master";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -28,12 +29,13 @@
 
   };
 
-  outputs = { nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, agenix, stylix, home-manager, ... }:
+  outputs = { nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, home-manager, ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
+      pkgs-signal = import nixpkgs-signal {inherit system; config.allowUnfree = true; };
       pkgs-unstable = import nixpkgs-unstable {inherit system; config.allowUnfree = true; };
       pkgs-bleeding = import nixpkgs-bleeding {inherit system; config.allowUnfree = true; };
       pkgs-stable = import nixpkgs-stable {inherit system; config.allowUnfree = true; };
@@ -44,7 +46,7 @@
 
     homeConfigurations."kyle" = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs-unstable;
-      extraSpecialArgs = { inherit pkgs-stable; inherit pkgs-bleeding; };
+      extraSpecialArgs = { inherit pkgs-signal; inherit pkgs-stable; inherit pkgs-bleeding; };
       modules = [
         ./hm/kyle.nix
       ] ++ common-modules;
@@ -52,7 +54,7 @@
 
     homeConfigurations."krobinson" = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs-unstable;
-      extraSpecialArgs = { inherit pkgs-stable; inherit pkgs-bleeding; };
+      extraSpecialArgs = { inherit pkgs-signal; inherit pkgs-stable; inherit pkgs-bleeding; };
       modules = [
         ./hm/krobinson.nix
       ] ++ common-modules;
