@@ -309,43 +309,6 @@ zshDefault = {
         # Configures !! to automatically execute
         unsetopt HIST_VERIFY
 
-        ### FZF widgets =========================================
-
-        ### ================================================================================================================================================
-        ### open file with xdg-open ========================================================================================================================
-        ### Ctrl + o =======================================================================================================================================
-        ### ================================================================================================================================================
-
-        fzf_open_file() {
-          local cmd="''${FZF_CTRL_O_COMMAND:-''${DEFAULT_COMMAND:-"find . -type f"}}"
-          local opts="''${FZF_CTRL_O_OPTS''${DEFAULT_OPTS:-""}}"
-          if [ -n "$file" ];
-            then echo opening...
-              xdg-open "$file" > /dev/null 2>&1
-              zle accept-line
-          fi
-        }
-        zle -N fzf_open_file_widget fzf_open_file
-        bindkey '^o' fzf_open_file_widget
-
-        ### ================================================================================================================================================
-        ### edit file with $EDITOR =========================================================================================================================
-        ### Ctrl + e =======================================================================================================================================
-        ### ================================================================================================================================================
-
-        fzf_edit_file() {
-          local cmd="''${FZF_CTRL_E_COMMAND:-''${DEFAULT_COMMAND:-"find . -type f"}}"
-          local opts="''${FZF_CTRL_E_OPTS:-''${DEFAULT_OPTS:-""}}"
-          setopt localoptions pipefail no_aliases 2> /dev/null
-          local file
-          file=$(eval "$cmd" | fzf $opts)
-          if [ -n "$file" ]; then
-            $EDITOR "$file" </dev/tty
-          fi
-        }
-        zle -N fzf_edit_file_widget fzf_edit_file
-        bindkey '^e' fzf_edit_file_widget
-
         ### Vaultwarden init ===============================================================================================================================
         AGEPATH="/run/user/$UID/age.key"
         BWPATH="/run/user/$UID/bwsession"
@@ -415,14 +378,6 @@ zshDefault = {
 
     HYPHEN_INSENSITIVE="true";
     COMPLETION_WAITING_DOTS="true";
-
-    # CTRL + O Opens a file with xdg-open
-    FZF_CTRL_O_COMMAND=fhomesearch;
-    #FZF_CTRL_O_OPTS=""
-
-    # CTRL + E Opens an editor with the selected file
-    FZF_CTRL_E_COMMAND=fhomesearch;
-    FZF_CTRL_E_OPTS="--preview 'ctpv {}'";
 
     # Ctrl + T pastes the selected path to the CLI where your cursor is
     FZF_CTRL_T_COMMAND=homesearch;
