@@ -116,18 +116,14 @@ packagesDefault = { home.packages = with pkgs; [
   zip unzip gcc cargo neovim
   # Nix things
   nix-prefetch-git
-  (pkgs.writeShellScriptBin "flink"
-   (builtins.readFile ./scripts/flink) )
-  (pkgs.writeShellScriptBin "hmpr"
-   (builtins.readFile ./scripts/hmpr) )
-  (pkgs.writeShellScriptBin "nr" ''
-    nix run nixpkgs#"$1" -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "ns" ''
-    nix shell nixpkgs#"$1" -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "nri" ''
-    nix run nixpkgs#"$1" --impure -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "nsi" ''
-    nix shell nixpkgs#"$1" --impure -- ''${@:2}'') ];};
+  (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
+  (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
+  (pkgs.writeShellScriptBin "nrte"  ''nix run .#apps.nixinate."$1"-dry-run'')
+  (pkgs.writeShellScriptBin "nrsw"  ''nix run .#apps.nixinate."$1"'')
+  (pkgs.writeShellScriptBin "nr"    ''nix run nixpkgs#"$1" -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "ns"    ''nix shell nixpkgs#"$1" -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "nri"   ''nix run nixpkgs#"$1" --impure -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "nsi"   ''nix shell nixpkgs#"$1" --impure -- ''${@:2}'') ];};
 
 envDefault = {
   home.sessionVariables = {
