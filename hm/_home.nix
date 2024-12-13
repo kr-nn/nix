@@ -286,13 +286,13 @@ zshDefault = {
     };
 
     oh-my-zsh = { enable = true; theme = "agnoster-nix"; plugins = [
+        "vi-mode"
         "aliases"
         "fzf"
-        "fzf-tab"
         "nix-shell"
         "sudo"
         "themes"
-        "vi-mode"
+        "fzf-tab"
         "virtualenv"
         "zsh-ssh"
       ];
