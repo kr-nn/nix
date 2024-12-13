@@ -411,26 +411,27 @@ zshDefault = {
     # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
     ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
     FZF_DEFAULT_COMMAND=rootsearch;
-    FZF_DEFAULT_OPTS=" --preview 'ctpv {}' --height=100% --reverse";
+    FZF_DEFAULT_OPTS="--height=100% --reverse";
 
     HYPHEN_INSENSITIVE="true";
     COMPLETION_WAITING_DOTS="true";
 
     # CTRL + O Opens a file with xdg-open
     FZF_CTRL_O_COMMAND=fhomesearch;
-    #export FZF_CTRL_O_OPTS=
+    #FZF_CTRL_O_OPTS=""
 
     # CTRL + E Opens an editor with the selected file
     FZF_CTRL_E_COMMAND=fhomesearch;
-    #export FZF_CTRL_O_OPTS=
+    FZF_CTRL_E_OPTS="--preview 'ctpv {}'";
 
     # Ctrl + T pastes the selected path to the CLI where your cursor is
     FZF_CTRL_T_COMMAND=homesearch;
+    FZF_CTRL_T_OPTS="--preview 'ctpv {}'";
 
     # ALT + C cd's to the selected entry
     # By Default it searches your current Directory and cd's to the directory you select
     FZF_ALT_C_COMMAND=dhomesearch;
-    #export FZF_ALT_C_OPTS=""
+    FZF_ALT_C_OPTS="--preview 'ctpv {}'";
 
     # CTRL + R Replaces your current entry with the selected result
     # By default it searches your history, it inlcudes your current entry with what you've typed already
