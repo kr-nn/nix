@@ -17,15 +17,17 @@
 
   };
 
-  outputs = { nixpkgs-stable, nixpkgs-stable-dis, nixpkgs-unstable, nixpkgs-bleeding, stylix, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-stable, nixpkgs-stable-dis, nixpkgs-unstable, nixpkgs-bleeding, stylix, nixos-hardware, ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
+      revision = if self ? rev then self.rev else self.dirtyRev;
       pkgs-stable = import nixpkgs-stable {inherit system; config.allowUnfree = true; };
       pkgs-stable-dis = import nixpkgs-stable-dis {inherit system; config.allowUnfree = true; };
       pkgs-unstable = import nixpkgs-unstable {inherit system; config.allowUnfree = true; };
       pkgs-bleeding = import nixpkgs-bleeding {inherit system; config.allowUnfree = true; };
+      commonModules = [ { system.configurationRevision = revision; } ];
     in {
   # NIXOS ========================================================================
 
@@ -37,8 +39,7 @@
        ./hosts/sorin/configuration.nix
        nixos-hardware.nixosModules.framework-13-7040-amd
        stylix.nixosModules.stylix
-     ];
+     ] ++ commonModules;
     };
-
   };
 }
