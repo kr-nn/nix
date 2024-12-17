@@ -1,9 +1,5 @@
 # TODO
-- [X] secrets management
-- [X] fingerprint sddm
-- [X] make syncthing start when logged in
-- [X] make displaylink run conditionally without the lockscreen problem & remember monitor config
-- [X] move modules to inside homes/hosts depending on if they're a nixos/home-manager module
+- [ ] move imports to flake nixosConfiguration declarations
 - [ ] Add to nix
     - [X] touchegg
     - [ ] dolphin
@@ -11,9 +7,12 @@
     - [ ] konsole/yakuake
     - [X] khotkeys
     - [ ] plasmashell
-- [ ] move zcomp
-- [ ] configure zsh history
 - [ ] add displaylink driver as a declared resource
+- [X] add configurationRevision management to hosts
+- [ ] make themes more pluggable with function gentheme
+- [ ] use specialisations for recovery mode
+- [ ] use specialisations for dual booting
+- [ ] update to 24.11
 
 # home-manager deploy
 ### Brief
