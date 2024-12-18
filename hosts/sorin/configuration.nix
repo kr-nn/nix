@@ -1,18 +1,6 @@
 { pkgs, pkgs-unstable, pkgs-bleeding, ... }:
 
 {
-  ## Imports =================================================================
-  imports =
-    [
-      ../../themes/_theme.nix
-      ./hardware-configuration.nix
-      ../common.nix
-      ../_mods/plasma.nix
-      ../_mods/syncthing.nix
-      ../_mods/zerotier.nix
-      ../_mods/displaylink.nix
-    ];
-
   environment.systemPackages = [ pkgs.fwupd pkgs-bleeding.framework-tool ];
 
   ## Bootloader ==============================================================

@@ -36,7 +36,14 @@
      inherit system;
      specialArgs = { inherit pkgs-unstable; inherit pkgs-bleeding; inherit pkgs-stable;};
      modules = [
+       ./themes/_theme.nix
        ./hosts/sorin/configuration.nix
+       ./hosts/sorin/hardware-configuration.nix
+       ./hosts/common.nix
+       ./hosts/_mods/plasma.nix
+       ./hosts/_mods/syncthing.nix
+       ./hosts/_mods/zerotier.nix
+       ./hosts/_mods/displaylink.nix
        nixos-hardware.nixosModules.framework-13-7040-amd
        stylix.nixosModules.stylix
      ] ++ commonModules;
