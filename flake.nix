@@ -27,7 +27,7 @@
       pkgs-stable-dis = import nixpkgs-stable-dis {inherit system; config.allowUnfree = true; };
       pkgs-unstable = import nixpkgs-unstable {inherit system; config.allowUnfree = true; };
       pkgs-bleeding = import nixpkgs-bleeding {inherit system; config.allowUnfree = true; };
-      commonModules = [ { system.configurationRevision = revision; } ];
+      commonModules = [ ./hosts/common.nix { system.configurationRevision = revision; } ];
     in {
   # NIXOS ========================================================================
 
@@ -36,7 +36,6 @@
      inherit system;
      specialArgs = { inherit pkgs-unstable; inherit pkgs-bleeding; inherit pkgs-stable;};
      modules = [
-       ./hosts/common.nix
        ./themes/_theme.nix
        ./hosts/sorin/configuration.nix
        ./hosts/sorin/hardware-configuration.nix
