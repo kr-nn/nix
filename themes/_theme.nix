@@ -19,7 +19,6 @@ let
   };
 
   # Fonts ===============================================================
-  FiraMono = { stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; }; };
 
   # Papers ==============================================================
 

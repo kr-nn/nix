@@ -9,6 +9,7 @@
   nix.gc.dates = "weekly";
 
   # Networking
+  networking.networkmanager = { enable = true; };
   networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ]; # ephemeral port range
   networking.firewall.allowedTCPPortRanges = [ { from = 32768; to = 60999; } ]; # ephemeral port range
 
@@ -24,6 +25,10 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
   };
+
+  #boot
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # zsh needs this:
   programs.zsh.enable = true;

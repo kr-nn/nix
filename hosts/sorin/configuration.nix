@@ -1,36 +1,49 @@
-{ pkgs, pkgs-unstable, pkgs-bleeding, ... }:
+{ lib, pkgs, pkgs-unstable, pkgs-bleeding, ... }:
+let
 
-{
-  environment.systemPackages = [ pkgs.fwupd pkgs-bleeding.framework-tool ];
-
-  ## Bootloader ==============================================================
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  ## Networking ==============================================================
-  networking.hostName = "sorin";
-  networking.networkmanager = {
-    enable = true;
+  # Theme =====================================================
+  wallpaper = ../../themes/media/framework.png;
+  theme = {
+    stylix.enable = true;
+    stylix.image = wallpaper;
+    stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; };
+    stylix.polarity = "dark";
   };
-  hardware.bluetooth.enable = true;
+  lockscreenWallpaper = (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+      [General]
+      background=${wallpaper}
+      type=image
+    '');
 
-  ## Specific Drivers ========================================================
-  services.fprintd.enable = false;
-  hardware.ckb-next.enable = true;
-  services.touchegg.enable = true;
+  # OS things ==================================================
+  main = lib.mkMerge [ theme {
 
-  ## Sound ===================================================================
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+    environment.systemPackages = [ lockscreenWallpaper pkgs.fwupd pkgs-bleeding.framework-tool ];
 
-  system.stateVersion = "23.11";
-}
+    ## Bootloader ==============================================================
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    ## Networking ==============================================================
+    networking.hostName = "sorin";
+    hardware.bluetooth.enable = true;
+
+    ## Specific Drivers ========================================================
+    services.fprintd.enable = false;
+    hardware.ckb-next.enable = true;
+    services.touchegg.enable = true;
+
+    ## Sound ===================================================================
+    # Enable sound with pipewire.
+    sound.enable = true;
+    hardware.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+
+    system.stateVersion = "23.11"; } ];
+in
+main

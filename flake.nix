@@ -36,7 +36,6 @@
      inherit system;
      specialArgs = { inherit pkgs-unstable; inherit pkgs-bleeding; inherit pkgs-stable;};
      modules = [
-       ./themes/_theme.nix
        ./hosts/sorin/configuration.nix
        ./hosts/sorin/hardware-configuration.nix
 
