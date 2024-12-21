@@ -5,7 +5,7 @@
     enable = true;
     user = "kyle";
     systemService = false;
-    dataDir = /home/kyle;
+    dataDir = "/home/kyle";
     overrideFolders = false;
     overrideDevices = false;
     openDefaultPorts = true;
