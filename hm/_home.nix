@@ -94,8 +94,6 @@ packagesPlasma = {
 packagesGui = { home.packages = with pkgs; [
   # docs
   obsidian onlyoffice-bin
-  # vivaldi
-  vivaldi vivaldi-ffmpeg-codecs widevine-cdm
   # System Packages
   kdePackages.partitionmanager
   # Social
@@ -118,8 +116,14 @@ packagesDefault = { home.packages = with pkgs; [
   nix-prefetch-git
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
-  (pkgs.writeShellScriptBin "nrte"  ''nix run .#apps.nixinate."$1"-dry-run'')
-  (pkgs.writeShellScriptBin "nrsw"  ''nix run .#apps.nixinate."$1"'')
+
+
+  (pkgs.writeShellScriptBin "no"    ''nixos-rebuild'')
+  (pkgs.writeShellScriptBin "nosw"  ''nixos-rebuild switch'')
+  (pkgs.writeShellScriptBin "note"  ''nixos-rebuild test'')
+  (pkgs.writeShellScriptBin "nobo"  ''nixos-rebuild boot'')
+  (pkgs.writeShellScriptBin "nobu"  ''nixos-rebuild build'')
+
   (pkgs.writeShellScriptBin "nr"    ''nix run nixpkgs#"$1" -- ''${@:2}'')
   (pkgs.writeShellScriptBin "ns"    ''nix shell nixpkgs#"$1" -- ''${@:2}'')
   (pkgs.writeShellScriptBin "nri"   ''nix run nixpkgs#"$1" --impure -- ''${@:2}'')
@@ -254,14 +258,9 @@ zshDefault = {
       vimrc="$EDITOR ~/.config/home-manager/hm/dotfiles/nvim/init.lua";
 
       # nixos configs
-      no="nixos-rebuild";
       nocd="cd /etc/nixos";
       norc="nocd && $EDITOR /etc/nixos/hosts/$(cat /etc/hostname)/configuration.nix && cd -";
       noll="ll /etc/nixos";
-      nosw="sudo nixos-rebuild switch";
-      note="sudo nixos-rebuild test";
-      nobo="sudo nixos-rebuild boot";
-      nobu="sudo nixos-rebuild build";
 
       # home-manager
       hm="home-manager";
