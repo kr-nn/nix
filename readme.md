@@ -7,7 +7,9 @@
     - [ ] konsole/yakuake
     - [X] khotkeys
     - [ ] plasmashell
-- [ ] add displaylink driver as a declared resource
+- [X] add displaylink driver as a declared resource
+- [X] update nixos to latest
+    - [X] update displaylink zip to 600
 - [X] add configurationRevision management to hosts
 - [ ] make themes more pluggable with function gentheme
 - [ ] use specialisations for recovery mode

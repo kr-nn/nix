@@ -21,7 +21,7 @@ let
     environment.systemPackages = [ lockscreenWallpaper pkgs.fwupd pkgs-bleeding.framework-tool ];
 
     ## Bootloader ==============================================================
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages;
 
     ## Networking ==============================================================
     networking.hostName = "sorin";
@@ -32,9 +32,6 @@ let
     hardware.ckb-next.enable = true;
     services.touchegg.enable = true;
 
-    ## Sound ===================================================================
-    # Enable sound with pipewire.
-    sound.enable = true;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {

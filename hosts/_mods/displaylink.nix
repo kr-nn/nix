@@ -3,7 +3,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       displaylink = prev.displaylink.overrideAttrs {
-        src = ../../assets/displaylink-580.zip;
+        src = ../../assets/displaylink-600.zip;
       };
     })
   ];

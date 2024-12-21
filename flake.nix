@@ -7,6 +7,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-stable-dis.url = "github:nixos/nixpkgs/249fbde2a178a2ea2638b65b9ecebd531b338cf9"; # working displaylink
+    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
 
     # HARDWARE
@@ -17,7 +18,7 @@
 
   };
 
-  outputs = { self, nixpkgs-stable, nixpkgs-stable-dis, nixpkgs-unstable, nixpkgs-bleeding, stylix, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-stable, nixpkgs-stable-dis, nixpkgs-sorin, nixpkgs-unstable, nixpkgs-bleeding, stylix, nixos-hardware, ... }:
 
   # ARGS ========================================================================
     let
@@ -32,7 +33,7 @@
   # NIXOS ========================================================================
 
     # Framework laptop
-    nixosConfigurations."sorin" = nixpkgs-stable-dis.lib.nixosSystem {
+    nixosConfigurations."sorin" = nixpkgs-sorin.lib.nixosSystem {
      inherit system;
      specialArgs = { inherit pkgs-unstable; inherit pkgs-bleeding; inherit pkgs-stable;};
      modules = [
