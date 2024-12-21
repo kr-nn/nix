@@ -18,7 +18,7 @@ let
   # OS things ==================================================
   main = lib.mkMerge [ theme {
 
-    environment.systemPackages = [ lockscreenWallpaper pkgs.fwupd pkgs-bleeding.framework-tool ];
+    environment.systemPackages = [ pkgs.vivaldi lockscreenWallpaper pkgs.fwupd pkgs-bleeding.framework-tool ];
 
     ## Bootloader ==============================================================
     boot.kernelPackages = pkgs.linuxPackages;
