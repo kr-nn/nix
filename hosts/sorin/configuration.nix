@@ -1,4 +1,4 @@
-{ lib, pkgs, pkgs-unstable, pkgs-bleeding, ... }:
+{ lib, pkgs, ... }:
 let
 
   # Theme =====================================================
