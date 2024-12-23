@@ -18,7 +18,7 @@ let
   # OS things ==================================================
   main = lib.mkMerge [ theme {
 
-    environment.systemPackages = with pkgs; [ vivaldi vivaldi-ffmpeg-codecs widevine-cdm lockscreenWallpaper fwupd framework-tool ];
+    environment.systemPackages = with pkgs; [ lockscreenWallpaper fwupd framework-tool ];
 
     ## Bootloader ==============================================================
     boot.kernelPackages = pkgs.linuxPackages;
