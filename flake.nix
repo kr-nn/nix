@@ -4,11 +4,15 @@
   inputs = {
 
     # NIXPKGS
-    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/master";
+    ## packages
+    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-24.11";
+
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
+
+    ## Nixos
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
 
     # HOME-MANAGER
     home-manager = {
