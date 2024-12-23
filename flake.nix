@@ -4,6 +4,7 @@
   inputs = {
 
     # NIXPKGS
+    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/master";
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
@@ -29,7 +30,7 @@
 
   };
 
-  outputs = { nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, home-manager, ... }:
+  outputs = { nixpkgs-vivaldi, nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, home-manager, ... }:
 
   # ARGS ========================================================================
     let
@@ -37,6 +38,7 @@
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
       standardOptions = { inherit system; config.allowUnfree = true; };
       allPkgs = {
+        pkgs-vivaldi = import nixpkgs-vivaldi standardOptions;
         pkgs-signal = import nixpkgs-signal standardOptions;
         pkgs-unstable = import nixpkgs-unstable standardOptions;
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;

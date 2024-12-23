@@ -102,6 +102,8 @@ packagesGui = { home.packages = with pkgs; [
   bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake
   # Fonts
   fira-code-nerdfont
+  # Browser
+  allPkgs.pkgs-vivaldi.vivaldi allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs allPkgs.pkgs-vivaldi.widevine-cdm
   # Entertainment
   mpv feishin steam ];};
 
@@ -114,6 +116,7 @@ packagesDefault = { home.packages = with pkgs; [
   zip unzip gcc cargo neovim
   # Nix things
   nix-prefetch-git
+  # aliases
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
 

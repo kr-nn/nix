@@ -355,6 +355,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-vivaldi": {
+      "locked": {
+        "lastModified": 1734973338,
+        "narHash": "sha256-E9JOCwppN3WX9oh6kV9w4nkN+6UPGNdzljscdJy5kTs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2b37ecedbb948e7607307c56e35aea5155eb65a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -363,6 +379,7 @@
         "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-vivaldi": "nixpkgs-vivaldi",
         "stylix": "stylix"
       }
     },
