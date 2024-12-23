@@ -19,6 +19,13 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
 
+  users.users.builder = {
+    isNormalUser = true;
+    description = "builder";
+    shell = pkgs.bash;
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
+
   users.users.kyle = {
     isNormalUser = true;
     description = "kyle";
