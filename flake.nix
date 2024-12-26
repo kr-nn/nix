@@ -48,24 +48,19 @@
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions; };
       common-modules = [ stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
+      homeMaker = username: home-manager.lib.homeManagerConfiguration {
+        pkgs = allPkgs.pkgs-unstable;
+        extraSpecialArgs = { inherit allPkgs; };
+        modules = [
+          ./hm/${username}.nix
+        ] ++ common-modules;
+      };
     in {
 
   # HOMES ========================================================================
 
-    homeConfigurations."kyle" = home-manager.lib.homeManagerConfiguration {
-      pkgs = allPkgs.pkgs-unstable;
-      extraSpecialArgs = { inherit allPkgs; };
-      modules = [
-        ./hm/kyle.nix
-      ] ++ common-modules;
-    };
+    homeConfigurations."kyle" = homeMaker "kyle";
+    homeConfigurations."krobinson" = homeMaker "krobinson";
 
-    homeConfigurations."krobinson" = home-manager.lib.homeManagerConfiguration {
-      pkgs = allPkgs.pkgs-unstable;
-      extraSpecialArgs = { inherit allPkgs; };
-      modules = [
-        ./hm/krobinson.nix
-      ] ++ common-modules;
-    };
   };
 }
