@@ -433,7 +433,7 @@ ksplashFramework = {
 polarityDark = { stylix.polarity = "dark"; };
 #Light = { stylix.polarity = "light"; };
 
-fontFiraMono = { stylix.fonts = { monospace.package = pkgs.fira-code-nerdfont; monospace.name = "nerdfonts-3.2.1"; }; };
+fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; }; };
 
 # Wallpapers/colorschemes =============================================
 
