@@ -101,7 +101,7 @@ packagesGui = { home.packages = with pkgs; [
   # admin things
   bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake
   # Fonts
-  fira-code-nerdfont
+  nerd-fonts.fira-code
   # Browser
   allPkgs.pkgs-vivaldi.vivaldi allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs allPkgs.pkgs-vivaldi.widevine-cdm
   # Entertainment
