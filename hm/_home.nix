@@ -19,7 +19,7 @@ main = lib.mkMerge [ Default activeProfiles activations ];
 ###_Profiles
 
 # puzzle pieces
-plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontFiraMono polarityDark ];
+plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontFiraMono ];
 x11 = lib.mkMerge [ packagesGui ];
 work = lib.mkMerge [ gitWork ];
 laptop = lib.mkMerge [ dotfilesTouchegg ];
@@ -32,8 +32,8 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
   specialisation.Work.configuration                                  = lib.mkMerge [ work ];
-  specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themeSpicyShego) framework ];
-  specialisation.framework-work.configuration                        = lib.mkMerge [ (genTheme themeParrotSec) framework work ];
+  specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themePink) framework ];
+  specialisation.framework-work.configuration                        = lib.mkMerge [ (genTheme themeGreen) framework work ];
 
   #specialisation.test.configuration                                  = lib.mkMerge [ ];
 };
@@ -431,7 +431,8 @@ ksplashFramework = {
 
 # Polarity
 polarityDark = { stylix.polarity = "dark"; };
-#Light = { stylix.polarity = "light"; };
+polarityLight = { stylix.polarity = "light"; };
+polarity = { stylix.polarity = "either"; };
 
 fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; }; };
 
@@ -439,6 +440,7 @@ fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code;
 
 genTheme = wallpaper: {
   stylix.image = wallpaper;
+  stylix.polarity = lib.mkDefault "either";
   home.file.".config/kscreenlockerrc".text = ''
     [Greeter]
     Wallpaper=org.kde.image
@@ -447,20 +449,25 @@ genTheme = wallpaper: {
   '';
 };
 
-## Parrotsec green
-themeParrotSec = pkgs.fetchurl {
+themeGreen = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/gj/wallhaven-gj2rod.jpg";
   sha256 = "017n6f9f2q0zyy5dca197qg7h1wkkq9qm08fyx09p0hk1ajmz0r3"; };
 
+themePink = pkgs.fetchurl {
+  url = "https://w.wallhaven.cc/full/7p/wallhaven-7pz9v9.jpg";
+  sha256 = "sha256-sqXEfndZiZ+Qt87D6NHj/0EAKXdUI+RsvlXckE6maMc="; };
+
+themepink2 = pkgs.fetchurl {
+  url = "https://w.wallhaven.cc/full/gp/wallhaven-gpyq2e.png";
+  sha256 = "sha256-d5uQ7BQ+tzFmx6shGpuMV6PBnUNfh7jbCRaaFxW8aNc="; };
+
 # Spicy ===============
 
-## Pink and Black pasties
-themePinkPasties = pkgs.fetchurl {
+themePink3 = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
   sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; };
 
-## A Very spicy Shego cosplay with green black and grey colorscheme
-themeSpicyShego = pkgs.fetchurl {
+themeGreen2 = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/l8/wallhaven-l8ogop.jpg";
   sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; };
 
