@@ -270,8 +270,8 @@ zshDefault = {
       hmcd="cd ~/.config/home-manager/";
       hmll="ll ~/.config/home-manager/";
       hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
-      hmsw="home-manager switch";
-      hmbu="home-manager build";
+      hmsw="home-manager switch -b ~/.hmbak";
+      hmbu="home-manager build -b ~/.hmbak";
 
       # convenience
       fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
