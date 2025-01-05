@@ -127,10 +127,11 @@ packagesDefault = { home.packages = with pkgs; [
   (pkgs.writeShellScriptBin "nobo"  ''nixos-rebuild boot'')
   (pkgs.writeShellScriptBin "nobu"  ''nixos-rebuild build'')
 
-  (pkgs.writeShellScriptBin "nr"    ''nix run nixpkgs#"$1" -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "ns"    ''nix shell nixpkgs#"$1" -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "nri"   ''nix run nixpkgs#"$1" --impure -- ''${@:2}'')
-  (pkgs.writeShellScriptBin "nsi"   ''nix shell nixpkgs#"$1" --impure -- ''${@:2}'') ];};
+  (pkgs.writeShellScriptBin "ns"    ''nix search github:nixos/nixpkgs'')
+  (pkgs.writeShellScriptBin "nr"    ''nix run github:nixos/nixpkgs#"$1" -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "nsh"    ''nix shell github:nixos/nixpkgs#"$1" -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "nri"   ''nix run github:nixos/nixpkgs#"$1" --impure -- ''${@:2}'')
+  (pkgs.writeShellScriptBin "nshi"   ''nix shell github:nixos/nixpkgs#"$1" --impure -- ''${@:2}'') ];};
 
 envDefault = {
   home.sessionVariables = {
