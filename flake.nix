@@ -32,9 +32,15 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Neovim
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
   };
 
-  outputs = { nixpkgs-vivaldi, nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, home-manager, ... }:
+  outputs = { nixpkgs-vivaldi, nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, nixvim, home-manager, ... }:
 
   # ARGS ========================================================================
     let
@@ -47,7 +53,7 @@
         pkgs-unstable = import nixpkgs-unstable standardOptions;
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions; };
-      common-modules = [ stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
+      common-modules = [ nixvim.homeManagerModules.nixvim stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
       homeMaker = username: home-manager.lib.homeManagerConfiguration {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };

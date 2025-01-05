@@ -113,9 +113,9 @@ packagesDefault = { home.packages = with pkgs; [
   # Terminal Apps
   bitwarden-cli glow
   # Neovim
-  zip unzip gcc cargo neovim
+  zip unzip gcc cargo
   # Nix things
-  nix-prefetch-git
+  nix-prefetch-git nixd
   # aliases
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
@@ -134,7 +134,6 @@ packagesDefault = { home.packages = with pkgs; [
 
 envDefault = {
   home.sessionVariables = {
-    EDITOR = "nvim";
     NIXPKGS_ALLOW_UNFREE = "1";  }; }; # for nri/nsi impure running/shells
 
 meta = { # Things home-manager needs to do the things I need
@@ -165,10 +164,177 @@ dotfilesPlasma = {
     "${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/mimeapps.list";
     "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/khotkeysrc"; }; };
 
+#dotfilesNeovim = {
+#  home.file = {
+#    "${config.home.homeDirectory}/.config/nvim/init.lua".source = ../hm/dotfiles/nvim/init.lua;
+#    "${config.home.homeDirectory}/.config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/nvim/lazy-lock.json"; }; };
 dotfilesNeovim = {
-  home.file = {
-    "${config.home.homeDirectory}/.config/nvim/init.lua".source = ../hm/dotfiles/nvim/init.lua;
-    "${config.home.homeDirectory}/.config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/nvim/lazy-lock.json"; }; };
+  programs.nixvim = {
+    enable = true;
+    defaultEditor = true;
+    vimdiffAlias = true;
+    viAlias = true;
+    vimAlias = true;
+    globals = {
+      mapleader = " ";
+      maplocalleader = " ";
+      have_nerd_font = true;
+    };
+    opts = {
+      number = true;
+      relativenumber = true;
+      mouse = ""; # enable mouse controls for resizing splits
+      #showmode = true; # toggle for statusline
+      clipboard = "unnamedplus";
+      breakindent = true; # ???
+      wrap = false;
+      undofile = true; # Saves undo history; persist undo across :q
+      ignorecase = true; # searches ignore case
+      smartcase = true; # ???
+      signcolumn = "yes"; # ???
+      updatetime = 250; # don't know why im decreasing updatetime;
+      timeoutlen = 300; # ???
+      splitright = true; # split default direction
+      splitbelow = true; # split default direction
+      list = true; # ???
+      listchars = { tab = "| "; trail = "_"; nbsp = "␣"; }; # ??? 
+      inccommand = "split"; # ???
+      cursorline = true; # ???
+      scrolloff = 15; # Number of lines to be above/below cursor before scrolling happens
+      hlsearch = true; # highlight search matches
+    };
+    keymaps = [
+      # hlsearch
+      { key = "<Esc>";                mode = "n";  action = "<cmd>nohlsearch<CR>";         options = { desc = "Clears highlight when pressing Esc"; }; }
+
+      # Saving
+      { key = "<leader><Esc>";        mode = "n";  action = "<cmd>q<CR>";                  options = { desc = "Close neovim"; }; }
+      { key = "<leader>q";            mode = "n";  action = "<cmd>bd<CR>";                 options = { desc = "Close current buffer"; }; }
+      { key = "<leader><Enter>";      mode = "n";  action = "<cmd>w<CR>";                  options = { desc = "Save current buffer"; }; }
+
+      # Terminal mode
+      { key = "<leader><Esc>";        mode = "t";  action = "<C-\\><C-n>";                 options = { desc = "Exit terminal mode"; }; }
+
+      # Oil
+      { key = "<leader>o";            mode = "n";  action = "<cmd>Oil<CR>";                options = { desc = "Open Directory structure"; }; }
+
+      # Misc Keymaps
+
+      { key = "<leader>n";            mode = "n";  action = "<cmd>bnext<CR>";              options = { desc = "Next Buffer"; }; }
+      { key = "<leader>p";            mode = "n";  action = "<cmd>bprev<CR>";              options = { desc = "Previous Buffer"; }; }
+      { key = "<left>";               mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
+      { key = "<right>";              mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
+      { key = "<up>";                 mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
+      { key = "<down>";               mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
+      { key = "<C-h>";                mode = "n";  action = "<C-w><C-h>";                  options = { desc = "Move focus to the left window"; }; }
+      { key = "<C-l>";                mode = "n";  action = "<C-w><C-l>";                  options = { desc = "Move focus to the right window"; }; }
+      { key = "<C-j>";                mode = "n";  action = "<C-w><C-j>";                  options = { desc = "Move focus to the lower window"; }; }
+      { key = "<C-k>";                mode = "n";  action = "<C-w><C-k>";                  options = { desc = "Move focus to the upper window"; }; }
+    ];
+    autoCmd = [
+      { event = "TextYankPost"; group = "highlight-yank"; callback = { __raw = "function() vim.highlight.on_yank() end"; }; desc = "Highlight when yanking text"; }
+    ];
+    autoGroups = {
+      highlight-yank = { clear = true; };
+    };
+    plugins = {
+      #lazy = { enable = true; };
+      #comment.enable = true; # keymaps for commenting parts of the buffer
+      lualine.enable = true; # nicer status line at the bottom
+      sleuth.enable = true; # automatically adjust spacing at newlines
+      #oil.enable = true; # filemanager
+      web-devicons.enable = true; # icons for ui
+      todo-comments = { enable = true; }; # highlight Comments
+      #statuscol.enable = true; # Line status on left # Needs configuring
+      which-key.enable = true; # keymap ui at bottom # Needs configuring
+      #fugitive.enable = true; # swiss army git plugin # Needs configuring
+      # Autocomplete
+      #friendly-snippets.enable = true; # For autocomplete
+      cmp = { enable = true; settings = {
+        sources = [ { name = "nvim_lsp"; } ];
+        mapping = {
+          "<C-Space>" = "cmp.mapping.complete()";
+          "<C-j>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-q>" = "cmp.mapping.close()";
+          "<C-k>" = "cmp.mapping.scroll_docs(4)";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})"; };
+        };
+      };
+      #luasnip = { enable = true; fromVscode = [ { paths = pkgs.vimPlugins.friendly-snippets; } ]; };
+      #mini = { enable = true; modules.ai.n_lines = 500; };
+      lsp = { enable = true; inlayHints = true;
+        capabilities = "require('cmp_nvim_lsp').default_capabilities()";
+        servers = {
+          nixd = { enable = true; };
+        };
+        keymaps = {
+          lspBuf = {
+            "<leader>rn" = "rename";
+            "<leader>ca" = "code_action"; # show code actions
+            "t" = "hover"; # Show type
+            "gD" = "declaration"; };
+          diagnostic = {
+            "<leader>K" = "open_float"; # Show all diagnostics
+            "<leader>je" = "goto_next";
+            "<leader>ke" = "goto_prev"; }; }; };
+      #gitsigns = { enable = true; settings = {
+      #  signs = {
+      #    add = { text = "+"; };
+      #    change = { text = "~"; };
+      #    delete = { text = "_"; };
+      #    topdelete = { text = "‾"; };
+      #    changedelete = { text = "~"; }; }; }; };
+      telescope = { enable = true;
+        settings = {
+          pickers = {
+            find_files = {
+              hidden = true; cwd = "."; }; }; };
+        keymaps = {
+          # Search
+          "<leader>sh"       = { action = "help_tags";                          options = { desc = "[S]earch [H]elp"; }; };
+          "<leader>sk"       = { action = "keymaps";                            options = { desc = "[S]earch [K]eymaps"; }; };
+          "<leader>sf"       = { action = "find_files";                         options = { desc = "[S]earch [F]iles"; }; };
+          "<leader>ss"       = { action = "builtin";                            options = { desc = "[S]earch [S]elect Telescope"; }; };
+          "<leader>sw"       = { action = "grep_string";                        options = { desc = "[S]earch current [W]ord"; }; };
+          "<leader>sq"       = { action = "loclist";                            options = { desc = "[S]earch [Q]uickfix list"; }; };
+          "<leader>sg"       = { action = "live_grep";                          options = { desc = "[S]earch by [G]rep"; }; };
+          "<leader>sd"       = { action = "diagnostics";                        options = { desc = "[S]earch [D]iagnostics"; }; };
+          "<leader>sr"       = { action = "resume";                             options = { desc = "[S]earch [R]esume"; }; };
+          "<leader>s."       = { action = "oldfiles";                           options = { desc = "[S]earch Recent Files ('.' for repeat)"; }; };
+          "<leader><leader>" = { action = "buffers";                            options = { desc = "[S]earch Buffers"; }; };
+          "<leader>/"        = { action = "current_buffer_fuzzy_find";          options = { desc = "[/] Fuzzy search in current buffer"; }; };
+
+          # Go To
+          "<leader>gd"       = { action = "lsp_definitions";                    options = { desc = "[G]oto [D]efinition"; }; };
+          "<leader>gr"       = { action = "lsp_references";                     options = { desc = "[G]oto [R]eferences"; }; };
+          "<leader>gi"       = { action = "lsp_implementations";                options = { desc = "[G]oto [I]mplementation"; }; };
+
+          # DNY
+          "<leader>td"       = { action = "lsp_type_definitions";               options = { desc = "Type [D]efinition"; }; };
+          "<leader>ds"       = { action = "lsp_document_symbols";               options = { desc = "[D]ocument [S]ymbols"; }; };
+          "<leader>ws"       = { action = "lsp_dynamic_workspace_symbols";      options = { desc = "[W]orkspace [S]ymbols"; }; };
+        };
+        extensions = {  fzf-native.enable = true; ui-select.enable = true; undo.enable = true; }; };
+      treesitter = { enable = true;
+        languageRegister = {
+          nix = "nix";
+          markdown = "md";
+          python = [ "py" ];
+          bash = "sh";
+          html = "html"; }; }; };
+    #extraConfigLua = ''
+    #  require("which-key").add({
+    #    { "<leader>c", desc = "[C]ode" },
+    #    { "<leader>d", desc = "[D]ocument" },
+    #    { "<leader>s", desc = "[S]earch" },
+    #    { "<leader>w", desc = "[W]orkspace" },
+    #    { "<leader>g", desc = "[G]oto Things" },
+    #  })
+    #'';
+  };
+};
 
 dotfilesTouchegg = {
   home.file = {
@@ -257,7 +423,6 @@ zshDefault = {
     enable = true;
     shellAliases = {
       # neovim
-      vim="nvim";
       vimrc="$EDITOR ~/.config/home-manager/hm/dotfiles/nvim/init.lua";
 
       # nixos configs
