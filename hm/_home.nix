@@ -127,7 +127,7 @@ packagesDefault = { home.packages = with pkgs; [
   (pkgs.writeShellScriptBin "nobo"  ''nixos-rebuild boot'')
   (pkgs.writeShellScriptBin "nobu"  ''nixos-rebuild build'')
 
-  (pkgs.writeShellScriptBin "ns"    ''nix search github:nixos/nixpkgs'')
+  (pkgs.writeShellScriptBin "ns"    ''nix search github:nixos/nixpkgs '')
   (pkgs.writeShellScriptBin "nr"    ''nix run github:nixos/nixpkgs#"$1" -- ''${@:2}'')
   (pkgs.writeShellScriptBin "nsh"    ''nix shell github:nixos/nixpkgs#"$1" -- ''${@:2}'')
   (pkgs.writeShellScriptBin "nri"   ''nix run github:nixos/nixpkgs#"$1" --impure -- ''${@:2}'')
