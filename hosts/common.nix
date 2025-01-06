@@ -19,6 +19,9 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
 
+  # Prevent sudo SUID attacks
+  security.sudo.execWheelOnly = true;
+
   users.users.builder = {
     isNormalUser = true;
     description = "builder";
