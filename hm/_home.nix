@@ -171,6 +171,12 @@ dotfilesPlasma = {
 #    "${config.home.homeDirectory}/.config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/nvim/lazy-lock.json"; }; };
 dotfilesNeovim = {
   programs.nixvim = {
+    /* mapping rules
+      ALT for navigation
+      Shift for alternative behavior (shifting open buffers instead of splits)
+      leader for mode-switching (opening telescope)
+      ctrl for state management (CD to prev, undo things, create windows )
+    */
     enable = true;
     defaultEditor = true;
     vimdiffAlias = true;
@@ -198,78 +204,93 @@ dotfilesNeovim = {
       splitright = true; # split default direction
       splitbelow = true; # split default direction
       list = true; # ???
-      listchars = { tab = "| "; trail = "_"; nbsp = "␣"; }; # ??? 
+      listchars = { tab = "| "; trail = "_"; nbsp = "␣"; }; # ???
       inccommand = "split"; # ???
       cursorline = true; # ???
       scrolloff = 15; # Number of lines to be above/below cursor before scrolling happens
       hlsearch = true; # highlight search matches
     };
     keymaps = [
-      # hlsearch
+      # hlsearch clear highlight
       { key = "<Esc>";                mode = "n";  action = "<cmd>nohlsearch<CR>";         options = { desc = "Clears highlight when pressing Esc"; }; }
 
-      # Saving
-      { key = "<leader><Esc>";        mode = "n";  action = "<cmd>q<CR>";                  options = { desc = "Close neovim"; }; }
+      # Saving/closing
+      { key = "<leader>qq";           mode = "n";  action = "<cmd>q<CR>";                  options = { desc = "Close neovim"; }; }
       { key = "<leader>q";            mode = "n";  action = "<cmd>bd<CR>";                 options = { desc = "Close current buffer"; }; }
       { key = "<leader><Enter>";      mode = "n";  action = "<cmd>w<CR>";                  options = { desc = "Save current buffer"; }; }
 
       # Terminal mode
-      { key = "<leader><Esc>";        mode = "t";  action = "<C-\\><C-n>";                 options = { desc = "Exit terminal mode"; }; }
+      { key = "<leader>t";            mode = "n";  action = "<cmd>term<CR>";               options = { desc = "Open Terminal Buffer"; }; }
+      { key = "<leader>q";            mode = "t";  action = "<C-\\><C-n>";                 options = { desc = "Enter normal mode in terminal"; }; }
 
-      # Oil
-      { key = "<leader>o";            mode = "n";  action = "<cmd>Oil<CR>";                options = { desc = "Open Directory structure"; }; }
-
-      # Misc Keymaps
-
-      { key = "<leader>n";            mode = "n";  action = "<cmd>bnext<CR>";              options = { desc = "Next Buffer"; }; }
-      { key = "<leader>p";            mode = "n";  action = "<cmd>bprev<CR>";              options = { desc = "Previous Buffer"; }; }
+      # Disable arrows
       { key = "<left>";               mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
       { key = "<right>";              mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
       { key = "<up>";                 mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
       { key = "<down>";               mode = "n";  action = "";                            options = { desc = "Disable mouse direction"; }; }
-      { key = "<C-h>";                mode = "n";  action = "<C-w><C-h>";                  options = { desc = "Move focus to the left window"; }; }
-      { key = "<C-l>";                mode = "n";  action = "<C-w><C-l>";                  options = { desc = "Move focus to the right window"; }; }
-      { key = "<C-j>";                mode = "n";  action = "<C-w><C-j>";                  options = { desc = "Move focus to the lower window"; }; }
-      { key = "<C-k>";                mode = "n";  action = "<C-w><C-k>";                  options = { desc = "Move focus to the upper window"; }; }
+
+      ## navigation
+      # Windows
+      { key = "<M-h>";                mode = "n";  action = "<C-w><C-h>";                  options = { desc = "Move focus to the left window"; }; }
+      { key = "<M-l>";                mode = "n";  action = "<C-w><C-l>";                  options = { desc = "Move focus to the right window"; }; }
+      { key = "<M-j>";                mode = "n";  action = "<C-w><C-j>";                  options = { desc = "Move focus to the lower window"; }; }
+      { key = "<M-k>";                mode = "n";  action = "<C-w><C-k>";                  options = { desc = "Move focus to the upper window"; }; }
+      # Buffers
+      { key = "<M-S-l>";              mode = "n";  action = "<cmd>bnext<CR>";              options = { desc = "Next Buffer"; }; }
+      { key = "<M-S-h>";              mode = "n";  action = "<cmd>bprev<CR>";              options = { desc = "Previous Buffer"; }; }
+      # Command mode
+      { key = "<M-k>";                mode = "c";  action = "<Up>";                        options = { desc = "Scroll up in vim command history"; }; }
+      { key = "<M-j>";                mode = "c";  action = "<Down>";                      options = { desc = "Scroll down in vim command history"; }; }
+      # Jumplist
+      { key = "<M-S-k>";              mode = "n";  action = "<C-I>";                       options = { desc = "Jump to previous Jump in jumplist"; }; }
+      { key = "<M-S-j>";              mode = "n";  action = "<C-O>";                       options = { desc = "Jump to next Jump in jumplist"; }; }
+
+      ## Oil
+      #{ key = "<leader>o";            mode = "n";  action = "<cmd>Oil<CR>";                options = { desc = "Open Directory structure"; }; }
+
     ];
     autoCmd = [
+      # highlight text when yanking
       { event = "TextYankPost"; group = "highlight-yank"; callback = { __raw = "function() vim.highlight.on_yank() end"; }; desc = "Highlight when yanking text"; }
     ];
     autoGroups = {
+      # highlight text when yanking
       highlight-yank = { clear = true; };
     };
+
     plugins = {
       #lazy = { enable = true; };
-      #comment.enable = true; # keymaps for commenting parts of the buffer
+      #oil.enable = true; # filemanager
+      #statuscol.enable = true; # Line status on left # Needs configuring
+      #fugitive.enable = true; # swiss army git plugin # Needs configuring
+      #gitsigns = { enable = true; settings = {
+      #  signs = {
+      #    add = { text = "+"; };
+      #    change = { text = "~"; };
+      #    delete = { text = "_"; };
+      #    topdelete = { text = "‾"; };
+      #    changedelete = { text = "~"; }; }; }; };
+      comment.enable = true; # keymaps for commenting parts of the buffer
       lualine.enable = true; # nicer status line at the bottom
       sleuth.enable = true; # automatically adjust spacing at newlines
-      #oil.enable = true; # filemanager
       web-devicons.enable = true; # icons for ui
       todo-comments = { enable = true; }; # highlight Comments
-      #statuscol.enable = true; # Line status on left # Needs configuring
-      which-key.enable = true; # keymap ui at bottom # Needs configuring
-      #fugitive.enable = true; # swiss army git plugin # Needs configuring
+      which-key = { enable = true; }; # keymap ui at bottom # Needs configuring
+
       # Autocomplete
-      #friendly-snippets.enable = true; # For autocomplete
       cmp = { enable = true; settings = {
         sources = [ { name = "nvim_lsp"; } ];
         mapping = {
-          "<C-Space>" = "cmp.mapping.complete()";
-          "<C-j>" = "cmp.mapping.scroll_docs(-4)";
-          "<C-q>" = "cmp.mapping.close()";
-          "<C-k>" = "cmp.mapping.scroll_docs(4)";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})"; };
-        };
-      };
-      #luasnip = { enable = true; fromVscode = [ { paths = pkgs.vimPlugins.friendly-snippets; } ]; };
-      #mini = { enable = true; modules.ai.n_lines = 500; };
+          "<M-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's', 'c'})";
+          "<M-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's', 'c'})";
+          "<M-q>" = "cmp.mapping.close()";
+          "<CR>" = "cmp.mapping.confirm({ select = true })"; }; }; };
+
+      # Language Servers
       lsp = { enable = true; inlayHints = true;
         capabilities = "require('cmp_nvim_lsp').default_capabilities()";
         servers = {
-          nixd = { enable = true; };
-        };
+          nixd = { enable = true; }; };
         keymaps = {
           lspBuf = {
             "<leader>rn" = "rename";
@@ -278,17 +299,17 @@ dotfilesNeovim = {
             "gD" = "declaration"; };
           diagnostic = {
             "<leader>K" = "open_float"; # Show all diagnostics
-            "<leader>je" = "goto_next";
-            "<leader>ke" = "goto_prev"; }; }; };
-      #gitsigns = { enable = true; settings = {
-      #  signs = {
-      #    add = { text = "+"; };
-      #    change = { text = "~"; };
-      #    delete = { text = "_"; };
-      #    topdelete = { text = "‾"; };
-      #    changedelete = { text = "~"; }; }; }; };
+            "<leader>ek" = "goto_prev";
+            "<leader>ej" = "goto_next"; }; }; };
+
+      # Fuzzy Finder
       telescope = { enable = true;
         settings = {
+          # Telescope use Alt + j/k to move option
+          defaults.mappings.i = {
+            "<leader>q".__raw = "require('telescope.actions').close";
+            "<M-k>".__raw = "require('telescope.actions').move_selection_previous";
+            "<M-j>".__raw = "require('telescope.actions').move_selection_next"; };
           pickers = {
             find_files = {
               hidden = true; cwd = "."; }; }; };
@@ -307,17 +328,19 @@ dotfilesNeovim = {
           "<leader><leader>" = { action = "buffers";                            options = { desc = "[S]earch Buffers"; }; };
           "<leader>/"        = { action = "current_buffer_fuzzy_find";          options = { desc = "[/] Fuzzy search in current buffer"; }; };
 
+          # DNY
+          #"<leader>td"       = { action = "lsp_type_definitions";               options = { desc = "Type [D]efinition"; }; };
+          #"<leader>ds"       = { action = "lsp_document_symbols";               options = { desc = "[D]ocument [S]ymbols"; }; };
+          #"<leader>ws"       = { action = "lsp_dynamic_workspace_symbols";      options = { desc = "[W]orkspace [S]ymbols"; }; };
+
           # Go To
           "<leader>gd"       = { action = "lsp_definitions";                    options = { desc = "[G]oto [D]efinition"; }; };
           "<leader>gr"       = { action = "lsp_references";                     options = { desc = "[G]oto [R]eferences"; }; };
-          "<leader>gi"       = { action = "lsp_implementations";                options = { desc = "[G]oto [I]mplementation"; }; };
+          "<leader>gi"       = { action = "lsp_implementations";                options = { desc = "[G]oto [I]mplementation"; }; }; };
 
-          # DNY
-          "<leader>td"       = { action = "lsp_type_definitions";               options = { desc = "Type [D]efinition"; }; };
-          "<leader>ds"       = { action = "lsp_document_symbols";               options = { desc = "[D]ocument [S]ymbols"; }; };
-          "<leader>ws"       = { action = "lsp_dynamic_workspace_symbols";      options = { desc = "[W]orkspace [S]ymbols"; }; };
-        };
-        extensions = {  fzf-native.enable = true; ui-select.enable = true; undo.enable = true; }; };
+        extensions = { ui-select.enable = true; undo.enable = true; }; };
+
+      # Syntax Highligher
       treesitter = { enable = true;
         languageRegister = {
           nix = "nix";
@@ -325,17 +348,17 @@ dotfilesNeovim = {
           python = [ "py" ];
           bash = "sh";
           html = "html"; }; }; };
-    #extraConfigLua = ''
-    #  require("which-key").add({
-    #    { "<leader>c", desc = "[C]ode" },
-    #    { "<leader>d", desc = "[D]ocument" },
-    #    { "<leader>s", desc = "[S]earch" },
-    #    { "<leader>w", desc = "[W]orkspace" },
-    #    { "<leader>g", desc = "[G]oto Things" },
-    #  })
-    #'';
-  };
-};
+
+    # Out of band configuration
+    extraConfigLua = ''
+      require("which-key").add({
+        { "<leader>c", desc = "[C]ode" },
+        { "<leader>d", desc = "[D]ocument" },
+        { "<leader>s", desc = "[S]earch" },
+        { "<leader>e", desc = "[E]rrors" },
+        { "<leader>w", desc = "[W]orkspace" },
+        { "<leader>g", desc = "[G]oto Things" },
+      }) ''; }; };
 
 dotfilesTouchegg = {
   home.file = {
