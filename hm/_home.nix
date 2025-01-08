@@ -175,7 +175,7 @@ dotfilesNeovim = {
       ALT for navigation
       Shift for alternative behavior (shifting open buffers instead of splits)
       leader for mode-switching (opening telescope)
-      ctrl for state management (CD to prev, undo things, create windows )
+      ctrl for LSP functions
     */
     enable = true;
     defaultEditor = true;
@@ -244,6 +244,7 @@ dotfilesNeovim = {
       # Jumplist
       { key = "<M-S-k>";              mode = "n";  action = "<C-I>";                       options = { desc = "Jump to previous Jump in jumplist"; }; }
       { key = "<M-S-j>";              mode = "n";  action = "<C-O>";                       options = { desc = "Jump to next Jump in jumplist"; }; }
+      # undo list TODO
 
       ## Oil
       #{ key = "<leader>o";            mode = "n";  action = "<cmd>Oil<CR>";                options = { desc = "Open Directory structure"; }; }
@@ -293,14 +294,9 @@ dotfilesNeovim = {
           nixd = { enable = true; }; };
         keymaps = {
           lspBuf = {
-            "<leader>rn" = "rename";
-            "<leader>ca" = "code_action"; # show code actions
-            "t" = "hover"; # Show type
-            "gD" = "declaration"; };
-          diagnostic = {
-            "<leader>K" = "open_float"; # Show all diagnostics
-            "<leader>ek" = "goto_prev";
-            "<leader>ej" = "goto_next"; }; }; };
+            "<C-r>" = "rename"; # Rename a symbol
+            "<C-q>" = "code_action"; # show code actions
+            "<C-t>" = "hover";  }; }; }; # Show type
 
       # Fuzzy Finder
       telescope = { enable = true;
