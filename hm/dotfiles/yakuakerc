@@ -20,7 +20,7 @@ detailViewIconSize=16
 new-session=Ctrl+Shift+N
 next-session=Ctrl+Shift+L
 previous-session=Ctrl+Shift+H
-toggle-window-state=none
+toggle-window-state=Alt+`
 
 [Window]
 Height=100
