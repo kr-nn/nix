@@ -72,6 +72,9 @@ gitDefault = {
   age.secrets.git.path = "${config.home.homeDirectory}/.git-credentials";
   programs.git = {
     enable = true;
+    aliases = {
+      "chop" = "!: git checkout && ${config.home.homeDirectory}/.nix-profile/bin/git-chop";
+    };
     userName = lib.mkDefault "kyle";
     userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
     extraConfig = {
@@ -119,7 +122,7 @@ packagesDefault = { home.packages = with pkgs; [
   # aliases
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
-
+  (pkgs.writeShellScriptBin "git-chop"  (builtins.readFile ./scripts/git-chop) )
 
   (pkgs.writeShellScriptBin "no"    ''nixos-rebuild'')
   (pkgs.writeShellScriptBin "nosw"  ''nixos-rebuild switch'')
@@ -434,7 +437,6 @@ omz_custom_themes_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/themes/
 zdir = "${config.xdg.dataHome}/zsh";
 
 zshDefault = {
-  programs.carapace = { enable = true; enableZshIntegration = true; };
   programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
     syntaxHighlighting.enable = true;

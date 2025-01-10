@@ -1,0 +1,37 @@
+show_help() {
+cat << EOF
+Usage: ${0##*/} { commit-hash | branch-name } [ -h ]
+
+Description:
+  Revert the current HEAD to a commit or branch.
+
+Options:
+  -h, --help Display this help message and exit.
+
+Examples:
+  ${0##*/} 1234567890abcdefqwerty
+  ${0##*/} master
+  ${0##*/} --help
+
+EOF
+}
+
+# Check if help is requested
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  show_help
+  exit 0
+fi
+
+# Validate input argument
+if [[ -z "$1" ]]; then
+  echo "Error: Missing commit-hash or branch-name."
+  show_help
+  exit 1
+fi
+
+head=$(git rev-parse --abbrev-ref HEAD)
+git checkout "$1" || { echo "Error: Failed to checkout $1"; exit 1; }
+git branch -D "$head" || { echo "Error: Failed to delete branch $head"; exit 1; }
+git branch "$head" || { echo "Error: Failed to create branch $head"; exit 1; }
+git checkout "$head" || { echo "Error: Failed to checkout branch $head"; exit 1; }
+
