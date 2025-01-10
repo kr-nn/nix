@@ -283,7 +283,7 @@ dotfilesNeovim = {
 
       # Autocomplete
       cmp = { enable = true; settings = {
-        sources = [ { name = "nvim_lsp"; } ];
+        sources = [ { name = "nvim_lsp"; } { name = "path"; } ];
         mapping = {
           "<M-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's', 'c'})";
           "<M-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's', 'c'})";
