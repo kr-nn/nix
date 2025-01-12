@@ -274,6 +274,7 @@ dotfilesNeovim = {
       #    delete = { text = "_"; };
       #    topdelete = { text = "‾"; };
       #    changedelete = { text = "~"; }; }; }; };
+      lsp-lines.enable = true;
       comment.enable = true; # keymaps for commenting parts of the buffer
       lualine.enable = true; # nicer status line at the bottom
       sleuth.enable = true; # automatically adjust spacing at newlines
