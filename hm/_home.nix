@@ -160,8 +160,21 @@ meta = { # Things home-manager needs to do the things I need
 ### ===========================================================================
 ###_Dotfiles
 
+mkDesktopFile = { pkg, execArgs }: ''
+  [Desktop Entry]
+  Comment[en_CA]=${pkg.meta.mainProgram}
+  Comment=${pkg.meta.description}
+  Exec=${pkg}/bin/${pkg.meta.mainProgram} ${execArgs}
+  Name[en_CA]=${pkg.meta.mainProgram}
+  Name=${pkg.meta.mainProgram}
+  TryExec=${pkg}/bin/${pkg.meta.mainProgram}
+  Type=Application
+'';
+
 dotfilesPlasma = {
   home.file = {
+    "${config.home.homeDirectory}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
+    "${config.home.homeDirectory}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.yakuake; execArgs = "";};
     "${config.home.homeDirectory}/.config/yakuakerc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/yakuakerc";
     "${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/systemsettingsrc";
     "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kglobalshortcutsrc";
