@@ -31,6 +31,9 @@ let
     services.fprintd.enable = false;
     hardware.ckb-next.enable = true;
     services.touchegg.enable = true;
+    # For printers and scanners
+    services.avahi = { enable = true; openFirewall = true;};
+    hardware.sane = { enable = true; openFirewall = true; extraBackends = [ pkgs.hplipWithPlugin pkgs.sane-airscan ]; };
 
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
