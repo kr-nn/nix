@@ -763,6 +763,7 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
 
       if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
         ln -s $AGEPATH ~/.ssh/age.key
+        # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
       else
         echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
         cleanup
