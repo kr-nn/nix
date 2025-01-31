@@ -19,7 +19,7 @@ main = lib.mkMerge [ Default activeProfiles activations ];
 ###_Profiles
 
 # puzzle pieces
-plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontFiraMono ];
+plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontMesloLgsNf ];
 x11 = lib.mkMerge [ packagesGui ];
 work = lib.mkMerge [ gitWork ];
 laptop = lib.mkMerge [ dotfilesTouchegg ];
@@ -27,7 +27,7 @@ laptop = lib.mkMerge [ dotfilesTouchegg ];
 # Devices
 framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
 
-Default = lib.mkMerge [ zshDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
+Default = lib.mkMerge [ zshDefault fzfDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
@@ -109,6 +109,7 @@ packagesGui = { home.packages = with pkgs; [
   bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake
   # Fonts
   nerd-fonts.fira-code
+  meslo-lgs-nf
   # Browser
   allPkgs.pkgs-vivaldi.vivaldi allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs allPkgs.pkgs-vivaldi.widevine-cdm
   # Entertainment
@@ -412,28 +413,43 @@ dotfilesTouchegg = {
 #     There is an easy alias for this for you (without the --max-depth ):
 #     fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {} |grep ^fd";
 
-# low perf search # not always up to date
-lrootsearch="locate /";
-lpwdsearch="locate $PWD";
-lhomesearch="locate $HOME";
+## low perf search # not always up to date
+#lrootsearch="locate /";
+#lpwdsearch="locate $PWD";
+#lhomesearch="locate $HOME";
 
-# High perf search # always up to date
-# Search files and directories
+## High perf search # always up to date
+## Search files and directories
 rootsearch=  "{fd /     --type f . --max-depth 1 --hidden; fd --type d . /     --max-depth 1 --hidden | parallel fd . {} --hidden}";
-pwdsearch=   "{fd $PWD  --type f . --max-depth 1 --hidden; fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --hidden}";
-homesearch=  "{fd $HOME --type f . --max-depth 1 --hidden; fd --type d . $HOME --max-depth 1 --hidden | parallel fd . {} --hidden}";
-
-# Searches Files
-frootsearch=  "{fd /     --type f . --max-depth 1 --hidden; fd --type d . /     --max-depth 1 --hidden | parallel fd . {} --type f --hidden}";
-fpwdsearch=   "{fd $PWD  --type f . --max-depth 1 --hidden; fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --type f --hidden}";
+#pwdsearch=   "{fd $PWD  --type f . --max-depth 1 --hidden; fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --hidden}";
+#homesearch=  "{fd $HOME --type f . --max-depth 1 --hidden; fd --type d . $HOME --max-depth 1 --hidden | parallel fd . {} --hidden}";
+#
+## Searches Files
+#frootsearch=  "{fd /     --type f . --max-depth 1 --hidden; fd --type d . /     --max-depth 1 --hidden | parallel fd . {} --type f --hidden}";
+#fpwdsearch=   "{fd $PWD  --type f . --max-depth 1 --hidden; fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --type f --hidden}";
 fhomesearch=  "{fd $HOME --type f . --max-depth 1 --hidden; fd --type d . $HOME --max-depth 1 --hidden | parallel fd . {} --type f --hidden}";
-
-# Searches Directories
+#
+## Searches Directories
 drootsearch=  "{fd --type d . /     --max-depth 1 --hidden | parallel fd . {} --type d --hidden}";
-dpwdsearch=   "{fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --type d --hidden}";
-dhomesearch=  "{fd --type d . $HOME --max-depth 1 --hidden | parallel fd . {} --type d --hidden}";
+#dpwdsearch=   "{fd --type d . $PWD  --max-depth 1 --hidden | parallel fd . {} --type d --hidden}";
+#dhomesearch=  "{fd --type d . $HOME --max-depth 1 --hidden | parallel fd . {} --type d --hidden}";
+
+fzfDefault = {
+  programs.fzf.enable = true;
+  programs.fzf.changeDirWidgetCommand = drootsearch;
+  programs.fzf.changeDirWidgetOptions = [ "--preview 'fzf-preview {}'" ];
+  programs.fzf.fileWidgetCommand = fhomesearch;
+  programs.fzf.fileWidgetOptions = [ "--preview 'fzf-preview {}'" ];
+  programs.fzf.defaultCommand = rootsearch;
+  programs.fzf.defaultOptions = [
+    "--bind 'alt-k:up'"
+    "--bind 'alt-j:down'"
+    "--height=100%"
+    "--reverse" ];
+};
 
 ### FZF config ^^^^^^^^ ==============================================================================
+zdir = "${config.xdg.dataHome}/zsh";
 
 fzf-tab = pkgs.fetchgit {
     url = "https://github.com/Aloxaf/fzf-tab";
@@ -450,60 +466,115 @@ nix-shell = pkgs.fetchgit {
     rev = "82ca15e638cc208e6d8368e34a1625ed75e08f90";
     sha256 = "1l99ayc9j9ns450blf4rs8511lygc2xvbhkg1xp791abcn8krn26"; };
 
-omz_custom_plugins_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/plugins/";
-omz_custom_themes_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/themes/";
-zdir = "${config.xdg.dataHome}/zsh";
+#powerlevel10k = pkgs.fetchgit {
+#    url = "https://github.com/romkatv/powerlevel10k";
+#    rev = "05b11d8b92f39ad109c5944fecad249dfe166088";
+#    sha256 = "sha256-LW7KqR9Ickyr13Dt+6+HobhgAIjpooif2sNMvfDsEpQ="; };
 
-zshDefault = {
+zshPlugins = {
+  programs.zsh.plugins = [
+    #{ name = "powerlevel10k"; src = powerlevel10k; file = "powerlevel10k.zsh-theme";}
+    { name = "fzf-tab"; src = fzf-tab; }
+    { name = "zsh-ssh"; src = zsh-ssh; }
+    { name = "nix-shell"; src = nix-shell; } ]; };
+
+zshAliases = {
+  programs.zsh.shellAliases = {
+    # neovim
+    vimrc="$EDITOR ~/.config/home-manager/hm/dotfiles/nvim/init.lua";
+
+    # nixos configs
+    nocd="cd /etc/nixos";
+    norc="nocd && $EDITOR /etc/nixos/hosts/$(cat /etc/hostname)/configuration.nix && cd -";
+    noll="ll /etc/nixos";
+
+    # home-manager
+    hm="home-manager";
+    hmcd="cd ~/.config/home-manager/";
+    hmll="ll ~/.config/home-manager/";
+    hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
+    hmsw="home-manager switch -b ~/.hmbak";
+    hmbu="home-manager build -b ~/.hmbak";
+
+    # convenience
+    fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
+    src="source ${zdir}/.zshrc";
+    sshrc="cd ~/.config/home-manager/secrets && agenix -e sshconfig.age && cd -";
+    ll="eza -lhg --group-directories-first";
+    l="eza -g --group-directories-first";
+    lla="eza -lhag --group-directories-first";
+    la="eza -ag --group-directories-first";
+    ff="fastfetch";
+    cat="bat -p";
+    myip="curl api.ipify.org";
+    cl="clear"; }; };
+
+zshDefault = lib.mkMerge [ zshAliases zshPlugins {
+  programs.powerlevel10k = { enable = true;
+    transientPrompt = "off";
+    promptModules = [ "nix_shell" "dir" "context" "vcs" ];
+    promptRightModules = [
+     "status"
+     "command_execution_time"
+     "background_jobs"
+     "direnv"
+     "virtualenv"
+     "anaconda"
+     "pyenv"
+     "goenv"
+     "kubecontext"
+     "terraform"
+     "terraform_version"
+     "aws"
+     "aws_eb_env"
+     "azure"
+     "gcloud"
+     "google_app_cred"
+     "vim_shell"
+     "load"
+     "disk_usage"
+     "ram"
+     "swap"
+     "todo"
+     "timewarrior"
+     "taskwarrior"
+     "time"
+    ];
+    widgets = {
+      currentTime = { enable = true;
+        updateOnCmd = true;
+      };
+    };
+    mode="nerdfont-v3";
+    newlineModules = [ "prompt_char" ];
+    newlineRightModules = [];
+    instantPrompt = "off";
+    newline = true;
+    flow = "concise";
+    compactSpacing = "compact";
+    manyIcons = true;
+  };
+
   programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
+    defaultKeymap = "emacs";
     dotDir = ".local/share/zsh";
     enable = true;
-    shellAliases = {
-      # neovim
-      vimrc="$EDITOR ~/.config/home-manager/hm/dotfiles/nvim/init.lua";
 
-      # nixos configs
-      nocd="cd /etc/nixos";
-      norc="nocd && $EDITOR /etc/nixos/hosts/$(cat /etc/hostname)/configuration.nix && cd -";
-      noll="ll /etc/nixos";
-
-      # home-manager
-      hm="home-manager";
-      hmcd="cd ~/.config/home-manager/";
-      hmll="ll ~/.config/home-manager/";
-      hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
-      hmsw="home-manager switch -b ~/.hmbak";
-      hmbu="home-manager build -b ~/.hmbak";
-
-      # convenience
-      fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
-      src="source ${zdir}/.zshrc";
-      sshrc="cd ~/.config/home-manager/secrets && agenix -e sshconfig.age && cd -";
-      ll="eza -lhg --group-directories-first";
-      l="eza -g --group-directories-first";
-      lla="eza -lhag --group-directories-first";
-      la="eza -ag --group-directories-first";
-      ff="fastfetch";
-      cat="bat -p";
-      myip="curl api.ipify.org";
-      cl="clear";
-    };
-
-    oh-my-zsh = { enable = true; theme = "agnoster-nix"; plugins = [
-        "vi-mode"
-        "aliases"
-        "fzf"
-        "nix-shell"
-        "sudo"
-        "themes"
-        "fzf-tab"
-        "virtualenv"
-        "zsh-ssh"
-      ];
-    };
+    #oh-my-zsh = { enable = true; theme = "agnoster-nix"; plugins = [
+    #    "vi-mode"
+    #    "aliases"
+    #    "fzf"
+    #    "nix-shell"
+    #    "sudo"
+    #    "themes"
+    #    "fzf-tab"
+    #    "virtualenv"
+    #    "zsh-ssh"
+    #  ];
+    #};
 
     initExtra =  ''
         ### fzf-tab =============================================
@@ -560,47 +631,27 @@ zshDefault = {
           fi
         }
         precmd_functions+=(reloadBW)
-
         '';
   };
 
   home.packages = with pkgs; [
-    oh-my-zsh
+    #oh-my-zsh
     zsh
     python313
   ];
 
-  home.file = {
-    "${omz_custom_plugins_path}fzf-tab".source = fzf-tab;
-    "${omz_custom_plugins_path}zsh-ssh".source = zsh-ssh;
-    "${omz_custom_plugins_path}nix-shell".source = nix-shell;
-    "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ./dotfiles/oh-my-zsh/agnoster-nix.zsh-theme;
-  };
+  #home.file = {
+  #  "${omz_custom_plugins_path}fzf-tab".source = fzf-tab;
+  #  "${omz_custom_plugins_path}zsh-ssh".source = zsh-ssh;
+  #  "${omz_custom_plugins_path}nix-shell".source = nix-shell;
+  #  "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ./dotfiles/oh-my-zsh/agnoster-nix.zsh-theme;
+  #};
 
-  home.sessionVariables = {
-    # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
-    ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
-    FZF_DEFAULT_COMMAND=rootsearch;
-    FZF_DEFAULT_OPTS="--height=100% --reverse";
-
-    HYPHEN_INSENSITIVE="true";
-    COMPLETION_WAITING_DOTS="true";
-
-    # Ctrl + T pastes the selected path to the CLI where your cursor is
-    FZF_CTRL_T_COMMAND=homesearch;
-    FZF_CTRL_T_OPTS="--preview 'ctpv {}'";
-
-    # ALT + C cd's to the selected entry
-    # By Default it searches your current Directory and cd's to the directory you select
-    FZF_ALT_C_COMMAND=dhomesearch;
-    FZF_ALT_C_OPTS="--preview 'ctpv {}'";
-
-    # CTRL + R Replaces your current entry with the selected result
-    # By default it searches your history, it inlcudes your current entry with what you've typed already
-    #export FZF_CTRL_R_COMMAND=""
-    #export FZF_CTRL_R_OPTS=""
-  };
-};
+  #home.sessionVariables = {
+  #  # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
+  #  #ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
+  #};
+} ];
 
 ### ==================================================================
 ### ==================================================================
@@ -640,6 +691,7 @@ polarityLight = { stylix.polarity = "light"; };
 polarity = { stylix.polarity = "either"; };
 
 fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; }; };
+fontMesloLgsNf = { stylix.fonts = { monospace.package = pkgs.meslo-lgs-nf; monospace.name = pkgs.meslo-lgs-nf.name; }; };
 
 # Wallpapers/colorschemes =============================================
 
