@@ -25,5 +25,6 @@ toggle-window-state=Alt+`
 [Window]
 Height=100
 KeepOpenAfterLastSessionCloses=true
+ShowTitleBar=false
 ToggleToFocus=true
 Width=100

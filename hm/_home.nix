@@ -645,7 +645,7 @@ fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code;
 
 genTheme = wallpaper: {
   stylix.image = wallpaper;
-  stylix.polarity = lib.mkDefault "either";
+  stylix.polarity = lib.mkDefault "dark";
   home.file.".config/kscreenlockerrc".text = ''
     [Greeter]
     Wallpaper=org.kde.image
