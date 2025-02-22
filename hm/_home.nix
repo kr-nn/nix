@@ -100,7 +100,7 @@ packagesPlasma = {
 
 packagesGui = { home.packages = with pkgs; [
   # docs
-  obsidian onlyoffice-bin
+  obsidian onlyoffice-bin kate
   # System Packages
   kdePackages.partitionmanager
   # Social
@@ -116,7 +116,7 @@ packagesGui = { home.packages = with pkgs; [
 
 packagesDefault = { home.packages = with pkgs; [
   # Shell tools
-  tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop jq
+  tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop jq minio-client
   # Terminal Apps
   bitwarden-cli glow
   # Neovim
