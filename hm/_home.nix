@@ -255,6 +255,9 @@ dotfilesNeovim = {
       { key = "<M-l>";                mode = "n";  action = "<C-w><C-l>";                  options = { desc = "Move focus to the right window"; }; }
       { key = "<M-j>";                mode = "n";  action = "<C-w><C-j>";                  options = { desc = "Move focus to the lower window"; }; }
       { key = "<M-k>";                mode = "n";  action = "<C-w><C-k>";                  options = { desc = "Move focus to the upper window"; }; }
+      # Tabs
+      { key = "<C-l>";                mode = "n";  action = "<cmd>tabn<CR>";               options = { desc = "Switch to next tab"; }; }
+      { key = "<C-h>";                mode = "n";  action = "<cmd>tabp<CR>";               options = { desc = "Switch to previous tab"; }; }
       # Buffers
       { key = "<M-S-l>";              mode = "n";  action = "<cmd>bnext<CR>";              options = { desc = "Next Buffer"; }; }
       { key = "<M-S-h>";              mode = "n";  action = "<cmd>bprev<CR>";              options = { desc = "Previous Buffer"; }; }
