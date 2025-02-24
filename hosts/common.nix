@@ -4,6 +4,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
+  
   nix.optimise.dates = [ "weekly" ];
   nix.gc.automatic = true;
   nix.gc.dates = "weekly";
@@ -21,13 +22,6 @@
 
   # Prevent sudo SUID attacks
   security.sudo.execWheelOnly = true;
-
-  users.users.builder = {
-    isNormalUser = true;
-    description = "builder";
-    shell = pkgs.bash;
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
 
   users.users.kyle = {
     isNormalUser = true;
