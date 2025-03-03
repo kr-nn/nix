@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+CREDENTIALS_FILE="$HOME/.git-credentials"
+
+DEBUG=0
+while getopts "d" opt; do
+    case "$opt" in
+        d)
+            DEBUG=1
+            ;;
+        *)
+            echo "Usage: $0 [-d]" >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Read the repository's configured user.email and user.name
+GIT_EMAIL=$(git config --get user.email)
+GIT_USER=$(git config --get user.name)
+
+# Read the host from stdin (Git provides this input)
+while IFS= read -r line; do
+    case "$line" in
+        protocol=*)
+            PROTOCOL="${line#protocol=}"
+            ;;
+        host=*)
+            HOST="${line#host=}"
+            ;;
+    esac
+done
+
+# Function to extract token from a matching credential line
+extract_token() {
+    echo "$1" | sed -E "s|https://[^:]+:([^@]+)@$HOST$|\1|"
+}
+
+[[ DEBUG -eq 0 ]] || echo "config:"
+[[ DEBUG -eq 0 ]] || echo "$GIT_EMAIL"
+[[ DEBUG -eq 0 ]] || echo "$GIT_USER"
+EMAIL_ESCAPED=$(echo "$GIT_EMAIL" | sed 's/@/%40/g')  # Encode '@' as '%40'
+[[ DEBUG -eq 0 ]] || echo "EMAIL_ESCAPED: $EMAIL_ESCAPED"
+
+# Try matching credentials using user.email first
+if [[ -n "$GIT_EMAIL" ]]; then
+    CREDENTIAL_LINE=$(grep -E "^https://$GIT_EMAIL:.*@$HOST$" "$CREDENTIALS_FILE")
+    [[ DEBUG -eq 0 ]] || echo "CREDENTIAL_LINE: $CREDENTIAL_LINE"
+    if [[ -n "$CREDENTIAL_LINE" ]]; then
+        TOKEN=$(extract_token "$CREDENTIAL_LINE")
+        [[ DEBUG -eq 0 ]] || echo "TOKEN: $TOKEN"
+        echo "username=$EMAIL_ESCAPED"
+        echo "password=$TOKEN"
+        exit 0
+    fi
+fi
+
+# If no match using email, try user.name
+if [[ -n "$GIT_USER" ]]; then
+    CREDENTIAL_LINE=$(grep -E "^https://$GIT_USER:.*@$HOST$" "$CREDENTIALS_FILE")
+    [[ DEBUG -eq 0 ]] || echo "CREDENTIAL_LINE: $CREDENTIAL_LINE"
+    if [[ -n "$CREDENTIAL_LINE" ]]; then
+        TOKEN=$(extract_token "$CREDENTIAL_LINE")
+        [[ DEBUG -eq 0 ]] || echo "TOKEN: $TOKEN"
+        echo "username=$GIT_USER"
+        echo "password=$TOKEN"
+        exit 0
+    fi
+fi
+
+# If no credentials found, print an error and exit
+echo "Error: No credentials found for user '$GIT_USER' or email '$GIT_EMAIL'" >&2
+exit 1
+

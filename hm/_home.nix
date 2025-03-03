@@ -60,12 +60,13 @@ secretsDefault = {
     "${config.home.homeDirectory}/.ssh/id_ed25519"   # main ssh key
     "${config.home.homeDirectory}/.ssh/age.key" ];}; # backup master key
 
-# Git ==============================================================
+# Minio ============================================================
 minioDefault = {
   age.secrets.minio.file = ../secrets/minioclientconfig.age;
   age.secrets.minio.path = "${config.home.homeDirectory}/.mc/config.json";
 };
 
+# Git ==============================================================
 gitWork = {
   programs.git = {
     userName = "krobinson";
@@ -83,7 +84,7 @@ gitDefault = {
     userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
     extraConfig = {
       credential.useHttpPath = "true";
-      credential.helper = "store";
+      credential.helper = "!gitauth";
       safe.directory = "/etc/nixos"; };};};
 
 # SSH ==============================================================
@@ -117,17 +118,19 @@ packagesGui = { home.packages = with pkgs; [
 
 packagesDefault = { home.packages = with pkgs; [
   # Shell tools
-  tmux bat fzf fd parallel ctpv eza ripgrep age git curl nmap fastfetch usbutils pciutils htop jq minio-client
+  tmux bat fzf fd parallel ctpv eza ripgrep age
+  git curl nmap fastfetch usbutils pciutils htop jq minio-client
   # Terminal Apps
   bitwarden-cli glow
   # Neovim
   zip unzip gcc cargo
   # Nix things
   nix-prefetch-git nixd
-  # aliases
+  # custom scripts
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
   (pkgs.writeShellScriptBin "git-chop"  (builtins.readFile ./scripts/git-chop) )
+  (pkgs.writeShellScriptBin "gitauth" (builtins.readFile ./scripts/gitauth) )
 
   (pkgs.writeShellScriptBin "no"    ''nixos-rebuild'')
   (pkgs.writeShellScriptBin "nosw"  ''nixos-rebuild switch'')
