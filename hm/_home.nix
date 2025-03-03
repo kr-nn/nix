@@ -82,6 +82,7 @@ gitDefault = {
     userName = lib.mkDefault "kyle";
     userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
     extraConfig = {
+      credential.useHttpPath = "true";
       credential.helper = "store";
       safe.directory = "/etc/nixos"; };};};
 
