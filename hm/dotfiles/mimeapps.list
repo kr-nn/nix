@@ -1,13 +1,13 @@
 [Added Associations]
 application/epub+zip=org.kde.ark.desktop;okularApplication_epub.desktop;
 application/pdf=onlyoffice-desktopeditors.desktop;
-text/plain=nvim.desktop;okularApplication_txt.desktop;
+text/plain=org.kde.kate.desktop;nvim.desktop;okularApplication_txt.desktop;org.kde.kwrite.desktop;
 x-scheme-handler/sgnl=signal-desktop.desktop;
 x-scheme-handler/signalcaptcha=signal-desktop.desktop;
 
 [Default Applications]
 application/epub+zip=org.kde.ark.desktop;
 application/pdf=onlyoffice-desktopeditors.desktop;
-text/plain=nvim.desktop;
+text/plain=org.kde.kate.desktop;
 x-scheme-handler/sgnl=signal-desktop.desktop
 x-scheme-handler/signalcaptcha=signal-desktop.desktop
