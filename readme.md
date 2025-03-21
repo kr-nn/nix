@@ -43,29 +43,13 @@ main
 Using this code we can run `hmpr developmode` and the profile switcher will activate the developmode profile
 
 # TODO
-- [ ] secrets management
-    - Make bitwarden deploy a home-manager activation
-- [X] fingerprint sddm
-- [X] make syncthing start when logged in
-- [X] make displaylink run conditionally without the lockscreen problem & remember monitor config
-- [X] move modules to inside homes/hosts depending on if they're a nixos/home-manager module
-- [X] move zcomp
-- [X] configure zsh history
-- [X] add displaylink driver as a declared resource # This was done in hosts
-- [X] Make specialisations more centralised
-- [ ] Migrate initExtra and Extra configs to proper nix modules
-- [ ] Migrate to nixvim
-    - [ ] inventory plugins I use from kickstart
-    - [ ] inventory my customizations
-    - [ ] cleanup extras I don't use anymore
-    - [ ] Stylix nixvim???
-- [ ] Add to nix
-    - [X] touchegg
-    - [ ] dolphin # Look at plasma-manager
-    - [ ] vivaldi # investigate Default overwritable dotfiles for chromeium
-    - [X] konsole/yakuake
-    - [X] khotkeys
-    - [ ] plasmashell # Look at plasma-manager
+- [ ] Faster Bitwarden interface
+- [ ] Switch from specialisations to different builds, specialisations should activate specific things (specialisations are too slow to build)
+- [ ] Change gitauth to support ssh
+- [ ] plasma manager for gui things (this should be a flake output rather than a specialisation)
+- [ ] Zshell change
+- [ ] Remove home-builder
+- [ ] Move away from monolithic configuration
 
 ### Secrets
 My home-manager takes advantage of agenix to deploy secrets. This requires bootstrapping home-manager with a secret but we don't want to __KEEP__ the secret on the same system. so it will be temporary, because my key is a master key. I might change this to be more secure later but for now, we temprarily grab the secret from bitwarden and deploy things this way.
