@@ -102,7 +102,7 @@ packagesPlasma = {
 
 packagesGui = { home.packages = with pkgs; [
   # docs
-  obsidian onlyoffice-bin kate
+  obsidian onlyoffice-bin kate kompare
   # System Packages
   kdePackages.partitionmanager
   # Social
