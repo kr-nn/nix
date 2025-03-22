@@ -187,7 +187,8 @@ dotfilesPlasma = {
     "${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/systemsettingsrc";
     "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kglobalshortcutsrc";
     "${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/mimeapps.list";
-    "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/khotkeysrc"; }; };
+    "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/khotkeysrc"; };
+};
 
 #dotfilesNeovim = {
 #  home.file = {
@@ -607,6 +608,11 @@ zshDefault = {
     #export FZF_CTRL_R_COMMAND=""
     #export FZF_CTRL_R_OPTS=""
   };
+
+  home.dotfiles = {
+    "${config.home.homeDirectory}/.test".source = ./dotfiles/yakuakerc;
+  };
+
 };
 
 ### ==================================================================

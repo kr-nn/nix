@@ -58,6 +58,7 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          ./hm/lib/dotfiles.nix
           ./hm/${username}.nix
         ] ++ common-modules;
       };
