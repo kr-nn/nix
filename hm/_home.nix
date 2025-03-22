@@ -183,11 +183,14 @@ dotfilesPlasma = {
   home.file = {
     "${config.home.homeDirectory}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
     "${config.home.homeDirectory}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.yakuake; execArgs = "";};
-    "${config.home.homeDirectory}/.config/yakuakerc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/yakuakerc";
-    "${config.home.homeDirectory}/.config/systemsettingsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/systemsettingsrc";
-    "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/kglobalshortcutsrc";
-    "${config.home.homeDirectory}/.config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/mimeapps.list";
-    "${config.home.homeDirectory}/.config/khotkeysrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/khotkeysrc"; };
+  };
+  home.dotfiles = {
+    "${config.home.homeDirectory}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
+    "${config.home.homeDirectory}/.config/systemsettingsrc".source = ./dotfiles/systemsettingsrc;
+    "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = ./dotfiles/kglobalshortcutsrc;
+    "${config.home.homeDirectory}/.config/mimeapps.list".source = ./dotfiles/mimeapps.list;
+    "${config.home.homeDirectory}/.config/khotkeysrc".source = ./dotfiles/khotkeysrc;
+  };
 };
 
 #dotfilesNeovim = {
