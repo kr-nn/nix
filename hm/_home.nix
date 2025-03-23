@@ -66,35 +66,37 @@ bw = {
   ];
 
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
-    echo "starting secretsInit"
-    PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
     echo "1"
-    export AGEPATH="/run/user/$UID/age.key"
+    echo "starting secretsInit"
     echo "2"
+    PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
+    echo "3"
+    export AGEPATH="/run/user/$UID/age.key"
+    echo "4"
 
     cleanup() {
-      echo "cleanup 1"
+    echo "cleanup 1"
       [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
-      echo "cleanup 2"
+    echo "cleanup 2"
       [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
-      echo "cleanup 3"
+    echo "cleanup 3"
     }
-    echo "3"
-
     cleanup
-    echo "4"
-    echo "Deploying Secrets"
     echo "5"
-    echo $(rbw get "age key") > $AGEPATH
+    [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
     echo "6"
+    echo "Deploying Secrets"
+    echo "7"
+    echo $(rbw get "age key") > $AGEPATH
+    echo "8"
 
     if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-      echo "7"
+      echo "9"
       ln -s $AGEPATH ~/.ssh/age.key
-      echo "8"
+      echo "10"
       # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
     else
-      echo "9"
+      echo "11"
       echo "WARNING: no secrets deployed"
       echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
       echo "Maybe you are an intruder >:("
