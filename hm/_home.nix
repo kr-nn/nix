@@ -66,22 +66,34 @@ bw = {
   ];
 
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
+    echo "starting secretsInit"
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
+    echo "1"
     export AGEPATH="/run/user/$UID/age.key"
+    echo "2"
 
     cleanup() {
+      echo "cleanup 1"
       [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
+      echo "cleanup 2"
       [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
     }
+    echo "3"
 
     cleanup
+    echo "4"
     echo "Deploying Secrets"
+    echo "5"
     echo $(rbw get "age key") > $AGEPATH
+    echo "6"
 
     if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+      echo "7"
       ln -s $AGEPATH ~/.ssh/age.key
+      echo "8"
       # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
     else
+      echo "9"
       echo "WARNING: no secrets deployed"
       echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
       echo "Maybe you are an intruder >:("
@@ -806,7 +818,7 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
     palette=$HOME/.config/stylix/palette.json
     scheme=$HOME/.local/share/konsole/Stylix.colorscheme
     if ! [ -f $palette ]; then
-      echo "Palette doesn't exist"
+      echo "Palette doesn't exist: skipping colorscheme"
     else
       json=$( cat $palette )
       hex_to_rgb() {
