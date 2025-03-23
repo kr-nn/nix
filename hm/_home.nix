@@ -77,6 +77,7 @@ bw = {
       [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
       echo "cleanup 2"
       [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
+      echo "cleanup 3"
     }
     echo "3"
 
