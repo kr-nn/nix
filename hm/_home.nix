@@ -27,7 +27,7 @@ laptop = lib.mkMerge [ dotfilesTouchegg ];
 # Devices
 framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
 
-Default = lib.mkMerge [ zshDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
+Default = lib.mkMerge [ bw zshDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
@@ -59,6 +59,46 @@ secretsDefault = {
   age.identityPaths = [
     "${config.home.homeDirectory}/.ssh/id_ed25519"   # main ssh key
     "${config.home.homeDirectory}/.ssh/age.key" ];}; # backup master key
+
+bw = {
+  home.packages = with pkgs; [
+    rbw pinentry-all
+  ];
+
+  home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
+    PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
+    export AGEPATH="/run/user/$UID/age.key"
+
+    cleanup() {
+      [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
+      [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
+    }
+
+    cleanup
+    echo "Deploying Secrets"
+    echo $(rbw get "age key") > $AGEPATH
+
+    if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+      ln -s $AGEPATH ~/.ssh/age.key
+      # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
+    else
+      echo "WARNING: no secrets deployed"
+      echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
+      echo "Maybe you are an intruder >:("
+      cleanup
+    fi
+  '';
+
+  programs.rbw = {
+    enable = true;
+    settings = {
+      email = "kyle@nocturnalnerd.xyz";
+      base_url = "https://vaultwarden.nocturnalnerd.xyz";
+      pinentry = pkgs.pinentry-all;
+      lock_timeout = 300;
+    };
+  };
+};
 
 # Minio ============================================================
 minioDefault = {
@@ -730,63 +770,6 @@ yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/
 
   activations = {
 
-    home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
-      PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.bitwarden-cli}/bin"
-      export AGEPATH="/run/user/$UID/age.key"
-      export BWPATH="/run/user/$UID/bwsession"
-      session=""
-      if ! [ -d ~/.ssh ]; then
-        mkdir ~/.ssh
-	chmod 700 ~/.ssh
-      fi
-
-      cleanup() {
-        if [ -f $BWPATH ]; then
-          rm -rf $BWPATH
-        fi
-        if [ -f $AGEPATH ]; then
-          rm -rf $AGEPATH
-        fi
-        if [ -L ~/.ssh/age.key ]; then
-          unlink ~/.ssh/age.key
-        fi
-      }
-
-      cleanup
-      echo "Deploying Secrets"
-      export STATUS=$(bw status | jq .status)
-      while [ -z "$session" ]; do
-        if [ "$STATUS" = "\"unauthenticated\"" ]; then
-          bw config server https://vaultwarden.nocturnalnerd.xyz
-          echo "Login to Vault:"
-          session=$(bw login --raw)
-        elif [ "$STATUS" = "\"locked\"" ]; then
-          echo "Unlock Vault:"
-          session=$(bw unlock --raw)
-        elif [ "$STATUS" = "\"unlocked\"" ]; then
-          echo "Already unlocked no need to unlock vault"
-          echo "current key: $BW_SESSION"
-          session=$BW_SESSION
-        else
-          echo "Something went wrong - couldn't get a session for vaultwarden"
-          cleanup
-          exit 1
-        fi
-        echo $session > $BWPATH
-      done
-
-      echo $(bw --session $session get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
-
-      if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-        ln -s $AGEPATH ~/.ssh/age.key
-        # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
-      else
-        echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
-        cleanup
-        exit 1
-      fi
-
-    '';
 
     home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
       PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
