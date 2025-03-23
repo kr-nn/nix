@@ -66,37 +66,22 @@ bw = {
   ];
 
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
-    echo "1"
-    echo "starting secretsInit"
-    echo "2"
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
-    echo "3"
     export AGEPATH="/run/user/$UID/age.key"
-    echo "4"
 
     cleanup() {
-    echo "cleanup 1"
       [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
-    echo "cleanup 2"
       [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
-    echo "cleanup 3"
     }
     cleanup
-    echo "5"
     [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
-    echo "6"
     echo "Deploying Secrets"
-    echo "7"
     echo $(rbw get "age key") > $AGEPATH
-    echo "8"
 
     if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-      echo "9"
       ln -s $AGEPATH ~/.ssh/age.key
-      echo "10"
       # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
     else
-      echo "11"
       echo "WARNING: no secrets deployed"
       echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
       echo "Maybe you are an intruder >:("
@@ -113,6 +98,19 @@ bw = {
       lock_timeout = 300;
     };
   };
+  programs.zsh.initExtra = ''
+    ### Vaultwarden init ===============================================================================================================================
+    AGEPATH="/run/user/$UID/age.key"
+    AGELINK="$HOME/.ssh/age.key"
+
+    if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
+      echo $(rbw get "age key") > $AGEPATH
+    fi
+
+    if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+      ln -s $AGEPATH $AGELINK
+    fi
+  '';
 };
 
 # Minio ============================================================
@@ -581,51 +579,6 @@ zshDefault = {
         ### zsh options =========================================
         # Configures !! to automatically execute
         unsetopt HIST_VERIFY
-
-        ### Vaultwarden init ===============================================================================================================================
-        AGEPATH="/run/user/$UID/age.key"
-        BWPATH="/run/user/$UID/bwsession"
-
-        while [ -z "$session" ]; do
-          if [ -n "$BW_SESSION" ]; then
-            session=$BW_SESSION
-          elif [ -f $BWPATH ]; then
-            session=$(head -n 1 $BWPATH)
-          else
-            STATUS=$(bw status | jq .status)
-            if [ "$STATUS" = "\"unauthenticated\"" ]; then
-              bw config server https://vaultwarden.nocturnalnerd.xyz
-              session=$(bw login --raw)
-            elif [ "$STATUS" = "\"locked\"" ]; then
-              session=$(bw unlock --raw)
-            else
-              echo "Something went wrong - couldn't get a session for vaultwarden"
-              exit 1
-            fi
-          fi
-        done
-
-        echo $session > $BWPATH
-        export BW_SESSION="$session"
-
-        if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
-          echo $(bw get password af9d248c-93e9-4de4-8e15-61b5801d326c) > $AGEPATH
-        fi
-
-        if ! [ -L ~/.ssh/age.key ] && ! [ -f ~/.ssh/age.key ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-          ln -s $AGEPATH ~/.ssh/age.key
-        fi
-
-        ### run on all commands =============================================================================================================================
-        reloadBW(){
-          if [ -f /run/user/$UID/bwsession ]; then
-            export BW_SESSION=$(cat /run/user/$UID/bwsession)
-          fi
-          if ! [ -d /run/user/$UID/agenix ] || [ $(eza -lha /run/user/$UID/agenix | wc -l) -eq 0 ]; then
-            systemctl --user start agenix
-          fi
-        }
-        precmd_functions+=(reloadBW)
 
         '';
   };
