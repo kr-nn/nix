@@ -53,7 +53,7 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 ### =============================================================
 ### =============================================================
 ###_Config
-homedir="${homedir}";
+homedir="${config.home.homeDirectory}";
 
 # SECRETS ==========================================================
 secretsDefault = {
