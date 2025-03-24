@@ -66,42 +66,13 @@ bw = {
     rbw pinentry-all
   ];
 
-  home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
-    echo "1"
+  home.activation.secretsInit = lib.hm.dag.entryBetween ["writeBoundary"] ["reloadSystemd"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
-    echo "2"
     export AGEPATH="/run/user/$UID/age.key"
-    echo "3"
-
-    cleanup() {
-      echo "cleanup 1"
-      [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
-      echo "cleanup 2"
-      [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
-      echo "cleanup 3"
-    }
-
-    echo "4"
-    cleanup
-    echo "5"
     [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
-    echo "6"
-    echo "Deploying Secrets"
+    echo "Installing master secret"
     echo $(rbw get "age key") > $AGEPATH
-    echo "7"
     rbw stop-agent # don't want user to linger
-    echo "8"
-
-    if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-      echo "9"
-      ln -s $AGEPATH ~/.ssh/age.key
-      echo "10"
-    else
-      echo "WARNING: no secrets deployed"
-      echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
-      echo "Maybe you are an intruder >:("
-      cleanup
-    fi
   '';
 
   programs.rbw = {
@@ -118,14 +89,15 @@ bw = {
     AGEPATH="/run/user/$UID/age.key"
     AGELINK="${homedir}/.ssh/age.key"
 
-    [[ -d ~/.ssh ]] || mkdir ~/.ssh
-
     if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
       echo $(rbw get "age key") > $AGEPATH
       rbw stop-agent
     fi
     if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH $AGELINK
+    fi
+    if [[ $(systemctl is-failed --user agenix) == "failed" ]];
+      systemctl restart --user agenix
     fi
   '';
 };
