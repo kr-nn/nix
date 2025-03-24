@@ -27,7 +27,7 @@ laptop = lib.mkMerge [ dotfilesTouchegg ];
 # Devices
 framework = lib.mkMerge [ ksplashFramework plasma laptop x11 ];
 
-Default = lib.mkMerge [ bw zshDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
+Default = lib.mkMerge [ zshDefault sshDefault secretsDefault minioDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
