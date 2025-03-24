@@ -67,22 +67,35 @@ bw = {
   ];
 
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
+    echo "1"
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
+    echo "2"
     export AGEPATH="/run/user/$UID/age.key"
+    echo "3"
 
     cleanup() {
+      echo "cleanup 1"
       [ -f $AGEPATH ] && rm -f $AGEPATH && echo "removed age key"
+      echo "cleanup 2"
       [ -L ~/.ssh/age.key ] && unlink ~/.ssh/age.key && echo "removed age.key link"
+      echo "cleanup 3"
     }
+
+    echo "4"
     cleanup
+    echo "5"
     [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
+    echo "6"
     echo "Deploying Secrets"
     echo $(rbw get "age key") > $AGEPATH
+    echo "7"
     rbw stop-agent # don't want user to linger
+    echo "8"
 
     if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+      echo "9"
       ln -s $AGEPATH ~/.ssh/age.key
-      # !NOTE We use linking instead of explicitly pointing identityPaths to /run because $UID is not exposed to us at buildtime
+      echo "10"
     else
       echo "WARNING: no secrets deployed"
       echo "Something went wrong, could not write age key to /run/user/$UID/age.key"
