@@ -53,12 +53,13 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 ### =============================================================
 ### =============================================================
 ###_Config
+homedir="${homedir}";
 
 # SECRETS ==========================================================
 secretsDefault = {
   age.identityPaths = [
-    "${config.home.homeDirectory}/.ssh/id_ed25519"   # main ssh key
-    "${config.home.homeDirectory}/.ssh/age.key" ];}; # backup master key
+    "${homedir}/.ssh/id_ed25519"   # main ssh key
+    "${homedir}/.ssh/age.key" ];}; # backup master key
 
 bw = {
   home.packages = with pkgs; [
@@ -77,6 +78,7 @@ bw = {
     [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
     echo "Deploying Secrets"
     echo $(rbw get "age key") > $AGEPATH
+    rbw stop-agent # don't want user to linger
 
     if [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH ~/.ssh/age.key
@@ -101,7 +103,7 @@ bw = {
   programs.zsh.initExtra = ''
     ### Vaultwarden init ===============================================================================================================================
     AGEPATH="/run/user/$UID/age.key"
-    AGELINK="$HOME/.ssh/age.key"
+    AGELINK="${homedir}/.ssh/age.key"
 
     if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
       echo $(rbw get "age key") > $AGEPATH
@@ -116,7 +118,7 @@ bw = {
 # Minio ============================================================
 minioDefault = {
   age.secrets.minio.file = ../secrets/minioclientconfig.age;
-  age.secrets.minio.path = "${config.home.homeDirectory}/.mc/config.json";
+  age.secrets.minio.path = "${homedir}/.mc/config.json";
 };
 
 # Git ==============================================================
@@ -127,11 +129,11 @@ gitWork = {
 
 gitDefault = {
   age.secrets.git.file = ../secrets/git.age;
-  age.secrets.git.path = "${config.home.homeDirectory}/.git-credentials";
+  age.secrets.git.path = "${homedir}/.git-credentials";
   programs.git = {
     enable = true;
     aliases = {
-      "chop" = "!: git checkout && ${config.home.homeDirectory}/.nix-profile/bin/git-chop";
+      "chop" = "!: git checkout && ${homedir}/.nix-profile/bin/git-chop";
     };
     userName = lib.mkDefault "kyle";
     userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
@@ -145,8 +147,8 @@ gitDefault = {
 sshDefault = {
   age.secrets.id.file = ../secrets/id_ed25519.age;
   age.secrets.sshconfig.file = ../secrets/sshconfig.age;
-  age.secrets.id.path = "${config.home.homeDirectory}/.ssh/id_ed25519";
-  age.secrets.sshconfig.path = "${config.home.homeDirectory}/.ssh/config"; };
+  age.secrets.id.path = "${homedir}/.ssh/id_ed25519";
+  age.secrets.sshconfig.path = "${homedir}/.ssh/config"; };
 
 # Packages =========================================================
 packagesPlasma = {
@@ -234,22 +236,18 @@ mkDesktopFile = { pkg, execArgs }: ''
 
 dotfilesPlasma = {
   home.file = {
-    "${config.home.homeDirectory}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
-    "${config.home.homeDirectory}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.yakuake; execArgs = "";};
+    "${homedir}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
+    "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.yakuake; execArgs = "";};
   };
   home.dotfiles = {
-    "${config.home.homeDirectory}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
-    "${config.home.homeDirectory}/.config/systemsettingsrc".source = ./dotfiles/systemsettingsrc;
-    "${config.home.homeDirectory}/.config/kglobalshortcutsrc".source = ./dotfiles/kglobalshortcutsrc;
-    "${config.home.homeDirectory}/.config/mimeapps.list".source = ./dotfiles/mimeapps.list;
-    "${config.home.homeDirectory}/.config/khotkeysrc".source = ./dotfiles/khotkeysrc;
+    "${homedir}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
+    "${homedir}/.config/systemsettingsrc".source = ./dotfiles/systemsettingsrc;
+    "${homedir}/.config/kglobalshortcutsrc".source = ./dotfiles/kglobalshortcutsrc;
+    "${homedir}/.config/mimeapps.list".source = ./dotfiles/mimeapps.list;
+    "${homedir}/.config/khotkeysrc".source = ./dotfiles/khotkeysrc;
   };
 };
 
-#dotfilesNeovim = {
-#  home.file = {
-#    "${config.home.homeDirectory}/.config/nvim/init.lua".source = ../hm/dotfiles/nvim/init.lua;
-#    "${config.home.homeDirectory}/.config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/nvim/lazy-lock.json"; }; };
 dotfilesNeovim = {
   programs.nixvim = {
     /* mapping rules
@@ -443,8 +441,8 @@ dotfilesNeovim = {
 
 dotfilesTouchegg = {
   home.file = {
-    "${config.home.homeDirectory}/.config/touchegg/touchegg.conf".source = ./dotfiles/touchegg.conf;
-    "${config.home.homeDirectory}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/hm/dotfiles/touchpadxlibinputrc"; }; };
+    "${homedir}/.config/touchegg/touchegg.conf".source = ./dotfiles/touchegg.conf;
+    "${homedir}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${homedir}/.config/home-manager/hm/dotfiles/touchpadxlibinputrc"; }; };
 
 ### ======================================================
 ### ======================================================
@@ -514,8 +512,8 @@ nix-shell = pkgs.fetchgit {
     rev = "82ca15e638cc208e6d8368e34a1625ed75e08f90";
     sha256 = "1l99ayc9j9ns450blf4rs8511lygc2xvbhkg1xp791abcn8krn26"; };
 
-omz_custom_plugins_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/plugins/";
-omz_custom_themes_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/themes/";
+omz_custom_plugins_path = "${homedir}/.oh-my-zsh/custom/plugins/";
+omz_custom_themes_path = "${homedir}/.oh-my-zsh/custom/themes/";
 zdir = "${config.xdg.dataHome}/zsh";
 
 zshDefault = {
@@ -598,7 +596,7 @@ zshDefault = {
 
   home.sessionVariables = {
     # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
-    ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
+    ZSH_CUSTOM="${homedir}/.oh-my-zsh/custom";
     FZF_DEFAULT_COMMAND=rootsearch;
     FZF_DEFAULT_OPTS="--height=100% --reverse";
 
@@ -621,7 +619,7 @@ zshDefault = {
   };
 
   home.dotfiles = {
-    "${config.home.homeDirectory}/.test".source = ./dotfiles/yakuakerc;
+    "${homedir}/.test".source = ./dotfiles/yakuakerc;
   };
 
 };
@@ -646,11 +644,11 @@ zshDefault = {
 # Plasma loading screen
 ksplashFramework = {
   home.file = {
-    "${config.home.homeDirectory}/.config/ksplashrc".text = "
+    "${homedir}/.config/ksplashrc".text = "
       [KSplash]
       Theme=FrameWorkx200";
 
-    "${config.home.homeDirectory}/.local/share/plasma/look-and-feel".source = pkgs.fetchgit {
+    "${homedir}/.local/share/plasma/look-and-feel".source = pkgs.fetchgit {
       url = "https://github.com/kr-nn/Frame.Work_SplashScreen-KDE"; # Stolen from https://github.com/NL-TCH/Frame.Work_SplashScreen-KDE 
       rev = "87e4c601fb6eedceb92a127f96ff50cc836883bb";                          # Credit to their Awesome work
       sha256 = "1vnpvsa47a5vxr044r4zladz660xz867kc518j298l940s39s1lk";
@@ -702,19 +700,19 @@ themeGreen2 = pkgs.fetchurl {
 
 # App skins ==========================================================
 ## Yakuake Skin
-yakuakeskinDark = { home.file."${config.home.homeDirectory}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
+yakuakeskinDark = { home.file."${homedir}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
   url = "https://github.com/kr-nn/noskin-yakuake";
   rev = "7c247eac0f63d83c804ca0d8be84add2286c3b2e";
   sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
 }; };
 
-yakuakeskinLight = { home.file."${config.home.homeDirectory}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
+yakuakeskinLight = { home.file."${homedir}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
   url = "https://github.com/kr-nn/noskin-yakuake";
   rev = "7c247eac0f63d83c804ca0d8be84add2286c3b2e";
   sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
 }; };
 
-yakuakeskinTransparent = { home.file."${config.home.homeDirectory}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
+yakuakeskinTransparent = { home.file."${homedir}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
   url = "https://github.com/kr-nn/noskin-yakuake";
   rev = "7c247eac0f63d83c804ca0d8be84add2286c3b2e";
   sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
