@@ -105,10 +105,12 @@ bw = {
     AGEPATH="/run/user/$UID/age.key"
     AGELINK="${homedir}/.ssh/age.key"
 
+    [[ -d ~/.ssh ]] || mkdir ~/.ssh
+
     if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
       echo $(rbw get "age key") > $AGEPATH
+      rbw stop-agent
     fi
-
     if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH $AGELINK
     fi
