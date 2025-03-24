@@ -56,24 +56,29 @@ activeProfiles = { # NOTE: Only activate some of these profiles when making test
 homedir="${config.home.homeDirectory}";
 
 # SECRETS ==========================================================
+secretinitpkg = pkgs.writeShellScriptBin "secretinit" ''
+  PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
+  AGEPATH="/run/user/$UID/age.key"
+  AGELINK="${homedir}/.ssh/age.key"
+
+  [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
+  if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
+    echo $(rbw get "age key") > $AGEPATH
+    rbw stop-agent
+  fi
+  if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+    ln -s $AGEPATH $AGELINK
+  fi
+'';
+
 secretsDefault = {
   age.identityPaths = [
     "${homedir}/.ssh/id_ed25519"   # main ssh key
-    "${homedir}/.ssh/age.key" ];}; # backup master key
+    "${homedir}/.ssh/age.key" ];   # backup master key
 
-bw = {
   home.packages = with pkgs; [
     rbw pinentry-all
   ];
-
-  home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
-    PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
-    export AGEPATH="/run/user/$UID/age.key"
-    [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
-    echo "Installing master secret"
-    echo $(rbw get "age key") > $AGEPATH
-    rbw stop-agent # don't want user to linger
-  '';
 
   programs.rbw = {
     enable = true;
@@ -84,22 +89,19 @@ bw = {
       lock_timeout = 300;
     };
   };
-  programs.zsh.initExtra = ''
-    ### Vaultwarden init ===============================================================================================================================
-    AGEPATH="/run/user/$UID/age.key"
-    AGELINK="${homedir}/.ssh/age.key"
 
-    if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
-      echo $(rbw get "age key") > $AGEPATH
-      rbw stop-agent
-    fi
-    if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-      ln -s $AGEPATH $AGELINK
-    fi
-    if [[ $(systemctl is-failed --user agenix) == "failed" ]]; then
-      systemctl restart --user agenix
-    fi
-  '';
+  systemd.user.services.secretInit = {
+    Unit = {
+      Description = "Installs master agenix key from vaultwarden";
+      Before = ["agenix.service"];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${secretinitpkg}/bin/secretinit";
+      RemainAfterExit = true;
+    };
+    Install.WantedBy = ["default.target"];
+  };
 };
 
 # Minio ============================================================
