@@ -96,7 +96,7 @@ bw = {
     if ! [ -L $AGELINK ] && ! [ -f $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH $AGELINK
     fi
-    if [[ $(systemctl is-failed --user agenix) == "failed" ]];
+    if [[ $(systemctl is-failed --user agenix) == "failed" ]]; then
       systemctl restart --user agenix
     fi
   '';
