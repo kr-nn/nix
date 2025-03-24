@@ -44,7 +44,7 @@ Using this code we can run `hmpr developmode` and the profile switcher will acti
 
 # TODO
 - [X] Nix function that copies files from nix store instead of links to them
-- [ ] Faster Bitwarden interface
+- [X] Faster Bitwarden interface
 - [ ] Switch from specialisations to different builds, specialisations should activate specific things (specialisations are too slow to build)
 - [ ] Change gitauth to support ssh
 - [ ] plasma manager for gui things (this should be a flake output rather than a specialisation)
