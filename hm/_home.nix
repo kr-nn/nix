@@ -66,7 +66,7 @@ bw = {
     rbw pinentry-all
   ];
 
-  home.activation.secretsInit = lib.hm.dag.entryBetween ["writeBoundary"] ["reloadSystemd"] ''
+  home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}/bin:${pkgs.rbw}/bin"
     export AGEPATH="/run/user/$UID/age.key"
     [ -d $HOME/.ssh ] || mkdir -p $HOME/.ssh
