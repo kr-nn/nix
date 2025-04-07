@@ -742,35 +742,35 @@ yakuakeskinTransparent = { home.file."${homedir}/.local/share/yakuake/kns_skins/
   activations = {
 
 
-    home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
-      PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
-      export HMGENERATIONPATH="$HOME/.config/home-manager/.hmgeneration"
-      export HMPROFILEPATH="$HOME/.config/home-manager/.hmprofile"
-      export HMGENERATION="$(home-manager generations | head -n 1 | gawk '{ print($7) }')"
-      echo "HMGENERATION: $HMGENERATION"
+  home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
+    export HMGENERATIONPATH="$HOME/.config/home-manager/.hmgeneration"
+    export HMPROFILEPATH="$HOME/.config/home-manager/.hmprofile"
+    export HMGENERATION="$(home-manager generations | head -n 1 | gawk '{ print($7) }')"
+    echo "HMGENERATION: $HMGENERATION"
 
-      if [ -d "$HMGENERATION/specialisation" ]; then
-        echo "Updating to newest generation: $HMGENERATION"
-        echo $HMGENERATION > $HMGENERATIONPATH
+    if [ -d "$HMGENERATION/specialisation" ]; then
+      echo "Updating to newest generation: $HMGENERATION"
+      echo $HMGENERATION > $HMGENERATIONPATH
 
-        if [ -e $HMPROFILEPATH ]; then
-          export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
-          if [ $HMPROFILE = "default" ]; then
-            :
-          elif [ -z $HMPROFILE ]; then
-            hmpr bootstrap
-          elif [ -n $HMPROFILE ]; then
-            hmpr $HMPROFILE
-            exit
-          fi
-        else
-          echo "HMPROFILE does not exist, bootstrapping..."
+      if [ -e $HMPROFILEPATH ]; then
+        export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
+        if [ $HMPROFILE = "default" ]; then
+          :
+        elif [ -z $HMPROFILE ]; then
           hmpr bootstrap
+        elif [ -n $HMPROFILE ]; then
+          hmpr $HMPROFILE
+          exit
         fi
       else
-        :
+        echo "HMPROFILE does not exist, bootstrapping..."
+        hmpr bootstrap
       fi
-    '';
+    else
+      :
+    fi
+  '';
 
   home.activation.konsolerc = lib.hm.dag.entryAfter ["profileSwitcher"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}"
