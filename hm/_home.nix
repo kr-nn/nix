@@ -168,7 +168,7 @@ packagesGui = { home.packages = with pkgs; [
   # Social
   vesktop telegram-desktop allPkgs.pkgs-signal.signal-desktop
   # admin things
-  bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake
+  bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake remmina
   # Fonts
   nerd-fonts.fira-code
   # Browser
