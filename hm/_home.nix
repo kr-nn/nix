@@ -351,13 +351,13 @@ dotfilesNeovim = {
       #oil.enable = true; # filemanager
       #statuscol.enable = true; # Line status on left # Needs configuring
       #fugitive.enable = true; # swiss army git plugin # Needs configuring
-      #gitsigns = { enable = true; settings = {
-      #  signs = {
-      #    add = { text = "+"; };
-      #    change = { text = "~"; };
-      #    delete = { text = "_"; };
-      #    topdelete = { text = "‾"; };
-      #    changedelete = { text = "~"; }; }; }; };
+      gitsigns = { enable = true; settings = {
+        signs = {
+          add = { text = "+"; };
+          change = { text = "~"; };
+          delete = { text = "_"; };
+          topdelete = { text = "‾"; };
+          changedelete = { text = "~"; }; }; }; };
       lsp-lines.enable = true;
       comment.enable = true; # keymaps for commenting parts of the buffer
       lualine.enable = true; # nicer status line at the bottom
@@ -379,7 +379,8 @@ dotfilesNeovim = {
       lsp = { enable = true; inlayHints = true;
         capabilities = "require('cmp_nvim_lsp').default_capabilities()";
         servers = {
-          nixd = { enable = true; }; };
+          nixd = { enable = true; };
+          gopls = { enable = true; }; };
         keymaps = {
           lspBuf = {
             "<C-r>" = "rename"; # Rename a symbol
