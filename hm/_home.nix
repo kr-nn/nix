@@ -626,11 +626,6 @@ zshDefault = {
     #export FZF_CTRL_R_COMMAND=""
     #export FZF_CTRL_R_OPTS=""
   };
-
-  home.dotfiles = {
-    "${homedir}/.test".source = ./dotfiles/yakuakerc;
-  };
-
 };
 
 ### ==================================================================
