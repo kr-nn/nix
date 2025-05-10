@@ -523,7 +523,7 @@ omz_custom_themes_path = "${homedir}/.oh-my-zsh/custom/themes/";
 zdir = "${config.xdg.dataHome}/zsh";
 
 zshDefault = {
-  programs.bash = { enable=true; initExtra = "zsh"; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
+  programs.bash = { enable=true; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
   programs.zsh = {
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
