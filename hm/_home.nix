@@ -446,9 +446,11 @@ dotfilesNeovim = {
       }) ''; }; };
 
 dotfilesTouchegg = {
-  home.file = {
+  home.dotfiles = { 
     "${homedir}/.config/touchegg/touchegg.conf".source = ./dotfiles/touchegg.conf;
-    "${homedir}/.config/touchpadxlibinputrc".source = config.lib.file.mkOutOfStoreSymlink "${homedir}/.config/home-manager/hm/dotfiles/touchpadxlibinputrc"; }; };
+    "${homedir}/.config/touchpadxlibinputrc".source = ./dotfiles/touchpadxlibinputrc;
+  };
+};
 
 ### ======================================================
 ### ======================================================
@@ -523,7 +525,7 @@ omz_custom_themes_path = "${homedir}/.oh-my-zsh/custom/themes/";
 zdir = "${config.xdg.dataHome}/zsh";
 
 zshDefault = {
-  programs.bash = { enable=true; historyFile = "${zdir}/bash_history"; }; # change shell to zsh when in a bash shell
+  programs.bash = { enable=true; historyFile = "${zdir}/bash_history"; };
   programs.zsh = {
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
