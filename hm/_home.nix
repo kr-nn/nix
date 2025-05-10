@@ -591,6 +591,7 @@ zshDefault = {
     oh-my-zsh
     zsh
     python313
+    go
   ];
 
   home.file = {
