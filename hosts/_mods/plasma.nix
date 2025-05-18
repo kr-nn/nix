@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   services.displayManager.sddm.enable = true;
@@ -9,5 +9,8 @@
     xkb.variant = "";
   };
 
-  programs.kdeconnect.enable = true;
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.kdePackages.kdeconnect-kde;
+  };
 }
