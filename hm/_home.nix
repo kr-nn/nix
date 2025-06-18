@@ -21,7 +21,7 @@ main = lib.mkMerge [ Default activeProfiles activations ];
 # puzzle pieces
 plasma = lib.mkMerge [ dotfilesPlasma packagesPlasma { stylix.enable = true; } yakuakeskinDark fontFiraMono ];
 x11 = lib.mkMerge [ packagesGui ];
-work = lib.mkMerge [ gitWork ];
+work = lib.mkMerge [  ];
 laptop = lib.mkMerge [ dotfilesTouchegg ];
 
 # Devices
@@ -31,9 +31,8 @@ Default = lib.mkMerge [ zshDefault sshDefault secretsDefault minioDefault gitDef
 activeProfiles = { # NOTE: Only activate some of these profiles when making tests and building home-manager, building all of them takes a long time
 
   # Default = lib.mkMerge [ zshDefault secretsDefault gitDefault packagesDefault envDefault meta dotfilesNeovim ];
-  specialisation.Work.configuration                                  = lib.mkMerge [ work ];
-  specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themePink) framework ];
-  specialisation.framework-work.configuration                        = lib.mkMerge [ (genTheme themeGreen) framework work ];
+  specialisation.framework.configuration                             = lib.mkMerge [ (genTheme themeRockstar) framework ];
+  specialisation.parrotsec.configuration                             = lib.mkMerge [ (genTheme themeParrotsec) framework ];
 
   #specialisation.test.configuration                                  = lib.mkMerge [ ];
 };
@@ -127,11 +126,6 @@ minioDefault = {
 };
 
 # Git ==============================================================
-gitWork = {
-  programs.git = {
-    userName = "krobinson";
-    userEmail = "kyle.robinson@nocturnalnerd.xyz"; }; };
-
 gitDefault = {
   age.secrets.git.file = ../secrets/git.age;
   age.secrets.git.path = "${homedir}/.git-credentials";
@@ -680,25 +674,27 @@ genTheme = wallpaper: {
   '';
 };
 
-themeGreen = pkgs.fetchurl {
+themeRockstar = pkgs.fetchurl {
+  url = "https://w.wallhaven.cc/full/ex/wallhaven-exvwko.jpg";
+  sha256 = "sha256-rAmHsbchl/BCpj0hMts9rd4GM85OmwmP9RXirhAqH7U="; };
+
+themeParrotsec = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/gj/wallhaven-gj2rod.jpg";
   sha256 = "017n6f9f2q0zyy5dca197qg7h1wkkq9qm08fyx09p0hk1ajmz0r3"; };
 
-themePink = pkgs.fetchurl {
+themeFloss = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/7p/wallhaven-7pz9v9.jpg";
   sha256 = "sha256-sqXEfndZiZ+Qt87D6NHj/0EAKXdUI+RsvlXckE6maMc="; };
 
-themepink2 = pkgs.fetchurl {
+themePearls = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/gp/wallhaven-gpyq2e.png";
   sha256 = "sha256-d5uQ7BQ+tzFmx6shGpuMV6PBnUNfh7jbCRaaFxW8aNc="; };
 
-# Spicy ===============
-
-themePink3 = pkgs.fetchurl {
+themeHearts = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
   sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634"; };
 
-themeGreen2 = pkgs.fetchurl {
+themeShego = pkgs.fetchurl {
   url = "https://w.wallhaven.cc/full/l8/wallhaven-l8ogop.jpg";
   sha256 = "1w8w9l1fpd7y6svfvs6p49xy2kma0cdg9r8i4lfmh66535fvmy7d"; };
 
