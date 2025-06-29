@@ -544,7 +544,7 @@ zshDefault = {
 
       # convenience
       fdbench = "time fd --type d . / --max-depth 1 | parallel time fd . {}|grep ^fd"; # Benchmarks the high performance search of fzf
-      src="source ${zdir}/.zshrc";
+      src="export __HM_ZSH_SESS_VARS_SOURCED='' && source ${config.home.homeDirectory}/.zshenv";
       sshrc="cd ~/.config/home-manager/secrets && agenix -e sshconfig.age && cd -";
       ll="eza -lhg --group-directories-first";
       l="eza -g --group-directories-first";
@@ -579,6 +579,9 @@ zshDefault = {
         ### zsh options =========================================
         # Configures !! to automatically execute
         unsetopt HIST_VERIFY
+
+        ### systemd one-time triggers
+        systemctl restart --user agenix
 
         '';
   };
