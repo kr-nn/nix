@@ -4,13 +4,13 @@
   inputs = {
 
     # NIXPKGS
-    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # HARDWARE
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # Stylix
-    stylix.url = "github:danth/stylix/release-24.05";
+    stylix.url = "github:nix-community/stylix/release-25.05";
 
   };
 
@@ -36,7 +36,7 @@
        ./hosts/_mods/plasma.nix
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
-       ./hosts/_mods/displaylink.nix
+       #./hosts/_mods/displaylink.nix # not using displaylink right now, needs to get a new zip file anyway
        nixos-hardware.nixosModules.framework-13-7040-amd stylix.nixosModules.stylix ] ++ commonModules;
     };
   };
