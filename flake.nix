@@ -5,14 +5,14 @@
 
     # NIXPKGS
     ## packages
-    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
 
     ## Nixos
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     # HOME-MANAGER
     home-manager = {
@@ -28,7 +28,7 @@
 
     # Stylix
     stylix = {
-      url = "github:danth/stylix";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -53,7 +53,7 @@
         pkgs-unstable = import nixpkgs-unstable standardOptions;
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions; };
-      common-modules = [ nixvim.homeManagerModules.nixvim stylix.homeManagerModules.stylix agenix.homeManagerModules.default agenixPkg ];
+      common-modules = [ nixvim.homeManagerModules.nixvim stylix.homeModules.stylix agenix.homeManagerModules.default agenixPkg ];
       homeMaker = username: home-manager.lib.homeManagerConfiguration {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };

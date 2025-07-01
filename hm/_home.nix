@@ -98,7 +98,7 @@ secretsDefault = {
   '';
 
   # On login
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     ### Vaultwarden init ===============================================================================================================================
     AGEPATH="/run/user/$UID/age.key"
     AGELINK="${homedir}/.ssh/age.key"
@@ -156,13 +156,13 @@ packagesPlasma = {
 
 packagesGui = { home.packages = with pkgs; [
   # docs
-  obsidian onlyoffice-bin kate kompare
+  obsidian onlyoffice-bin kdePackages.kate kdePackages.kompare
   # System Packages
   kdePackages.partitionmanager
   # Social
   vesktop telegram-desktop allPkgs.pkgs-signal.signal-desktop
   # admin things
-  bitwarden-desktop allPkgs.pkgs-stable.rustdesk yakuake remmina
+  bitwarden-desktop allPkgs.pkgs-stable.rustdesk kdePackages.yakuake remmina
   # Fonts
   nerd-fonts.fira-code
   # Browser
@@ -236,7 +236,7 @@ mkDesktopFile = { pkg, execArgs }: ''
 dotfilesPlasma = {
   home.file = {
     "${homedir}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
-    "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.yakuake; execArgs = "";};
+    "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.kdePackages.yakuake; execArgs = "";};
   };
   home.dotfiles = {
     "${homedir}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
@@ -569,7 +569,7 @@ zshDefault = {
       ];
     };
 
-    initExtra =  ''
+    initContent =  ''
         ### fzf-tab =============================================
         zstyle ':completion:*:git-checkout:*' sort true
         zstyle ':completion:*' menu no
