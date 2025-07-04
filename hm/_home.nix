@@ -156,7 +156,7 @@ packagesPlasma = {
 
 packagesGui = { home.packages = with pkgs; [
   # docs
-  obsidian onlyoffice-bin kdePackages.kate kdePackages.kompare
+  obsidian onlyoffice-bin kdePackages.kate kdePackages.kompare kdePackages.merkuro
   # System Packages
   kdePackages.partitionmanager
   # Social
