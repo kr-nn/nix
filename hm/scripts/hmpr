@@ -30,7 +30,11 @@ activate_profile() {
 
   else
       if [ -d "$SPECIALIZATIONS/$profile" ]; then
-          echo "DEBUG: $SPECIALIZATIONS"
+          echo "DEBUG: ====================================="
+          echo "HMGENERATION: $HMGENERATION"
+          echo "SPECIALIZATIONS: $SPECIALIZATIONS"
+          echo "HMPROFILE: $HMPROFILE"
+
           echo "Activating: $profile"
           $SPECIALIZATIONS/$profile/activate
           echo "Activated: $profile"
@@ -46,6 +50,11 @@ bootstrap_profile() {
   selected_profile=$(echo "$profiles" | fzf --prompt="Select a profile: ")
   save_profile $selected_profile
   activate_profile $selected_profile
+
+echo "DEBUG: ====================================="
+echo "HMGENERATION: $HMGENERATION"
+echo "SPECIALIZATIONS: $SPECIALIZATIONS"
+echo "HMPROFILE: $HMPROFILE"
 }
 
 if [ "$1" = "-h" ]; then
@@ -54,8 +63,6 @@ if [ "$1" = "-h" ]; then
 fi
 
 echo "DEBUG: ====================================="
-echo "HMGENERATIONPATH: $HMGENERATIONPATH"
-echo "HMPROFILEPATH: $HMPROFILEPATH"
 echo "HMGENERATION: $HMGENERATION"
 echo "SPECIALIZATIONS: $SPECIALIZATIONS"
 echo "HMPROFILE: $HMPROFILE"
