@@ -30,6 +30,7 @@ activate_profile() {
 
   else
       if [ -d "$SPECIALIZATIONS/$profile" ]; then
+          echo "DEBUG: $SPECIALIZATIONS"
           echo "Activating: $profile"
           $SPECIALIZATIONS/$profile/activate
           echo "Activated: $profile"
@@ -51,6 +52,13 @@ if [ "$1" = "-h" ]; then
   show_help
   exit
 fi
+
+echo "DEBUG: ====================================="
+echo "HMGENERATIONPATH: $HMGENERATIONPATH"
+echo "HMPROFILEPATH: $HMPROFILEPATH"
+echo "HMGENERATION: $HMGENERATION"
+echo "SPECIALIZATIONS: $SPECIALIZATIONS"
+echo "HMPROFILE: $HMPROFILE"
 
 # main
 if [ -z "$HMGENERATION" ]; then
