@@ -37,6 +37,7 @@
 
        # Addons
        ./hosts/_mods/plasma.nix
+       ./hosts/_mods/xremap.nix
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
        #./hosts/_mods/displaylink.nix # not using displaylink right now, needs to get a new zip file anyway
