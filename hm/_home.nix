@@ -235,6 +235,7 @@ mkDesktopFile = { env, pkg, execArgs }: ''
 
 dotfilesPlasma = {
   home.file = {
+    # the env fixes mismatched qt versions
     "${homedir}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { env = "QT_PLUGIN_PATH="; pkg = pkgs.ckb-next; execArgs = "--background";};
     "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { env = ""; pkg = pkgs.kdePackages.yakuake; execArgs = "";};
   };
