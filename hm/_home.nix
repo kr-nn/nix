@@ -222,11 +222,11 @@ meta = { # Things home-manager needs to do the things I need
 ### ===========================================================================
 ###_Dotfiles
 
-mkDesktopFile = { pkg, execArgs }: ''
+mkDesktopFile = { env, pkg, execArgs }: ''
   [Desktop Entry]
   Comment[en_CA]=${pkg.meta.mainProgram}
   Comment=${pkg.meta.description}
-  Exec=${pkg}/bin/${pkg.meta.mainProgram} ${execArgs}
+  Exec=env ${env} ${pkg}/bin/${pkg.meta.mainProgram} ${execArgs}
   Name[en_CA]=${pkg.meta.mainProgram}
   Name=${pkg.meta.mainProgram}
   TryExec=${pkg}/bin/${pkg.meta.mainProgram}
@@ -235,8 +235,8 @@ mkDesktopFile = { pkg, execArgs }: ''
 
 dotfilesPlasma = {
   home.file = {
-    "${homedir}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { pkg = pkgs.ckb-next; execArgs = "--background";};
-    "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { pkg = pkgs.kdePackages.yakuake; execArgs = "";};
+    "${homedir}/.config/autostart/ckb-next.desktop".text = mkDesktopFile { env = "QT_PLUGIN_PATH="; pkg = pkgs.ckb-next; execArgs = "--background";};
+    "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { env = ""; pkg = pkgs.kdePackages.yakuake; execArgs = "";};
   };
   home.dotfiles = {
     "${homedir}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
