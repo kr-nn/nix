@@ -12,15 +12,18 @@
     # Stylix
     stylix.url = "github:nix-community/stylix/release-25.05";
 
+    # xremap
+    xremap.url = "github:xremap/nix-flake";
+
   };
 
-  outputs = { self, nixpkgs-sorin, stylix, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
       revision = if self ? rev then self.rev else self.dirtyRev;
-      commonModules = [ ./hosts/common.nix { system.configurationRevision = revision; } ];
+      commonModules = [ ./hosts/common.nix xremap.nixosModules.default { system.configurationRevision = revision; } ];
     in {
   # NIXOS ========================================================================
 
