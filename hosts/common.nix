@@ -4,7 +4,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
-  
+
   nix.optimise.dates = [ "weekly" ];
   nix.gc.automatic = true;
   nix.gc.dates = "weekly";
@@ -29,6 +29,13 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
   };
+
+  # input requirements # Needed for xremap uses
+  hardware.uinput.enable = true;
+  boot.kernelModules = [ "uinput" ];
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="input", TAG+="uaccess"
+  '';
 
   #boot
   boot.loader.systemd-boot.enable = true;
