@@ -30,13 +30,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # input requirements # Needed for xremap uses
-  #hardware.uinput.enable = true;
-  #boot.kernelModules = [ "uinput" ];
-  #services.udev.extraRules = ''
-  #  KERNEL=="uinput", GROUP="input", TAG+="uaccess"
-  #'';
-
   #boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
