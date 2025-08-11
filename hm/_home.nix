@@ -172,7 +172,7 @@ packagesGui = { home.packages = with pkgs; [
 
 packagesDefault = { home.packages = with pkgs; [
   # Shell tools
-  tmux bat fzf fd parallel ctpv eza ripgrep age
+  tmux bat fzf fd parallel ctpv eza ripgrep age unrar
   git curl nmap fastfetch usbutils pciutils htop jq minio-client
   # Terminal Apps
   bitwarden-cli glow
