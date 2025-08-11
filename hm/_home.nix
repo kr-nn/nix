@@ -374,6 +374,7 @@ dotfilesNeovim = {
       lsp = { enable = true; inlayHints = true;
         capabilities = "require('cmp_nvim_lsp').default_capabilities()";
         servers = {
+          bashls = { enable = true; };
           nixd = { enable = true; };
           gopls = { enable = true; }; };
         keymaps = {
