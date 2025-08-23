@@ -507,9 +507,9 @@ fzf-tab = pkgs.fetchgit {
     sha256 = "0hv21mp6429ny60y7fyn4xbznk31ab4nkkdjf6kjbnf6bwphxxnk"; };
 
 zsh-ssh = pkgs.fetchgit {
-    url = "https://github.com/sunlei/zsh-ssh";
-    rev = "8c93772e9353d0b749ceffa588fadce17312fa84";
-    sha256 = "sha256-lc3fRcM1IazuDRvlOmPEiHk5ddWalqsiNNKcOj8eUSs="; };
+    url = "https://github.com/kr-nn/zsh-ssh";
+    rev = "6e78c0841c078eccd0f1293bd04f7df3a50be3cf";
+    sha256 = "sha256-cUTMQDSIEM0VnSwhuoq2Adlve7OhGvW+41O/i8iw8bY="; };
 
 nix-shell = pkgs.fetchgit {
     url = "https://github.com/chisui/zsh-nix-shell";
