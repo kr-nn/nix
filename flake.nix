@@ -4,20 +4,21 @@
   inputs = {
 
     # NIXPKGS
-    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # HARDWARE
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # Stylix
-    stylix.url = "github:nix-community/stylix/release-25.05";
+    #stylix.url = "github:nix-community/stylix/release-25.05";
+    #stylix.inputs.nixpkgs.follows = "nixpkgs-sorin";
 
     # xremap
     xremap.url = "github:xremap/nix-flake";
 
   };
 
-  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-sorin, /*stylix*/ xremap, nixos-hardware, ... }:
 
   # ARGS ========================================================================
     let
@@ -40,8 +41,7 @@
        ./hosts/_mods/xremap.nix
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
-       #./hosts/_mods/displaylink.nix # not using displaylink right now, needs to get a new zip file anyway
-       nixos-hardware.nixosModules.framework-13-7040-amd stylix.nixosModules.stylix ] ++ commonModules;
+       nixos-hardware.nixosModules.framework-13-7040-amd /*stylix.nixosModules.stylix*/ ] ++ commonModules;
     };
   };
 }
