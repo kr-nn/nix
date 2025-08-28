@@ -3,12 +3,12 @@ let
 
   # Theme =====================================================
   wallpaper = ../../themes/media/framework.png;
-  #theme = {
-  #  stylix.enable = true;
-  #  stylix.image = wallpaper;
-  #  stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; };
-  #  stylix.polarity = "dark";
-  #};
+  theme = {
+    stylix.enable = true;
+    stylix.image = wallpaper;
+    stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; };
+    stylix.polarity = "dark";
+  };
   lockscreenWallpaper = (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
       background=${wallpaper}

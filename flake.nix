@@ -10,15 +10,14 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     # Stylix
-    #stylix.url = "github:nix-community/stylix/release-25.05";
-    #stylix.inputs.nixpkgs.follows = "nixpkgs-sorin";
+    stylix.url = "github:nix-community/stylix/release-25.05";
 
     # xremap
     xremap.url = "github:xremap/nix-flake";
 
   };
 
-  outputs = { self, nixpkgs-sorin, /*stylix*/ xremap, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, ... }:
 
   # ARGS ========================================================================
     let
