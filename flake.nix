@@ -68,6 +68,7 @@
 
     homeConfigurations."kyle" = homeMaker "kyle";
     homeConfigurations."krobinson" = homeMaker "krobinson";
+    homeConfigurations."lpa" = homeMaker "lpa";
 
   };
 }
