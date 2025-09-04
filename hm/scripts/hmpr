@@ -2,8 +2,8 @@
 export HMGENERATIONPATH=$HOME/.config/home-manager/.hmgeneration
 export HMPROFILEPATH=$HOME/.config/home-manager/.hmprofile
 export HMGENERATION=$(head -n 1 $HMGENERATIONPATH)
+export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
 export SPECIALIZATIONS="$HMGENERATION/specialisation"
-export HMPROFILE=0
 
 show_help(){
   echo Usage: $0 [ profilename bootstrap default]
@@ -30,11 +30,6 @@ activate_profile() {
 
   else
       if [ -d "$SPECIALIZATIONS/$profile" ]; then
-          echo "DEBUG: ====================================="
-          echo "HMGENERATION: $HMGENERATION"
-          echo "SPECIALIZATIONS: $SPECIALIZATIONS"
-          echo "HMPROFILE: $HMPROFILE"
-
           echo "Activating: $profile"
           $SPECIALIZATIONS/$profile/activate
           echo "Activated: $profile"
@@ -50,33 +45,17 @@ bootstrap_profile() {
   selected_profile=$(echo "$profiles" | fzf --prompt="Select a profile: ")
   save_profile $selected_profile
   activate_profile $selected_profile
-
-echo "DEBUG: ====================================="
-echo "HMGENERATION: $HMGENERATION"
-echo "SPECIALIZATIONS: $SPECIALIZATIONS"
-echo "HMPROFILE: $HMPROFILE"
 }
 
-if [ "$1" = "-h" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   show_help
   exit
 fi
 
-echo "DEBUG: ====================================="
-echo "HMGENERATION: $HMGENERATION"
-echo "SPECIALIZATIONS: $SPECIALIZATIONS"
-echo "HMPROFILE: $HMPROFILE"
-
 # main
-if [ -z "$HMGENERATION" ]; then
-    echo "There is no home generation set. Do a home-manager switch and boostrap a profile."
-    exit 1
-fi
-
-if ! [ -d $SPECIALIZATIONS ]; then
-    echo "Something went wrong, we can't find the specialisations from the parent hmgeneration. Check that $HMGENERATIONPATH exists."
-    exit 1
-fi
+[ -z "$HMGENERATION" ] && { echo "There is no home generation set. Do a home-manager switch and boostrap a profile"; exit 1; }
+[ -z "$HMPROFILE" ] && { echo "There is no profile set. Do a home-manager switch and boostrap a profile"; exit 1; }
+[ ! -d $SPECIALIZATIONS ] && { echo "Something went wrong, we can't find the specialisations from the parent hmgeneration. Check that $HMGENERATIONPATH exists"; exit 1; }
 
 if [ $# -eq 0 ] || [ "$1" = "bootstrap" ]; then
     bootstrap_profile
@@ -84,5 +63,4 @@ else
     save_profile $1
     activate_profile $1
 fi
-
 
