@@ -1,9 +1,8 @@
-# CONSTS
-export HMGENERATIONPATH=$HOME/.config/home-manager/.hmgeneration
-export HMPROFILEPATH=$HOME/.config/home-manager/.hmprofile
-export HMGENERATION=$(head -n 1 $HMGENERATIONPATH)
-export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
-export SPECIALIZATIONS="$HMGENERATION/specialisation"
+HMGENERATIONPATH=$HOME/.config/home-manager/.hmgeneration
+HMPROFILEPATH=$HOME/.config/home-manager/.hmprofile
+HMGENERATION=$(head -n 1 $HMGENERATIONPATH)
+HMPROFILE=$(head -n 1 $HMPROFILEPATH)
+SPECIALIZATIONS="$HMGENERATION/specialisation"
 
 show_help(){
   echo Usage: $0 [ profilename bootstrap default]

@@ -75,6 +75,14 @@ secretsDefault = {
   };
 
   # Activation
+  systemd.user.services.agenix.Unit = {
+    X-restart-Triggers = [
+      config.age.secrets.minio.path
+      config.age.secrets.git.path
+      config.age.secrets.id.path
+      config.age.secrets.sshconfig.path
+    ];
+  };
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.rbw}/bin"
     AGEPATH="/run/user/$UID/age.key"
@@ -87,10 +95,6 @@ secretsDefault = {
     fi
     if ! [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH $AGELINK
-    elif [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
-      if [[ $(systemctl is-failed --user agenix) == "failed" ]]; then
-        systemctl restart --user agenix
-      fi
     else
       echo "Something strange happened"
       echo "check the age key"
@@ -746,22 +750,21 @@ yakuakeskinTransparent = { home.file."${homedir}/.local/share/yakuake/kns_skins/
     PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
     export HMGENERATIONPATH="$HOME/.config/home-manager/.hmgeneration"
     export HMPROFILEPATH="$HOME/.config/home-manager/.hmprofile"
-    export HMGENERATION="$(home-manager generations | head -n 1 | gawk '{ print($7) }')"
-    echo "HMGENERATION: $HMGENERATION"
-
+    export HMGENERATION=$(home-manager generations | head -n 1 | gawk '{ print($7) }')
     if [ -d "$HMGENERATION/specialisation" ]; then
       echo "Updating to newest generation: $HMGENERATION"
       echo $HMGENERATION > $HMGENERATIONPATH
 
       if [ -e $HMPROFILEPATH ]; then
         export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
+        echo "HMPROFILE: $HMPROFILE"
         if [ $HMPROFILE = "default" ]; then
           :
-        elif [ -z $HMPROFILE ]; then
-          hmpr bootstrap
-        elif [ -n $HMPROFILE ]; then
+        elif [ ! -z $HMPROFILE ]; then
           hmpr $HMPROFILE
-          exit
+          #exit
+        else
+          hmpr bootstrap
         fi
       else
         echo "HMPROFILE does not exist, bootstrapping..."
