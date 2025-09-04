@@ -762,7 +762,7 @@ yakuakeskinTransparent = { home.file."${homedir}/.local/share/yakuake/kns_skins/
           :
         elif [ ! -z $HMPROFILE ]; then
           hmpr $HMPROFILE
-          #exit
+          exit
         else
           hmpr bootstrap
         fi
