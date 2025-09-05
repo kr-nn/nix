@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   homedir="${config.home.homeDirectory}";
 
@@ -10,17 +10,6 @@ let
   fontFiraMono = { stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; }; };
 
   # Wallpapers/colorschemes =============================================
-
-  genTheme = wallpaper: {
-    stylix.image = wallpaper;
-    stylix.polarity = lib.mkDefault "dark";
-    home.file.".config/kscreenlockerrc".text = ''
-      [Greeter]
-      Wallpaper=org.kde.image
-      WallpaperPlugin=org.kde.image
-      Image=file://${wallpaper}
-    '';
-  };
 
   themeRockstar = pkgs.fetchurl {
     url = "https://w.wallhaven.cc/full/ex/wallhaven-exvwko.jpg";
@@ -68,6 +57,22 @@ let
     sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
     };
   };
+  theme = themeRockstar;
 in
 {
+  stylix.image = theme;
+  stylix.polarity = "dark";
+  home.file.".config/kscreenlockerrc".text = ''
+    [Greeter]
+    Wallpaper=org.kde.image
+    WallpaperPlugin=org.kde.image
+    Image=file://${theme}
+  '';
+  stylix.fonts = { monospace.package = pkgs.nerd-fonts.fira-code; monospace.name = "nerdfonts-3.2.1"; };
+  home.file."${homedir}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
+    url = "https://github.com/kr-nn/noskin-yakuake";
+    rev = "7c247eac0f63d83c804ca0d8be84add2286c3b2e";
+    sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";
+  };
+
 }

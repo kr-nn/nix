@@ -62,6 +62,7 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
           ./hm/kyle.nix
           ./hm/git.nix

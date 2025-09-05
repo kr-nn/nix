@@ -2,7 +2,7 @@
 let
 in
 {
-  home.activation.konsolerc = lib.hm.dag.entryAfter ["profileSwitcher"] ''
+  home.activation.konsolerc = lib.hm.dag.entryAfter ["writeBoundary"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}"
     palette=$HOME/.config/stylix/palette.json
     scheme=$HOME/.local/share/konsole/Stylix.colorscheme
