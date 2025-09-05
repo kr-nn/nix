@@ -1,6 +1,5 @@
 { ... }:
 {
-dotfilesNeovim = {
   programs.nixvim = {
     /* mapping rules
       ALT for navigation
@@ -192,6 +191,5 @@ dotfilesNeovim = {
         { "<leader>w", desc = "[W]orkspace" },
         { "<leader>g", desc = "[G]oto Things" },
       }) '';
-    };
   };
 }

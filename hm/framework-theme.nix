@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   homedir="${config.home.homeDirectory}";
 in

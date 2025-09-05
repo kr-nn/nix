@@ -58,7 +58,7 @@
 
   # HOMES ========================================================================
     homeConfigurations = {
-      "kyle" = {
+      "kyle" = home-manager.lib.homeManagerConfiguration {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
