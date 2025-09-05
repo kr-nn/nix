@@ -86,30 +86,60 @@
           agenixPkg
         ];
       };
-      #krobinson = {
-      #  pkgs = allPkgs.pkgs-unstable;
-      #  extraSpecialArgs = { inherit allPkgs; };
-      #  modules = [
-      #    ./hm/lib/dotfiles.nix
-      #    ./hm/krobinson.nix
-      #    nixvim.homeManagerModules.nixvim
-      #    stylix.homeModules.stylix
-      #    agenix.homeManagerModules.default
-      #    agenixPkg
-      #  ];
-      #};
-      #lpa = {
-      #  pkgs = allPkgs.pkgs-unstable;
-      #  extraSpecialArgs = { inherit allPkgs; };
-      #  modules = [
-      #    ./hm/lib/dotfiles.nix
-      #    ./hm/lpa.nix
-      #    nixvim.homeManagerModules.nixvim
-      #    stylix.homeModules.stylix
-      #    agenix.homeManagerModules.default
-      #    agenixPkg
-      #  ];
-      #};
+      krobinson = {
+        pkgs = allPkgs.pkgs-unstable;
+        extraSpecialArgs = { inherit allPkgs; };
+        modules = [
+          ./hm/lib/dotfiles.nix
+          ./hm/krobinson.nix
+          ./hm/git.nix
+          ./hm/ssh.nix
+          ./hm/minio.nix
+          ./hm/neovim.nix
+          ./hm/themes.nix
+          ./hm/zshell.nix
+          ./hm/secrets.nix
+          ./hm/packages.nix
+          ./hm/packages-gui.nix
+          ./hm/packages-plasma.nix
+          ./hm/touchegg.nix
+          ./hm/activations.nix
+          ./hm/environment.nix
+          ./hm/dotfiles-plasma.nix
+          ./hm/framework-theme.nix
+          nixvim.homeManagerModules.nixvim
+          stylix.homeModules.stylix
+          agenix.homeManagerModules.default
+          agenixPkg
+        ];
+      };
+      lpa = {
+        pkgs = allPkgs.pkgs-unstable;
+        extraSpecialArgs = { inherit allPkgs; };
+        modules = [
+          ./hm/lib/dotfiles.nix
+          ./hm/lpa.nix
+          ./hm/git.nix
+          ./hm/ssh.nix
+          ./hm/minio.nix
+          ./hm/neovim.nix
+          ./hm/themes.nix
+          ./hm/zshell.nix
+          ./hm/secrets.nix
+          ./hm/packages.nix
+          ./hm/packages-gui.nix
+          ./hm/packages-plasma.nix
+          ./hm/touchegg.nix
+          ./hm/activations.nix
+          ./hm/environment.nix
+          ./hm/dotfiles-plasma.nix
+          ./hm/framework-theme.nix
+          nixvim.homeManagerModules.nixvim
+          stylix.homeModules.stylix
+          agenix.homeManagerModules.default
+          agenixPkg
+        ];
+      };
     };
   };
 }
