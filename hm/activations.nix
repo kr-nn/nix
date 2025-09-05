@@ -2,35 +2,6 @@
 let
 in
 {
-  home.activation.profileSwitcher = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    PATH="${config.home.path}/bin:$PATH:${pkgs.gawk}/bin"
-    export HMGENERATIONPATH="$HOME/.config/home-manager/.hmgeneration"
-    export HMPROFILEPATH="$HOME/.config/home-manager/.hmprofile"
-    export HMGENERATION=$(home-manager generations | head -n 1 | gawk '{ print($7) }')
-    if [ -d "$HMGENERATION/specialisation" ]; then
-      echo "Updating to newest generation: $HMGENERATION"
-      echo $HMGENERATION > $HMGENERATIONPATH
-
-      if [ -e $HMPROFILEPATH ]; then
-        export HMPROFILE=$(head -n 1 $HMPROFILEPATH)
-        echo "HMPROFILE: $HMPROFILE"
-        if [ $HMPROFILE = "default" ]; then
-          :
-        elif [ ! -z $HMPROFILE ]; then
-          hmpr $HMPROFILE
-          exit
-        else
-          hmpr bootstrap
-        fi
-      else
-        echo "HMPROFILE does not exist, bootstrapping..."
-        hmpr bootstrap
-      fi
-    else
-      :
-    fi
-  '';
-
   home.activation.konsolerc = lib.hm.dag.entryAfter ["profileSwitcher"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.jq}"
     palette=$HOME/.config/stylix/palette.json
