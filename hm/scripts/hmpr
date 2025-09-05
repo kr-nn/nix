@@ -28,3 +28,4 @@ main() {
   [ ! -e $HOME/.config/home-manager/.profile ] && get_profile
   home-manager switch -b hmbak --flake $HOME/.config/home-manager\#$profile
 }
+main
