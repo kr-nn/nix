@@ -80,7 +80,7 @@ in
       hmcd="cd ~/.config/home-manager/";
       hmll="ll ~/.config/home-manager/";
       hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
-      hmsw="home-manager switch -b hmbak";
+      hmsw="hmpr";
       hmbu="home-manager build";
 
       # convenience

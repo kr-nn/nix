@@ -21,6 +21,7 @@
     htop
     jq
     minio-client
+    gum
 
     # Terminal Apps
     bitwarden-cli
