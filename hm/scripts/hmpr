@@ -4,7 +4,7 @@ homeconfigdir="$HOME/.config/home-manager"
 profilepath="$homeconfigdir/.profile"
 
 get_configs() {
-  nix eval --json --apply builtins.attrNames '.#homeConfigurations' | jq -r '.[]' || true
+  nix eval --json --apply builtins.attrNames "$homeconfigdir#homeConfigurations" | jq -r '.[]' || true
 }
 
 save_profile() {
