@@ -62,24 +62,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          { programs.home-manager.enable = true; }
           { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
           ./hm/kyle.nix
-          ./hm/git.nix
-          ./hm/ssh.nix
-          ./hm/minio.nix
-          ./hm/neovim.nix
-          ./hm/themes.nix
-          ./hm/zshell.nix
-          ./hm/secrets.nix
-          ./hm/packages.nix
-          ./hm/packages-gui.nix
-          ./hm/packages-plasma.nix
-          ./hm/touchegg.nix
-          ./hm/activations.nix
-          ./hm/environment.nix
-          ./hm/dotfiles-plasma.nix
-          ./hm/framework-theme.nix
+          ./hm/comp/git.nix
+          ./hm/comp/ssh.nix
+          ./hm/comp/minio.nix
+          ./hm/comp/neovim.nix
+          ./hm/comp/themes.nix
+          ./hm/comp/zshell.nix
+          ./hm/comp/secrets.nix
+          ./hm/comp/packages.nix
+          ./hm/comp/packages-gui.nix
+          ./hm/comp/packages-plasma.nix
+          ./hm/comp/touchegg.nix
+          ./hm/comp/activations.nix
+          ./hm/comp/environment.nix
+          ./hm/comp/dotfiles-plasma.nix
+          ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
@@ -90,23 +91,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          { programs.home-manager.enable = true; }
+          { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
           ./hm/krobinson.nix
-          ./hm/git.nix
-          ./hm/ssh.nix
-          ./hm/minio.nix
-          ./hm/neovim.nix
-          ./hm/themes.nix
-          ./hm/zshell.nix
-          ./hm/secrets.nix
-          ./hm/packages.nix
-          ./hm/packages-gui.nix
-          ./hm/packages-plasma.nix
-          ./hm/touchegg.nix
-          ./hm/activations.nix
-          ./hm/environment.nix
-          ./hm/dotfiles-plasma.nix
-          ./hm/framework-theme.nix
+          ./hm/comp/git.nix
+          ./hm/comp/ssh.nix
+          ./hm/comp/minio.nix
+          ./hm/comp/neovim.nix
+          ./hm/comp/themes.nix
+          ./hm/comp/zshell.nix
+          ./hm/comp/secrets.nix
+          ./hm/comp/packages.nix
+          ./hm/comp/packages-gui.nix
+          ./hm/comp/packages-plasma.nix
+          ./hm/comp/touchegg.nix
+          ./hm/comp/activations.nix
+          ./hm/comp/environment.nix
+          ./hm/comp/dotfiles-plasma.nix
+          ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
@@ -117,23 +120,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          { programs.home-manager.enable = true; }
+          { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
           ./hm/lpa.nix
-          ./hm/git.nix
-          ./hm/ssh.nix
-          ./hm/minio.nix
-          ./hm/neovim.nix
-          ./hm/themes.nix
-          ./hm/zshell.nix
-          ./hm/secrets.nix
-          ./hm/packages.nix
-          ./hm/packages-gui.nix
-          ./hm/packages-plasma.nix
-          ./hm/touchegg.nix
-          ./hm/activations.nix
-          ./hm/environment.nix
-          ./hm/dotfiles-plasma.nix
-          ./hm/framework-theme.nix
+          ./hm/comp/git.nix
+          ./hm/comp/ssh.nix
+          ./hm/comp/minio.nix
+          ./hm/comp/neovim.nix
+          ./hm/comp/themes.nix
+          ./hm/comp/zshell.nix
+          ./hm/comp/secrets.nix
+          ./hm/comp/packages.nix
+          ./hm/comp/packages-gui.nix
+          ./hm/comp/packages-plasma.nix
+          ./hm/comp/touchegg.nix
+          ./hm/comp/activations.nix
+          ./hm/comp/environment.nix
+          ./hm/comp/dotfiles-plasma.nix
+          ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
