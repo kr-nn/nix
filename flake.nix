@@ -65,7 +65,7 @@
           { programs.home-manager.enable = true; }
           { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
-          ./hm/kyle.nix
+          ./hm/usernames/kyle.nix
           ./hm/comp/git.nix
           ./hm/comp/ssh.nix
           ./hm/comp/minio.nix
@@ -77,8 +77,8 @@
           ./hm/comp/packages-gui.nix
           ./hm/comp/packages-plasma.nix
           ./hm/comp/touchegg.nix
-          ./hm/comp/activations.nix
-          ./hm/comp/environment.nix
+          ./hm/comp/stylix-konsoleRc.nix
+          ./hm/comp/allowUnfree.nix
           ./hm/comp/dotfiles-plasma.nix
           ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
@@ -94,7 +94,7 @@
           { programs.home-manager.enable = true; }
           { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
-          ./hm/krobinson.nix
+          ./hm/usernames/krobinson.nix
           ./hm/comp/git.nix
           ./hm/comp/ssh.nix
           ./hm/comp/minio.nix
@@ -106,8 +106,8 @@
           ./hm/comp/packages-gui.nix
           ./hm/comp/packages-plasma.nix
           ./hm/comp/touchegg.nix
-          ./hm/comp/activations.nix
-          ./hm/comp/environment.nix
+          ./hm/comp/stylix-konsoleRc.nix
+          ./hm/comp/allowUnfree.nix
           ./hm/comp/dotfiles-plasma.nix
           ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
@@ -123,7 +123,7 @@
           { programs.home-manager.enable = true; }
           { stylix.enable = true; }
           ./hm/lib/dotfiles.nix
-          ./hm/lpa.nix
+          ./hm/usernames/lpa.nix
           ./hm/comp/git.nix
           ./hm/comp/ssh.nix
           ./hm/comp/minio.nix
@@ -135,8 +135,8 @@
           ./hm/comp/packages-gui.nix
           ./hm/comp/packages-plasma.nix
           ./hm/comp/touchegg.nix
-          ./hm/comp/activations.nix
-          ./hm/comp/environment.nix
+          ./hm/comp/stylix-konsoleRc.nix
+          ./hm/comp/allowUnfree.nix
           ./hm/comp/dotfiles-plasma.nix
           ./hm/comp/framework-theme.nix
           nixvim.homeManagerModules.nixvim
