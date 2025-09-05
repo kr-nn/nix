@@ -183,7 +183,7 @@ packagesDefault = { home.packages = with pkgs; [
   # Neovim
   zip unzip gcc cargo
   # Nix things
-  nix-prefetch-git nixd
+  nix-prefetch-git nixd nh
   # custom scripts
   (pkgs.writeShellScriptBin "flink" (builtins.readFile ./scripts/flink) )
   (pkgs.writeShellScriptBin "hmpr"  (builtins.readFile ./scripts/hmpr) )
