@@ -52,23 +52,63 @@
         pkgs-signal = import nixpkgs-signal standardOptions;
         pkgs-unstable = import nixpkgs-unstable standardOptions;
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
-        pkgs-stable = import nixpkgs-stable standardOptions; };
-      common-modules = [ nixvim.homeManagerModules.nixvim stylix.homeModules.stylix agenix.homeManagerModules.default agenixPkg ];
-      homeMaker = username: home-manager.lib.homeManagerConfiguration {
-        pkgs = allPkgs.pkgs-unstable;
-        extraSpecialArgs = { inherit allPkgs; };
-        modules = [
-          ./hm/lib/dotfiles.nix
-          ./hm/${username}.nix
-        ] ++ common-modules;
+        pkgs-stable = import nixpkgs-stable standardOptions;
       };
     in {
 
   # HOMES ========================================================================
-
-    homeConfigurations."kyle" = homeMaker "kyle";
-    homeConfigurations."krobinson" = homeMaker "krobinson";
-    homeConfigurations."lpa" = homeMaker "lpa";
-
+    homeConfigurations = {
+      "kyle" = {
+        pkgs = allPkgs.pkgs-unstable;
+        extraSpecialArgs = { inherit allPkgs; };
+        modules = [
+          ./hm/lib/dotfiles.nix
+          ./hm/kyle.nix
+          ./hm/git.nix
+          ./hm/ssh.nix
+          ./hm/minio.nix
+          ./hm/neovim.nix
+          ./hm/themes.nix
+          ./hm/zshell.nix
+          ./hm/secrets.nix
+          ./hm/packages.nix
+          ./hm/packages-gui.nix
+          ./hm/packages-plasma.nix
+          ./hm/touchegg.nix
+          ./hm/activations.nix
+          ./hm/environment.nix
+          ./hm/dotfiles-plasma.nix
+          ./hm/framework-theme.nix
+          nixvim.homeManagerModules.nixvim
+          stylix.homeModules.stylix
+          agenix.homeManagerModules.default
+          agenixPkg
+        ];
+      };
+      #krobinson = {
+      #  pkgs = allPkgs.pkgs-unstable;
+      #  extraSpecialArgs = { inherit allPkgs; };
+      #  modules = [
+      #    ./hm/lib/dotfiles.nix
+      #    ./hm/krobinson.nix
+      #    nixvim.homeManagerModules.nixvim
+      #    stylix.homeModules.stylix
+      #    agenix.homeManagerModules.default
+      #    agenixPkg
+      #  ];
+      #};
+      #lpa = {
+      #  pkgs = allPkgs.pkgs-unstable;
+      #  extraSpecialArgs = { inherit allPkgs; };
+      #  modules = [
+      #    ./hm/lib/dotfiles.nix
+      #    ./hm/lpa.nix
+      #    nixvim.homeManagerModules.nixvim
+      #    stylix.homeModules.stylix
+      #    agenix.homeManagerModules.default
+      #    agenixPkg
+      #  ];
+      #};
+    };
   };
 }
