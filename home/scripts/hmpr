@@ -2,10 +2,10 @@
 
 homeconfigdir="$HOME/.config/home-manager"
 profilepath="$homeconfigdir/.profile"
-flakeUri="$HOME/.config/home-manager\#$profile"
+flakeUri="$HOME/.config/home-manager#$profile"
 
 get_configs() {
-  nix eval --json --apply builtins.attrNames "$flakeUri\#homeConfgurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
+  nix eval --json --apply builtins.attrNames "$flakeUri#homeConfgurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
 }
 
 save_profile() {
