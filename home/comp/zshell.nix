@@ -77,8 +77,8 @@ in
       hm="home-manager";
       hmcd="cd ~/.config/home-manager/";
       hmll="ll ~/.config/home-manager/";
-      hmrc="hmcd && $EDITOR ~/.config/home-manager/hm/_home.nix && cd -";
-      hmsw="hmpr";
+      hmrc="hmcd && $EDITOR ~/.config/home-manager/flake.nix && cd -";
+      hmsw="HMPROFILE=$(cat $HOME/.config/home-manager/.profile) hmpr";
       hmbu="home-manager build";
 
       # convenience
