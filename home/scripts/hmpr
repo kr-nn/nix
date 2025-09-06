@@ -5,7 +5,7 @@ profilepath="$homeconfigdir/.profile"
 flakeUri="$HOME/.config/home-manager"
 
 get_configs() {
-  nix eval --json --apply builtins.attrNames "$homeconfigdir#homeConfgurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
+  nix eval --json --apply builtins.attrNames "$homeconfigdir#homeConfigurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
 }
 
 save_profile() {
