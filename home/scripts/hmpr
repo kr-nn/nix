@@ -34,13 +34,14 @@ main() {
     get_profile
   fi
 
+  echo "\$0: $0"
   if [ $0 == "hmpr" ] || [ $flakeUri == "https://github.com/kr-nn/nix/archive/home.zip" ] ; then
     get_profile
   fi
 
   [ -z $profile ] && { echo "No profile selected"; exit 1; }
-  save_profile
 
+  save_profile
   home-manager switch -b hmbak --flake $flakeUri\#$profile
 }
 main
