@@ -2,9 +2,10 @@
 
 homeconfigdir="$HOME/.config/home-manager"
 profilepath="$homeconfigdir/.profile"
+flakeUri="$HOME/.config/home-manager\#$profile"
 
 get_configs() {
-  nix eval --json --apply builtins.attrNames "$homeconfigdir#homeConfigurations" | jq -r '.[]' || true
+  nix eval --json --apply builtins.attrNames "$flakeUri\#homeConfgurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
 }
 
 save_profile() {
@@ -12,20 +13,33 @@ save_profile() {
 }
 
 load_profile() {
-  profile=$(head -n 1 $profilepath)
+  [ -n $HMPROFILE ] && { profile=$HMPROFILE; return; }
+  #[ -e $HOME/.config/home-manager/.profile ] && [ ! -z $HMPROFILE ] && { profile=$HMPROFILE; return; }
+  [ -e $HOME/.config/home-manager/.profile ] && { profile=$(head -n 1 $profilepath); return; }
+  { echo "Failed to load profile, make sure $homeconfigdir/.profile exists or set env: HMPROFILE"; exit 1; }
 }
 
 get_profile() {
-  profile=$(gum choose $(get_configs))
+  profile=$(gum choose --header "Choose your profile: " $(get_configs))
 }
 
 main() {
-  if [ $0 == "hmpr" ]; then # running hmpr directly should switch profiles manually, usually run via hmsw
+  [ -d $homeconfigdir ] || mkdir -p $homeconfigdir
+
+  [ ! -d $HOME/.config/home-manager ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
+
+  if [ ! -z $HMPROFILE ] || [ -e $profilepath ]; then
+    load_profile
+  elif [ ! -e $profilepath ] && [ -z $HMPROFILE ]; then
     get_profile
-    save_profile
   fi
-  [ -e $HOME/.config/home-manager/.profile ] && load_profile
-  [ ! -e $HOME/.config/home-manager/.profile ] && get_profile
-  home-manager switch -b hmbak --flake $HOME/.config/home-manager\#$profile
+
+  if [ $0 == "hmpr" ] || [ $flakeUri == "https://github.com/kr-nn/nix/archive/home.zip" ] ; then
+    get_profile
+  fi
+
+  save_profile
+
+  home-manager switch -b hmbak --flake $flakeUri
 }
 main
