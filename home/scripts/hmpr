@@ -5,18 +5,19 @@ profilepath="$homeconfigdir/.profile"
 flakeUri="$HOME/.config/home-manager"
 
 get_configs() {
-  nix eval --json --apply builtins.attrNames "$homeconfigdir#homeConfigurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
+  nix eval --json --apply builtins.attrNames "$flakeUri#homeConfigurations" | jq -r '.[]' || echo "Failed to get home-manager profiles"
 }
 
 save_profile() {
-  echo $profile > $profilepath
+  echo "$profile" > "$profilepath"
 }
 
 load_profile() {
-  [ -n $HMPROFILE ] && { profile=$HMPROFILE; return; }
-  #[ -e $HOME/.config/home-manager/.profile ] && [ ! -z $HMPROFILE ] && { profile=$HMPROFILE; return; }
-  [ -e $HOME/.config/home-manager/.profile ] && { profile=$(head -n 1 $profilepath); return; }
-  { echo "Failed to load profile, make sure $homeconfigdir/.profile exists or set env: HMPROFILE"; exit 1; }
+  if [ -n "${HMPROFILE+x}" ]; then
+    [ -n "$HMPROFILE" ] && { profile="$HMPROFILE"; return; }
+    [ -e "$profilepath" ] && { profile=$(head -n 1 "$profilepath"); return; }
+  fi
+  return 1
 }
 
 get_profile() {
@@ -25,21 +26,18 @@ get_profile() {
 
 main() {
 
-  [ -d $homeconfigdir ] || mkdir -p $homeconfigdir
+  [ -d "$homeconfigdir" ] || mkdir -p "$homeconfigdir"
 
   # Set flake Uri
   [ ! -d $homeconfigdir ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
 
-  # Set Profile
-  if [ ! -z $HMPROFILE ] || [ -e $profilepath ]; then
-    load_profile
-  elif [ ! -e $profilepath ] && [ -z $HMPROFILE ]; then
+  if ! load_profile; then
     get_profile
   fi
 
 
-  [ -z $profile ] && { echo "No profile selected"; exit 1; }
+  [ -z "$profile" ] && { echo "No profile selected"; exit 1; }
   save_profile
-  home-manager switch -b hmbak --flake $flakeUri#$profile
+  home-manager switch -b hmbak --flake "$flakeUri#$profile"
 }
 main
