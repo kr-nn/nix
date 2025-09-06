@@ -48,7 +48,7 @@ in
     elif [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       if [[ $(systemctl is-failed --user agenix) == "failed" ]] && [ -n "$(head -n 1 $AGEPATH)" ]; then
         systemctl restart --user agenix
-      elif [[ $(systemctl is-failed --user agenix) == "failed" ]] && [ -z "$(head -n 1 $AGEPATH)" ];
+      elif [[ $(systemctl is-failed --user agenix) == "failed" ]] && [ -z "$(head -n 1 $AGEPATH)" ]; then
         echo "Placing AgeKey failed"
       fi
     else
