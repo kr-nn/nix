@@ -41,7 +41,6 @@ main() {
   while getopts "c" opt; do
     case $opt in
       c) override="yes";;
-      *) : ;;
     esac
   done
   [ ! -z $override ] && get_profile
