@@ -27,26 +27,19 @@ main() {
 
   [ -d $homeconfigdir ] || mkdir -p $homeconfigdir
 
-  # set flake Uri
-  [ ! -d $HOME/.config/home-manager ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
+  # Set flake Uri
+  [ ! -d $homeconfigdir ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
 
-  # set Profile
+  # Set Profile
   if [ ! -z $HMPROFILE ] || [ -e $profilepath ]; then
     load_profile
   elif [ ! -e $profilepath ] && [ -z $HMPROFILE ]; then
     get_profile
   fi
 
-  # check if we want to override profile
-  while getopts "c" opt; do
-    case $opt in
-      c) override="yes";;
-    esac
-  done
-  [ ! -z $override ] && get_profile
 
   [ -z $profile ] && { echo "No profile selected"; exit 1; }
   save_profile
-  home-manager switch -b hmbak --flake $flakeUri\#$profile
+  home-manager switch -b hmbak --flake $flakeUri#$profile
 }
 main
