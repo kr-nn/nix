@@ -24,10 +24,10 @@
 
   # ARGS ========================================================================
     let
-      lib = import ./lib/lib.nix;
       system = "x86_64-linux";
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
       standardOptions = { inherit system; config.allowUnfree = true; };
+      libs = import ./libs/lib.nix { config = allPkgs.pkgs-unstable.config; lib = allPkgs.pkgs-unstable.lib; pkgs = allPkgs.pkgs-unstable; };
       allPkgs = {
         pkgs-vivaldi = import nixpkgs-vivaldi standardOptions;
         pkgs-signal = import nixpkgs-signal standardOptions;
@@ -41,9 +41,9 @@
     homeConfigurations = {
       "kyle" = home-manager.lib.homeManagerConfiguration {
         pkgs = allPkgs.pkgs-unstable;
-        extraSpecialArgs = { inherit allPkgs; };
+        extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/lib/dotfiles.nix
+          ./home/options/dotfiles.nix
           { programs.home-manager.enable = true; }
           ./home/usernames/kyle.nix
           ./home/themes/rockstar.nix
@@ -61,6 +61,7 @@
           ./home/comp/dotfiles-plasma.nix
           ./home/comp/framework-theme.nix
           ./home/comp/agenix.nix
+          ./home/comp/ckb-next.nix
           ./home/comp/yakuake.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
@@ -70,9 +71,9 @@
       };
       krobinson = {
         pkgs = allPkgs.pkgs-unstable;
-        extraSpecialArgs = { inherit allPkgs; };
+        extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/lib/dotfiles.nix
+          ./home/options/dotfiles.nix
           { programs.home-manager.enable = true; }
           ./home/usernames/krobinson.nix
           ./home/themes/parrot.nix
@@ -99,9 +100,9 @@
       };
       lpa = {
         pkgs = allPkgs.pkgs-unstable;
-        extraSpecialArgs = { inherit allPkgs; };
+        extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/lib/dotfiles.nix
+          ./home/options/dotfiles.nix
           { programs.home-manager.enable = true; }
           ./home/usernames/lpa.nix
           ./home/themes/parrot.nix

@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
-let
-  homedir="${config.home.homeDirectory}";
-in
 {
-  age.identityPaths = [ "${homedir}/.ssh/id_ed25519" "${homedir}/.ssh/age.key" ];
+  age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" "${config.home.homeDirectory}/.ssh/age.key" ];
   home.packages = with pkgs; [ age rbw pinentry-all ];
 
   programs.rbw = {
@@ -19,8 +16,8 @@ in
   home.activation.secretsInit = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
     PATH="${config.home.path}/bin:$PATH:${pkgs.rbw}/bin"
     AGEPATH="/run/user/$UID/age.key"
-    AGELINK="${homedir}/.ssh/age.key"
-    [ -d ${homedir}/.ssh ] || mkdir -p ${homedir}/.ssh
+    AGELINK="${config.home.homeDirectory}/.ssh/age.key"
+    [ -d ${config.home.homeDirectory}/.ssh ] || mkdir -p ${config.home.homeDirectory}/.ssh
 
     if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
       echo $(rbw get "age key") > $AGEPATH
@@ -38,7 +35,7 @@ in
   programs.zsh.initContent = ''
     ### Vaultwarden init ==================================================
     AGEPATH="/run/user/$UID/age.key"
-    AGELINK="${homedir}/.ssh/age.key"
+    AGELINK="${config.home.homeDirectory}/.ssh/age.key"
     if ! [ -f $AGEPATH ] || [ -z "$(head -n 1 $AGEPATH)" ]; then
       echo $(rbw get "age key") > $AGEPATH
       rbw stop-agent

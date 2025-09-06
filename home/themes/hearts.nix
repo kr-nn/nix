@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 let
-  homedir="${config.home.homeDirectory}";
   wallpaper = pkgs.fetchurl {
     url = "https://w.wallhaven.cc/full/g8/wallhaven-g891mq.jpg";
     sha256 = "0kdzdny260klqz6mprns3641a59f652w9ppyy89dair07wb9a634";
@@ -24,7 +23,7 @@ in
   '';
 
   # yakuake skin
-  home.file."${homedir}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
+  home.file."${config.home.homeDirectory}/.local/share/yakuake/kns_skins/noskin/".source = pkgs.fetchgit {
     url = "https://github.com/kr-nn/noskin-yakuake";
     rev = "7c247eac0f63d83c804ca0d8be84add2286c3b2e";
     sha256 = "12220i5cljrlbp0r9ybmi1zmyw20jky6azvrj6ivglnfpzsvckzh";

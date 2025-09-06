@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 let
-homedir="${config.home.homeDirectory}";
 
 ### FZF configuration:
 # ! NOTE Performance disclaimer
@@ -54,8 +53,8 @@ nix-shell = pkgs.fetchgit {
     rev = "82ca15e638cc208e6d8368e34a1625ed75e08f90";
     sha256 = "1l99ayc9j9ns450blf4rs8511lygc2xvbhkg1xp791abcn8krn26"; };
 
-omz_custom_plugins_path = "${homedir}/.oh-my-zsh/custom/plugins/";
-omz_custom_themes_path = "${homedir}/.oh-my-zsh/custom/themes/";
+omz_custom_plugins_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/plugins/";
+omz_custom_themes_path = "${config.home.homeDirectory}/.oh-my-zsh/custom/themes/";
 zdir = "${config.xdg.dataHome}/zsh";
 
 in
@@ -143,7 +142,7 @@ in
 
   home.sessionVariables = {
     # LANG="C.UTF-8"; I don't remember why I needed this. put back if I need it still
-    ZSH_CUSTOM="${homedir}/.oh-my-zsh/custom";
+    ZSH_CUSTOM="${config.home.homeDirectory}/.oh-my-zsh/custom";
     FZF_DEFAULT_COMMAND=rootsearch;
     FZF_DEFAULT_OPTS="--height=100% --reverse";
 
