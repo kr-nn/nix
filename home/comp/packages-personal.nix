@@ -1,5 +1,10 @@
+# These are packages for personal daily driver machines
+# Highest level of packages
+# includes ./packages-gui.nix & ./packages.nix
+
 { pkgs, allPkgs, ... }:
 {
+  imports = [ ./packages-gui.nix ];
   home.packages = with pkgs; [
 
     # docs
@@ -17,9 +22,6 @@
     bitwarden-desktop
     allPkgs.pkgs-stable.rustdesk
     remmina
-
-    # Fonts
-    nerd-fonts.fira-code
 
     # Browser
     allPkgs.pkgs-vivaldi.vivaldi

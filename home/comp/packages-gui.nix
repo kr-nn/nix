@@ -1,39 +1,18 @@
+# These are packages that can be used in a work environment
+# Second level of packages
+# includes ./packages.nix
+
 { pkgs, allPkgs, ... }:
 {
+  imports = [ ./packages.nix ];
   home.packages = with pkgs; [
-
-    # docs
-    obsidian
-    onlyoffice-bin
     kdePackages.kate
-    kdePackages.kompare
-    kdePackages.merkuro
-
-    # System Packages
-    kdePackages.partitionmanager
-
-    # Social
-    vesktop
-    telegram-desktop
-    allPkgs.pkgs-signal.signal-desktop
-
-    # admin things
-    bitwarden-desktop 
+    bitwarden-desktop
     allPkgs.pkgs-stable.rustdesk
     remmina
 
-    # Fonts
-    nerd-fonts.fira-code
-
-    # Browser
     allPkgs.pkgs-vivaldi.vivaldi
     allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
     allPkgs.pkgs-vivaldi.widevine-cdm
-
-    # Entertainment
-    mpv
-    feishin
-    steam
-
   ];
 }

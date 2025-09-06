@@ -1,3 +1,4 @@
+# These are packages for the terminal
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
@@ -22,7 +23,7 @@
     superfile
 
     # Terminal Apps
-    bitwarden-cli
+    rbw
     glow
 
     # Nix things

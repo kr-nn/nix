@@ -1,3 +1,6 @@
+# This module pulls in my secrets with agenix
+# Needed if using git/ssh/minioclient
+
 { config, lib, pkgs, ... }:
 {
   age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" "${config.home.homeDirectory}/.ssh/age.key" ];

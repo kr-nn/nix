@@ -7,6 +7,7 @@
     gcc
     cargo
   ];
+
   programs.nixvim = {
     /* mapping rules
       ALT for navigation

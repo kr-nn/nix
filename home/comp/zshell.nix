@@ -59,7 +59,6 @@ zdir = "${config.xdg.dataHome}/zsh";
 
 in
 {
-  programs.bash = { enable=true; historyFile = "${zdir}/bash_history"; };
   programs.zsh = {
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";

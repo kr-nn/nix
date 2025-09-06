@@ -35,6 +35,7 @@
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions;
       };
+      commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeManagerModules.nixvim ];
     in {
 
   # HOMES ========================================================================
@@ -43,89 +44,70 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/options/dotfiles.nix
-          { programs.home-manager.enable = true; }
+          # Required / dependencies
           ./home/usernames/kyle.nix
           ./home/themes/rockstar.nix
+          stylix.homeModules.stylix
+          agenix.homeManagerModules.default
+          agenixPkg
+          # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
           ./home/comp/minio.nix
           ./home/comp/neovim.nix
           ./home/comp/zshell.nix
           ./home/comp/agenix.nix
-          ./home/comp/packages.nix
-          ./home/comp/packages-daily-personal.nix
-          ./home/comp/packages-plasma.nix
-          ./home/comp/touchegg.nix
-          ./home/comp/stylix-konsoleRc.nix
-          ./home/comp/dotfiles-plasma.nix
+          # desktop
           ./home/comp/framework-theme.nix
-          ./home/comp/agenix.nix
+          ./home/comp/packages-personal.nix
+          ./home/comp/packages-plasma.nix
+          ./home/comp/dotfiles-plasma.nix
+          ./home/comp/touchegg.nix
           ./home/comp/ckb-next.nix
           ./home/comp/yakuake.nix
-          nixvim.homeManagerModules.nixvim
-          stylix.homeModules.stylix
-          agenix.homeManagerModules.default
-          agenixPkg
-        ];
+        ] ++ commonHomeModules;
       };
       krobinson = {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/options/dotfiles.nix
-          { programs.home-manager.enable = true; }
+          # Required / dependencies
           ./home/usernames/krobinson.nix
-          ./home/themes/parrot.nix
+          agenix.homeManagerModules.default
+          agenixPkg
+          # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
           ./home/comp/minio.nix
           ./home/comp/neovim.nix
           ./home/comp/zshell.nix
           ./home/comp/agenix.nix
-          ./home/comp/packages.nix
-          ./home/comp/packages-daily-personal.nix
+          # desktop
+          ./home/comp/packages-gui.nix
           ./home/comp/packages-plasma.nix
-          ./home/comp/touchegg.nix
-          ./home/comp/stylix-konsoleRc.nix
           ./home/comp/dotfiles-plasma.nix
-          ./home/comp/framework-theme.nix
-          ./home/comp/agenix.nix
-          ./home/comp/yakuake.nix
-          nixvim.homeManagerModules.nixvim
-          stylix.homeModules.stylix
-          agenix.homeManagerModules.default
-          agenixPkg
-        ];
+        ] ++ commonHomeModules;
       };
       lpa = {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit libs; inherit allPkgs; };
         modules = [
-          ./home/options/dotfiles.nix
-          { programs.home-manager.enable = true; }
+          # Required / dependencies
           ./home/usernames/lpa.nix
-          ./home/themes/parrot.nix
+          agenix.homeManagerModules.default
+          agenixPkg
+          # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
           ./home/comp/minio.nix
           ./home/comp/neovim.nix
           ./home/comp/zshell.nix
           ./home/comp/agenix.nix
-          ./home/comp/packages.nix
-          ./home/comp/packages-daily-personal.nix
+          # desktop
+          ./home/comp/packages-gui.nix
           ./home/comp/packages-plasma.nix
-          ./home/comp/touchegg.nix
-          ./home/comp/stylix-konsoleRc.nix
           ./home/comp/dotfiles-plasma.nix
-          ./home/comp/framework-theme.nix
-          ./home/comp/agenix.nix
-          ./home/comp/yakuake.nix
-          nixvim.homeManagerModules.nixvim
-          stylix.homeModules.stylix
-          agenix.homeManagerModules.default
-          agenixPkg
-        ];
+        ] ++ commonHomeModules;
       };
     };
   };
