@@ -38,6 +38,7 @@ main() {
     get_profile
   fi
 
+  [ -z $profile ] && { echo "No profile selected"; exit 1; }
   save_profile
 
   home-manager switch -b hmbak --flake $flakeUri\#$profile
