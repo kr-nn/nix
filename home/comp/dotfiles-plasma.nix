@@ -17,9 +17,9 @@ in
   home.file = {
   };
   home.dotfiles = {
-    "${homedir}/.config/systemsettingsrc".source = ./dotfiles/systemsettingsrc;
-    "${homedir}/.config/kglobalshortcutsrc".source = ./dotfiles/kglobalshortcutsrc;
-    "${homedir}/.config/mimeapps.list".source = ./dotfiles/mimeapps.list;
-    "${homedir}/.config/khotkeysrc".source = ./dotfiles/khotkeysrc;
+    "${homedir}/.config/systemsettingsrc".source = ../dotfiles/systemsettingsrc;
+    "${homedir}/.config/kglobalshortcutsrc".source = ../dotfiles/kglobalshortcutsrc;
+    "${homedir}/.config/mimeapps.list".source = ../dotfiles/mimeapps.list;
+    "${homedir}/.config/khotkeysrc".source = ../dotfiles/khotkeysrc;
   };
 }

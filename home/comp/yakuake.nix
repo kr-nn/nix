@@ -18,7 +18,7 @@ in
     "${homedir}/.config/autostart/yakuake.desktop".text = mkDesktopFile { env = ""; pkg = pkgs.kdePackages.yakuake; execArgs = "";};
   };
   home.dotfiles = {
-    "${homedir}/.config/yakuakerc".source = ./dotfiles/yakuakerc;
+    "${homedir}/.config/yakuakerc".source = ../dotfiles/yakuakerc;
   };
   home.packages = with pkgs; [ kdePackages.yakuake ];
 }
