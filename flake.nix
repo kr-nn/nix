@@ -3,40 +3,20 @@
 
   inputs = {
 
-    # NIXPKGS
-    ## packages
-    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
-
-    nixpkgs-signal.url = "github:nixos/nixpkgs/master";
-
-    ## Nixos
+    ## generic channels
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    # HOME-MANAGER
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    ## packages
+    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-signal.url = "github:nixos/nixpkgs/master";
 
-    #Secrets management
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    # Stylix
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    # Neovim
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    # Modules
+    home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
+    agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
+    stylix = { url = "github:nix-community/stylix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
+    nixvim = { url = "github:nix-community/nixvim"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
 
   };
 
@@ -44,6 +24,7 @@
 
   # ARGS ========================================================================
     let
+      lib = import ./lib/lib.nix;
       system = "x86_64-linux";
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
       standardOptions = { inherit system; config.allowUnfree = true; };
@@ -62,25 +43,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          ./home/lib/dotfiles.nix
           { programs.home-manager.enable = true; }
-          { stylix.enable = true; }
-          ./hm/lib/dotfiles.nix
-          ./hm/usernames/kyle.nix
-          ./hm/comp/git.nix
-          ./hm/comp/ssh.nix
-          ./hm/comp/minio.nix
-          ./hm/comp/neovim.nix
-          ./hm/comp/themes.nix
-          ./hm/comp/zshell.nix
-          ./hm/comp/secrets.nix
-          ./hm/comp/packages.nix
-          ./hm/comp/packages-gui.nix
-          ./hm/comp/packages-plasma.nix
-          ./hm/comp/touchegg.nix
-          ./hm/comp/stylix-konsoleRc.nix
-          ./hm/comp/allowUnfree.nix
-          ./hm/comp/dotfiles-plasma.nix
-          ./hm/comp/framework-theme.nix
+          ./home/usernames/kyle.nix
+          ./home/themes/rockstar.nix
+          ./home/comp/git.nix
+          ./home/comp/ssh.nix
+          ./home/comp/minio.nix
+          ./home/comp/neovim.nix
+          ./home/comp/zshell.nix
+          ./home/comp/agenix.nix
+          ./home/comp/packages.nix
+          ./home/comp/packages-daily-personal.nix
+          ./home/comp/packages-plasma.nix
+          ./home/comp/touchegg.nix
+          ./home/comp/stylix-konsoleRc.nix
+          ./home/comp/dotfiles-plasma.nix
+          ./home/comp/framework-theme.nix
+          ./home/comp/agenix.nix
+          ./home/comp/yakuake.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
@@ -91,25 +72,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          ./home/lib/dotfiles.nix
           { programs.home-manager.enable = true; }
-          { stylix.enable = true; }
-          ./hm/lib/dotfiles.nix
-          ./hm/usernames/krobinson.nix
-          ./hm/comp/git.nix
-          ./hm/comp/ssh.nix
-          ./hm/comp/minio.nix
-          ./hm/comp/neovim.nix
-          ./hm/comp/themes.nix
-          ./hm/comp/zshell.nix
-          ./hm/comp/secrets.nix
-          ./hm/comp/packages.nix
-          ./hm/comp/packages-gui.nix
-          ./hm/comp/packages-plasma.nix
-          ./hm/comp/touchegg.nix
-          ./hm/comp/stylix-konsoleRc.nix
-          ./hm/comp/allowUnfree.nix
-          ./hm/comp/dotfiles-plasma.nix
-          ./hm/comp/framework-theme.nix
+          ./home/usernames/krobinson.nix
+          ./home/themes/parrot.nix
+          ./home/comp/git.nix
+          ./home/comp/ssh.nix
+          ./home/comp/minio.nix
+          ./home/comp/neovim.nix
+          ./home/comp/zshell.nix
+          ./home/comp/agenix.nix
+          ./home/comp/packages.nix
+          ./home/comp/packages-daily-personal.nix
+          ./home/comp/packages-plasma.nix
+          ./home/comp/touchegg.nix
+          ./home/comp/stylix-konsoleRc.nix
+          ./home/comp/dotfiles-plasma.nix
+          ./home/comp/framework-theme.nix
+          ./home/comp/agenix.nix
+          ./home/comp/yakuake.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
@@ -120,25 +101,25 @@
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit allPkgs; };
         modules = [
+          ./home/lib/dotfiles.nix
           { programs.home-manager.enable = true; }
-          { stylix.enable = true; }
-          ./hm/lib/dotfiles.nix
-          ./hm/usernames/lpa.nix
-          ./hm/comp/git.nix
-          ./hm/comp/ssh.nix
-          ./hm/comp/minio.nix
-          ./hm/comp/neovim.nix
-          ./hm/comp/themes.nix
-          ./hm/comp/zshell.nix
-          ./hm/comp/secrets.nix
-          ./hm/comp/packages.nix
-          ./hm/comp/packages-gui.nix
-          ./hm/comp/packages-plasma.nix
-          ./hm/comp/touchegg.nix
-          ./hm/comp/stylix-konsoleRc.nix
-          ./hm/comp/allowUnfree.nix
-          ./hm/comp/dotfiles-plasma.nix
-          ./hm/comp/framework-theme.nix
+          ./home/usernames/lpa.nix
+          ./home/themes/parrot.nix
+          ./home/comp/git.nix
+          ./home/comp/ssh.nix
+          ./home/comp/minio.nix
+          ./home/comp/neovim.nix
+          ./home/comp/zshell.nix
+          ./home/comp/agenix.nix
+          ./home/comp/packages.nix
+          ./home/comp/packages-daily-personal.nix
+          ./home/comp/packages-plasma.nix
+          ./home/comp/touchegg.nix
+          ./home/comp/stylix-konsoleRc.nix
+          ./home/comp/dotfiles-plasma.nix
+          ./home/comp/framework-theme.nix
+          ./home/comp/agenix.nix
+          ./home/comp/yakuake.nix
           nixvim.homeManagerModules.nixvim
           stylix.homeModules.stylix
           agenix.homeManagerModules.default

@@ -138,7 +138,7 @@ in
     "${omz_custom_plugins_path}fzf-tab".source = fzf-tab;
     "${omz_custom_plugins_path}zsh-ssh".source = zsh-ssh;
     "${omz_custom_plugins_path}nix-shell".source = nix-shell;
-    "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ./dotfiles/oh-my-zsh/agnoster-nix.zsh-theme;
+    "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ../dotfiles/oh-my-zsh/agnoster-nix.zsh-theme;
   };
 
   home.sessionVariables = {

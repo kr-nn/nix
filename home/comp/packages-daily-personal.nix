@@ -7,10 +7,6 @@
     onlyoffice-bin
     kdePackages.kate
     kdePackages.kompare
-    kdePackages.merkuro
-
-    # System Packages
-    kdePackages.partitionmanager
 
     # Social
     vesktop
@@ -18,9 +14,8 @@
     allPkgs.pkgs-signal.signal-desktop
 
     # admin things
-    bitwarden-desktop 
+    bitwarden-desktop
     allPkgs.pkgs-stable.rustdesk
-    kdePackages.yakuake
     remmina
 
     # Fonts
@@ -33,7 +28,6 @@
 
     # Entertainment
     mpv
-    feishin
     steam
 
   ];
