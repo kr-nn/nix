@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2046
 homeconfigdir="$HOME/.config/home-manager"
 profilepath="$homeconfigdir/.profile"
 flakeUri="$HOME/.config/home-manager"
@@ -29,7 +30,7 @@ main() {
   [ -d "$homeconfigdir" ] || mkdir -p "$homeconfigdir"
 
   # Set flake Uri
-  [ ! -d $homeconfigdir ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
+  [ ! -d "$homeconfigdir" ] && flakeUri="https://github.com/kr-nn/nix/archive/home.zip"
 
   if ! load_profile; then
     get_profile

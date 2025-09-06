@@ -35,6 +35,24 @@
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions;
       };
+      hmprInputs = (with allPkgs.pkgs-unstable; [
+        coreutils
+        nix
+        jq
+        gum
+      ]) ++ [ home-manager.packages.${system}.default ];
+      hmprScript = allPkgs.pkgs-unstable.writeShellScriptBin "hmpr" (builtins.readFile ./home/scripts/hmpr);
+      hmpr = allPkgs.pkgs-unstable.stdenvNoCC.mkDerivation {
+        pname = "hmpr";
+        version = "1.0";
+        nativeBuildInputs = [ allPkgs.pkgs-unstable.makeWrapper ];
+        dontUnpack = true;
+        installPhase = ''
+          mkdir -p $out/bin
+          cp ${hmprScript}/bin/hmpr $out/bin/hmpr
+          wrapProgram $out/bin/hmpr --prefix PATH : ${allPkgs.pkgs-unstable.lib.makeBinPath hmprInputs}
+        '';
+      };
       commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeManagerModules.nixvim ];
     in {
 
@@ -109,6 +127,13 @@
           ./home/comp/dotfiles-plasma.nix
         ] ++ commonHomeModules;
       };
+    };
+
+  # PACKAGES / APPS =============================================================
+    packages.${system}.hmpr = hmpr;
+    apps.${system}.hmpr = {
+      type = "app";
+      program = "${hmpr}/bin/hmpr";
     };
   };
 }
