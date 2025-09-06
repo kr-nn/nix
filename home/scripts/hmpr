@@ -35,7 +35,7 @@ main() {
   fi
 
   echo "\$0: $0"
-  if [ $0 == "hmpr" ] || [ $flakeUri == "https://github.com/kr-nn/nix/archive/home.zip" ] ; then
+  if [ $0 == "$(which hmpr)" ] || [ $flakeUri == "https://github.com/kr-nn/nix/archive/home.zip" ] ; then
     get_profile
   fi
 
