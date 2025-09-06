@@ -46,6 +46,7 @@
         pname = "hmpr";
         version = "1.0";
         nativeBuildInputs = [ allPkgs.pkgs-unstable.makeWrapper ];
+        buildInputs = [ allPkgs.pkgs-unstable.jq allPkgs.pkgs-unstable.gum allPkgs.pkgs-unstable.home-manager ];
         dontUnpack = true;
         installPhase = ''
           mkdir -p $out/bin
