@@ -19,6 +19,7 @@
     htop
     jq
     gum
+    superfile
 
     # Terminal Apps
     bitwarden-cli
