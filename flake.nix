@@ -17,10 +17,15 @@
     agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     stylix = { url = "github:nix-community/stylix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     nixvim = { url = "github:nix-community/nixvim"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
+    plasma = { url = "github:nix-community/plasma-manager"; inputs = { nixpkgs.follows = "nixpkgs-unstable"; home-manager.follows = "home-manager"; }; };
 
   };
 
-  outputs = { nixpkgs-vivaldi, nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable, nixpkgs-signal, agenix, stylix, nixvim, home-manager, ... }:
+  outputs = {
+    nixpkgs-vivaldi, nixpkgs-signal,
+    nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable,
+    agenix, stylix, nixvim, home-manager, plasma,
+    ... }:
 
   # ARGS ========================================================================
     let
@@ -35,6 +40,9 @@
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions;
       };
+      commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeManagerModules.nixvim ];
+
+      ## HMPR package ==========================================================
       hmprInputs = (with allPkgs.pkgs-unstable; [
         coreutils
         nix
@@ -54,7 +62,8 @@
           wrapProgram $out/bin/hmpr --prefix PATH : ${allPkgs.pkgs-unstable.lib.makeBinPath hmprInputs}
         '';
       };
-      commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeManagerModules.nixvim ];
+      ## =======================================================================
+
     in {
 
   # HOMES ========================================================================
@@ -66,6 +75,7 @@
           # Required / dependencies
           ./home/usernames/kyle.nix
           ./home/themes/rockstar.nix
+          plasma.homeModules.plasma-manager
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
           agenixPkg
@@ -81,7 +91,7 @@
           ./home/comp/packages-personal.nix
           ./home/comp/packages-plasma.nix
           ./home/comp/dotfiles-plasma.nix
-          ./home/comp/touchegg.nix
+          #./home/comp/touchegg.nix
           ./home/comp/ckb-next.nix
           ./home/comp/yakuake.nix
         ] ++ commonHomeModules;
