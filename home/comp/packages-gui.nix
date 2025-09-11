@@ -7,6 +7,7 @@
   imports = [ ./packages.nix ];
   home.packages = with pkgs; [
     kdePackages.kate
+    kdePackages.plasma-browser-integration
     bitwarden-desktop
     allPkgs.pkgs-stable.rustdesk
     remmina
