@@ -96,6 +96,34 @@
           ./home/comp/yakuake.nix
         ] ++ commonHomeModules;
       };
+      "kyle-parrot" = home-manager.lib.homeManagerConfiguration {
+        pkgs = allPkgs.pkgs-unstable;
+        extraSpecialArgs = { inherit libs; inherit allPkgs; };
+        modules = [
+          # Required / dependencies
+          ./home/usernames/kyle.nix
+          ./home/themes/parrot.nix
+          plasma.homeModules.plasma-manager
+          stylix.homeModules.stylix
+          agenix.homeManagerModules.default
+          agenixPkg
+          # terminal
+          ./home/comp/git.nix
+          ./home/comp/ssh.nix
+          ./home/comp/minio.nix
+          ./home/comp/neovim.nix
+          ./home/comp/zshell.nix
+          ./home/comp/agenix.nix
+          # desktop
+          ./home/comp/framework-theme.nix
+          ./home/comp/packages-personal.nix
+          ./home/comp/packages-plasma.nix
+          ./home/comp/dotfiles-plasma.nix
+          #./home/comp/touchegg.nix
+          ./home/comp/ckb-next.nix
+          ./home/comp/yakuake.nix
+        ] ++ commonHomeModules;
+      };
       krobinson = {
         pkgs = allPkgs.pkgs-unstable;
         extraSpecialArgs = { inherit libs; inherit allPkgs; };
