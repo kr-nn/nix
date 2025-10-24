@@ -23,8 +23,10 @@
   # Prevent sudo SUID attacks
   security.sudo.execWheelOnly = true;
 
+  users.groups.kyle = {};
   users.users.kyle = {
     isNormalUser = true;
+    group = "kyle";
     description = "kyle";
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
