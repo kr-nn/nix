@@ -36,6 +36,7 @@
        ./hosts/sorin/hardware-configuration.nix
 
        # Addons
+       ./hosts/_mods/gui-packages.nix
        ./hosts/_mods/plasma.nix
        ./hosts/_mods/xremap.nix
        ./hosts/_mods/syncthing.nix
