@@ -1,6 +1,7 @@
 { ... }:
 {
   services.xremap = {
+    enable = true;
     withX11 = true;
     watch = true;
     yamlConfig = ''

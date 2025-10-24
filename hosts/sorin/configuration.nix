@@ -29,7 +29,10 @@ let
 
     ## Specific Drivers ========================================================
     services.fprintd.enable = false;
-    hardware.ckb-next.enable = true;
+    hardware.ckb-next = {
+      enable = true;
+      package = pkgs.ckb-next.overrideAttrs (old: { cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DUSE_DBUS_MENU=0" ]; });
+    };
     services.touchegg.enable = true;
     # For printers and scanners
     services.avahi = { enable = true; openFirewall = true;};
