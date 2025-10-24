@@ -12,8 +12,8 @@
     allPkgs.pkgs-stable.rustdesk
     remmina
 
-    allPkgs.pkgs-vivaldi.vivaldi
-    allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
-    allPkgs.pkgs-vivaldi.widevine-cdm
+    #allPkgs.pkgs-vivaldi.vivaldi
+    #allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
+    #allPkgs.pkgs-vivaldi.widevine-cdm
   ];
 }
