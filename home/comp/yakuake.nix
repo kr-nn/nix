@@ -6,5 +6,5 @@
   home.dotfiles = {
     "${config.home.homeDirectory}/.config/yakuakerc".source = ../dotfiles/yakuakerc;
   };
-  home.packages = with pkgs; [ kdePackages.yakuake ];
+  #home.packages = with pkgs; [ kdePackages.yakuake ]; # Yakuake depends on compatible QT version. Moved to nixos.
 }
