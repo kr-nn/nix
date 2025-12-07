@@ -83,6 +83,7 @@
           ./home/comp/git.nix
           ./home/comp/ssh.nix
           ./home/comp/minio.nix
+          ./home/comp/ai.nix
           ./home/comp/neovim.nix
           ./home/comp/zshell.nix
           ./home/comp/agenix.nix
@@ -111,6 +112,7 @@
           ./home/comp/git.nix
           ./home/comp/ssh.nix
           ./home/comp/minio.nix
+          ./home/comp/ai.nix
           ./home/comp/neovim.nix
           ./home/comp/zshell.nix
           ./home/comp/agenix.nix
