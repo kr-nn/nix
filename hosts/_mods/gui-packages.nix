@@ -5,5 +5,6 @@
     pkgs.vivaldi-ffmpeg-codecs
     pkgs.widevine-cdm
     pkgs.kdePackages.yakuake # yakuake requires compatible QT version
+    pkgs.moonlight-qt # Codec Decode needs to match OS driver
   ];
 }
