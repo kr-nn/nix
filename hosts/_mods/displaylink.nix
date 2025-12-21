@@ -1,23 +1,21 @@
 { lib, pkgs, ... }:
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      displaylink = prev.displaylink.overrideAttrs {
-        src = ../../assets/displaylink-620.zip;
-      };
-    })
-  ];
+  #nixpkgs.overlays = [
+  #  (final: prev: {
+  #    displaylink = prev.displaylink.overrideAttrs {
+  #      src = ../../assets/displaylink-620.zip;
+  #    };
+  #  })
+  #];
 
-  services.xserver = {
-    videoDrivers = [ "displaylink" "modesetting" ];
-  };
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+  environment.systemPackages = [ pkgs.displaylink ];
 
-  # fix order of operations
-  systemd.services.display-manager.after = [ "dlm.service" ];
-  systemd.services.dlm.before = [ "display-manager.service" ];
-  systemd.services.dlm.after = lib.mkForce [ ];
+  ## fix order of operations
+  #systemd.services.display-manager.after = [ "dlm.service" ];
+  #systemd.services.dlm.before = [ "display-manager.service" ];
+  #systemd.services.dlm.after = lib.mkForce [ ];
+  #systemd.services.dlm.enable = true;
 
-  environment.systemPackages = [
-    pkgs.displaylink
-  ];
 }
