@@ -1,12 +1,12 @@
 { lib, pkgs, ... }:
 {
-  #nixpkgs.overlays = [
-  #  (final: prev: {
-  #    displaylink = prev.displaylink.overrideAttrs {
-  #      src = ../../assets/displaylink-620.zip;
-  #    };
-  #  })
-  #];
+  nixpkgs.overlays = [
+    (final: prev: {
+      displaylink = prev.displaylink.overrideAttrs {
+        src = ../../assets/displaylink-620.zip;
+      };
+    })
+  ];
 
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
   systemd.services.dlm.wantedBy = [ "multi-user.target" ];
