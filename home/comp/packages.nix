@@ -29,7 +29,6 @@
     # Nix things
     nix-prefetch-git
     nixd
-    nh
 
     # custom scripts
     (pkgs.writeShellScriptBin "flink" (builtins.readFile ../scripts/flink) )

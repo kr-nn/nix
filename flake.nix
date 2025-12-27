@@ -11,6 +11,7 @@
     ## packages
     nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
+    neix.url = "github:Hovirix/neix";
 
     # Modules
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
@@ -24,13 +25,14 @@
   outputs = {
     nixpkgs-vivaldi, nixpkgs-signal,
     nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable,
-    agenix, stylix, nixvim, home-manager, plasma,
+    agenix, stylix, nixvim, home-manager, plasma, neix,
     ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
       agenixPkg = { home.packages = [ agenix.packages.${system}.default ]; };
+      neixPkg = { home.packages = [ neix.packages.${system}.default ]; };
       standardOptions = { inherit system; config.allowUnfree = true; };
       libs = import ./libs/lib.nix { config = allPkgs.pkgs-unstable.config; lib = allPkgs.pkgs-unstable.lib; pkgs = allPkgs.pkgs-unstable; };
       allPkgs = {
@@ -79,6 +81,7 @@
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
           agenixPkg
+          neixPkg
           # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
@@ -108,6 +111,7 @@
           stylix.homeModules.stylix
           agenix.homeManagerModules.default
           agenixPkg
+          neixPkg
           # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
@@ -134,6 +138,7 @@
           ./home/usernames/krobinson.nix
           agenix.homeManagerModules.default
           agenixPkg
+          neixPkg
           # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
@@ -155,6 +160,7 @@
           ./home/usernames/lpa.nix
           agenix.homeManagerModules.default
           agenixPkg
+          neixPkg
           # terminal
           ./home/comp/git.nix
           ./home/comp/ssh.nix
