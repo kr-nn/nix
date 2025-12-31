@@ -11,6 +11,7 @@
     bitwarden-desktop
     allPkgs.pkgs-stable.rustdesk
     remmina
+    appimage-run
 
     #allPkgs.pkgs-vivaldi.vivaldi
     #allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
