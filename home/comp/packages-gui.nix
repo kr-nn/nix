@@ -10,7 +10,7 @@
     kdePackages.merkuro
     kdePackages.plasma-browser-integration
     bitwarden-desktop
-    allPkgs.pkgs-stable.rustdesk
+    rustdesk
     remmina
     appimage-run
 

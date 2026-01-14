@@ -20,7 +20,7 @@
 
     # admin things
     bitwarden-desktop
-    allPkgs.pkgs-stable.rustdesk
+    rustdesk
     remmina
 
     # Browser
