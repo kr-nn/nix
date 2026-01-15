@@ -62,7 +62,7 @@ in
   programs.zsh = {
     syntaxHighlighting.enable = true;
     history.path = "${zdir}/.zsh_history";
-    dotDir = ".local/share/zsh";
+    dotDir = "${config.home.homeDirectory}/.local/share/zsh";
     enable = true;
     shellAliases = {
       # neovim

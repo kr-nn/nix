@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
-    libsForQt5.kwallet-pam
+    kdePackages.kwallet-pam
   ];
 
   home.activation.konsolerc = lib.hm.dag.entryAfter ["writeBoundary"] ''

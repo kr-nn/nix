@@ -42,7 +42,7 @@
         pkgs-bleeding = import nixpkgs-bleeding standardOptions;
         pkgs-stable = import nixpkgs-stable standardOptions;
       };
-      commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeManagerModules.nixvim ];
+      commonHomeModules = [ ./home/options/dotfiles.nix { programs.home-manager.enable = true; } nixvim.homeModules.nixvim ];
 
       ## HMPR package ==========================================================
       hmprInputs = (with allPkgs.pkgs-unstable; [

@@ -9,7 +9,7 @@
 
     # docs
     obsidian
-    onlyoffice-bin
+    onlyoffice-desktopeditors
     kdePackages.kate
     kdePackages.kompare
 

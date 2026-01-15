@@ -7,15 +7,17 @@
 
   programs.git = {
     enable = true;
-    aliases = {
-      "chop" = "!: git checkout && ${config.home.homeDirectory}/.nix-profile/bin/git-chop";
-    };
-    userName = lib.mkDefault "kyle";
-    userEmail = lib.mkDefault "kyle@nocturnalnerd.xyz";
-    extraConfig = {
-      credential.useHttpPath = "true";
-      credential.helper = "!gitauth";
-      safe.directory = "/etc/nixos";
+    settings = {
+      aliases = {
+        "chop" = "!: git checkout && ${config.home.homeDirectory}/.nix-profile/bin/git-chop";
+      };
+      user.email = lib.mkDefault "kyle@nocturnalnerd.xyz";
+      user.name = lib.mkDefault "kyle";
+      extraConfig = {
+        credential.useHttpPath = "true";
+        credential.helper = "!gitauth";
+        safe.directory = "/etc/nixos";
+      };
     };
   };
 }
