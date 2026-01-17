@@ -13,11 +13,9 @@
       };
       user.email = lib.mkDefault "kyle@nocturnalnerd.xyz";
       user.name = lib.mkDefault "kyle";
-      extraConfig = {
-        credential.useHttpPath = "true";
-        credential.helper = "!gitauth";
-        safe.directory = "/etc/nixos";
-      };
+      credential.useHttpPath = "true";
+      credential.helper = "!gitauth";
+      safe.directory = "/etc/nixos";
     };
   };
 }
