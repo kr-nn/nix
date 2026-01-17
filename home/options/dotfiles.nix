@@ -19,6 +19,12 @@ in {
             default = name;
             description = "Target location for the file.";
           };
+
+          mode = mkOption {
+            type = types.str;
+            default = "644";
+            description = "The permissions assigned to the file";
+          };
         };
       }));
       default = {};
@@ -28,9 +34,12 @@ in {
 
   config = {
     home.activation.copyDotfiles = dag.entryAfter [ "writeBoundary" ] ''
-      ${lib.concatStringsSep "\n" (mapAttrsToList (dst: src: ''
-        install -D -m 644 ${lib.escapeShellArg src.source} ${lib.escapeShellArg dst}
-      '') config.home.dotfiles)}
+      ${
+        lib.concatStringsSep "\n"
+          ( mapAttrsToList (
+            dst: src: ''install -D -m ${lib.escapeShellArg src.mode} ${lib.escapeShellArg src.source} ${lib.escapeShellArg dst} '')
+          config.home.dotfiles )
+      }
     '';
   };
 }
