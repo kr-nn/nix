@@ -4,9 +4,6 @@ Skin=noskin
 SkinInstalledWithKns=true
 Translucency=true
 
-[Behavior]
-OpenAfterStart=true
-
 [Desktop Entry]
 DefaultProfile=Stylix.profile
 
