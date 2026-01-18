@@ -23,7 +23,8 @@
   # Prevent sudo SUID attacks
   security.sudo.execWheelOnly = true;
 
-  users.groups.kyle = {};
+  users.groups.dialout.members = [ "kyle" ];
+  users.groups.kyle = { };
   users.users.kyle = {
     isNormalUser = true;
     group = "kyle";
