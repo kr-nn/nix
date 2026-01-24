@@ -14,6 +14,7 @@
     rustdesk
     remmina
     appimage-run
+    steam-run
 
     #allPkgs.pkgs-vivaldi.vivaldi
     #allPkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
