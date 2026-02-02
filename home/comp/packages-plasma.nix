@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     kdePackages.kwallet-pam
+    lxqt.lxqt-sudo # This allows me to use gui elevation easily
   ];
 
   home.activation.konsolerc = lib.hm.dag.entryAfter ["writeBoundary"] ''
