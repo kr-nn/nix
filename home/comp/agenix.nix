@@ -45,7 +45,7 @@
     fi
     if ! [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
       ln -s $AGEPATH $AGELINK
-    elif [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+    elif [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then #BUG: duplicate check???
       if [[ $(systemctl is-failed --user agenix) == "failed" ]] && [ -n "$(head -n 1 $AGEPATH)" ]; then
         systemctl restart --user agenix
       elif [[ $(systemctl is-failed --user agenix) == "failed" ]] && [ -z "$(head -n 1 $AGEPATH)" ]; then
