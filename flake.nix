@@ -3,6 +3,8 @@
 
   inputs = {
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     ## generic channels
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
@@ -23,11 +25,13 @@
   };
 
   outputs = {
-    nixpkgs-vivaldi, nixpkgs-signal,
+    flake-parts, nixpkgs-vivaldi, nixpkgs-signal,
     nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable,
     agenix, stylix, nixvim, home-manager, plasma, neix,
-    ... }:
+    ... }@inputs : flake-parts.lib.mkFlake { inherit inputs; } (top@{ config, withSystem, moduleWithSystem, ... }: {
 
+      systems = [ "x86_64-linux" ];
+      flake =
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
@@ -66,7 +70,7 @@
       };
       ## =======================================================================
 
-    in {
+    in  {
 
   # HOMES ========================================================================
     homeConfigurations = {
@@ -183,4 +187,5 @@
       program = "${hmpr}/bin/hmpr";
     };
   };
+  });
 }
