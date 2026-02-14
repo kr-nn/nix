@@ -4,6 +4,7 @@
   inputs = {
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
 
     ## generic channels
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -24,15 +25,6 @@
 
   };
 
-  outputs = {
-    flake-parts, nixpkgs-vivaldi, nixpkgs-signal,
-    nixpkgs-unstable, nixpkgs-bleeding, nixpkgs-stable,
-    agenix, stylix, nixvim, home-manager, plasma, neix,
-    ... }@inputs : flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
-      imports = [
-        ./homes/kyle.nix
-        ./packages/hmpr.nix
-      ];
-  };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; }
+    (inputs.import-tree ./modules );
 }

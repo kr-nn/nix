@@ -15,7 +15,7 @@ let
     jq
     gum
   ]) ++ [ inputs.home-manager.packages.${system}.default ];
-  hmprScript = allPkgs.pkgs-unstable.writeShellScriptBin "hmpr" (builtins.readFile ../home/scripts/hmpr);
+  hmprScript = allPkgs.pkgs-unstable.writeShellScriptBin "hmpr" (builtins.readFile ../../home/scripts/hmpr);
   hmpr = allPkgs.pkgs-unstable.stdenvNoCC.mkDerivation {
     pname = "hmpr";
     version = "1.0";
