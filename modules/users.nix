@@ -21,7 +21,6 @@ in
       inputs.self.homeModules.dotfiles
       inputs.self.homeModules.framework
       inputs.self.homeModules.git
-      inputs.self.homeModules.plasma-dotfiles
       inputs.self.homeModules.personal-packages
       inputs.self.homeModules.gui-packages
       inputs.self.homeModules.plasma-packages

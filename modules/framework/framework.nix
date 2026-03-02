@@ -15,5 +15,17 @@ in
         sha256 = "1vnpvsa47a5vxr044r4zladz660xz867kc518j298l940s39s1lk";
       };
     };
+    programs.plasma = {
+      input.touchpads = [
+        {
+          disableWhileTyping = true;
+          enable = true;
+          name = "PIXA3854:00 093A:0274 Touchpad";
+          naturalScroll = true;
+          productId = "0274";
+          vendorId = "093a";
+        }
+      ];
+    };
   };
 }
