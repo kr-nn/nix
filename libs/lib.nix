@@ -1,5 +1,5 @@
-{ pkgs, lib, ... }:
-{
+{ lib, ... }: {
+
   mkDesktopFile = { env, pkg, execArgs }: ''
     [Desktop Entry]
     Comment[en_CA]=${pkg.meta.mainProgram}
@@ -10,4 +10,5 @@
     TryExec=${pkg}/bin/${pkg.meta.mainProgram}
     Type=Application
   '';
+
 }

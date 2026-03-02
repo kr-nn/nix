@@ -34,4 +34,4 @@ git checkout "$1" || { echo "Error: Failed to checkout $1"; exit 1; }
 git branch -D "$head" || { echo "Error: Failed to delete branch $head"; exit 1; }
 git branch "$head" || { echo "Error: Failed to create branch $head"; exit 1; }
 git checkout "$head" || { echo "Error: Failed to checkout branch $head"; exit 1; }
-
+git push --set-upstream origin "$head" > /dev/null

@@ -25,6 +25,17 @@
 
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; }
-    (inputs.import-tree ./modules );
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; specialArgs = {
+        mylib = import ./libs/lib.nix { lib = inputs.nixpkgs-unstable.lib; };
+        mypkgs = {
+          pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
+          pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };
+        };
+      };
+    }
+    (inputs.import-tree [
+      inputs.home-manager.flakeModules.home-manager               # Import home-manager flake-parts module
+      #(inputs.import-tree ./modules)
+      (inputs.import-tree.matchNot ''.*/secrets\.nix'' ./modules) # Import everything except secrets.nix
+    ]);
 }

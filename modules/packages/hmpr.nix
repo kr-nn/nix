@@ -2,30 +2,24 @@
 let
   system = "x86_64-linux";
   standardOptions = { inherit system; config.allowUnfree = true; };
-  allPkgs = {
-    pkgs-vivaldi = import inputs.nixpkgs-vivaldi standardOptions;
-    pkgs-signal = import inputs.nixpkgs-signal standardOptions;
-    pkgs-unstable = import inputs.nixpkgs-unstable standardOptions;
-    pkgs-bleeding = import inputs.nixpkgs-bleeding standardOptions;
-    pkgs-stable = import inputs.nixpkgs-stable standardOptions;
-  };
-  hmprInputs = (with allPkgs.pkgs-unstable; [
+  pkgs = import inputs.nixpkgs-unstable standardOptions;
+  hmprInputs = (with pkgs; [
     coreutils
     nix
     jq
     gum
   ]) ++ [ inputs.home-manager.packages.${system}.default ];
-  hmprScript = allPkgs.pkgs-unstable.writeShellScriptBin "hmpr" (builtins.readFile ../../home/scripts/hmpr);
-  hmpr = allPkgs.pkgs-unstable.stdenvNoCC.mkDerivation {
+  hmprScript = pkgs.writeShellScriptBin "hmpr" (builtins.readFile ../../home/scripts/hmpr);
+  hmpr = pkgs.stdenvNoCC.mkDerivation {
     pname = "hmpr";
     version = "1.0";
-    nativeBuildInputs = [ allPkgs.pkgs-unstable.makeWrapper ];
-    buildInputs = [ allPkgs.pkgs-unstable.jq allPkgs.pkgs-unstable.gum allPkgs.pkgs-unstable.home-manager ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    buildInputs = [ pkgs.jq pkgs.gum pkgs.home-manager ];
     dontUnpack = true;
     installPhase = ''
       mkdir -p $out/bin
       cp ${hmprScript}/bin/hmpr $out/bin/hmpr
-      wrapProgram $out/bin/hmpr --prefix PATH : ${allPkgs.pkgs-unstable.lib.makeBinPath hmprInputs}
+      wrapProgram $out/bin/hmpr --prefix PATH : ${pkgs.lib.makeBinPath hmprInputs}
     '';
   };
 in

@@ -3,7 +3,7 @@ let
   ssh = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILS702QCxlr2wTXjZDaJ0IiO5NKkYMAgN4Ei+YbS19sF";
 in
 {
-  "git.age".publicKeys = [ age ssh ];
+  "../modules/git/git.age".publicKeys = [ age ssh ];
   "sshconfig.age".publicKeys = [ age ssh ];
   "id_ed25519.age".publicKeys = [ age ];
   "minioclientconfig.age".publicKeys = [ age ssh ];
