@@ -26,6 +26,9 @@ in {
           echo "Something strange happened"
           echo "check the age key"
         fi
+
+        ### systemd one-time triggers
+        systemctl restart --user agenix
       '';
       in {
     age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" "${config.home.homeDirectory}/.ssh/age.key" ];
@@ -62,5 +65,6 @@ in {
     # Opening Shell =========================================================
     programs.zsh.initContent = shellInit;
     programs.bash.initExtra = shellInit;
+
   };
 }
