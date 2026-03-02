@@ -51,11 +51,6 @@ in
         rev = "bf3ef5588af6d3bf7cc60f2ad2c1c95bca216241";
         sha256 = "0hv21mp6429ny60y7fyn4xbznk31ab4nkkdjf6kjbnf6bwphxxnk"; };
 
-    zsh-ssh = pkgs.fetchgit {
-        url = "https://github.com/kr-nn/zsh-ssh";
-        rev = "6e78c0841c078eccd0f1293bd04f7df3a50be3cf";
-        sha256 = "sha256-cUTMQDSIEM0VnSwhuoq2Adlve7OhGvW+41O/i8iw8bY="; };
-
     nix-shell = pkgs.fetchgit {
         url = "https://github.com/chisui/zsh-nix-shell";
         rev = "82ca15e638cc208e6d8368e34a1625ed75e08f90";
@@ -131,8 +126,7 @@ in
 
     home.file = {
       "${omz_custom_plugins_path}fzf-tab".source = fzf-tab;
-      "${omz_custom_plugins_path}zsh-ssh".source = zsh-ssh;
-      "${omz_custom_plugins_path}nix-shell".source = nix-shell; # TODO: move to ssh.nix module
+      "${omz_custom_plugins_path}nix-shell".source = nix-shell;
       "${omz_custom_themes_path}agnoster-nix.zsh-theme".source = ./agnoster-nix.zsh-theme;
     };
 
