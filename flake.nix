@@ -30,6 +30,7 @@
         mypkgs = {
           pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };
+          neixPkg = inputs.neix.packages.x86_64-linux.default;
         };
       };
     }

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, mypkgs, ... }:
 let
   comp = "terminal-packages";
 in
@@ -24,6 +24,7 @@ in
       jq
       gum
       superfile
+      mypkgs.neixPkg
 
       # Terminal Apps
       rbw
