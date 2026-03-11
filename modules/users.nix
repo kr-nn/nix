@@ -35,6 +35,7 @@ in
       inputs.self.homeModules.themes-rockstar
 
       # libraries
+      inputs.nix-index.homeModules.default
       inputs.agenix.homeManagerModules.default
       inputs.plasma.homeModules.plasma-manager
       inputs.stylix.homeModules.stylix
