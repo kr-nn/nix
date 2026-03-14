@@ -7,6 +7,7 @@
     import-tree.url = "github:vic/import-tree";
 
     ## generic channels
+    nixpkgs.url = "github:nixos/nixpkgs/master"; # for shells
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -17,6 +18,7 @@
     neix.url = "github:Hovirix/neix";
 
     # Modules
+    llm = { url = "github:numtide/llm-agents.nix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
@@ -31,7 +33,6 @@
         mypkgs = {
           pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };
-          neixPkg = inputs.neix.packages.x86_64-linux.default;
         };
       };
     }

@@ -24,7 +24,7 @@ in
       jq
       gum
       superfile
-      mypkgs.neixPkg
+      inputs.neix.packages.x86_64-linux.default
 
       # Terminal Apps
       rbw
