@@ -15,6 +15,33 @@ let
   };
 in
 {
+  flake.homeConfigurations.kyle-parrot = mkHome { name="kyle"; addModules = [
+      inputs.self.homeModules.ai
+      inputs.self.homeModules.ckb-next
+      inputs.self.homeModules.dotfiles
+      inputs.self.homeModules.framework
+      inputs.self.homeModules.git
+      inputs.self.homeModules.personal-packages
+      inputs.self.homeModules.gui-packages
+      inputs.self.homeModules.plasma-packages
+      inputs.self.homeModules.terminal-packages
+      inputs.self.homeModules.minio
+      inputs.self.homeModules.neovim
+      inputs.self.homeModules.secrets
+      inputs.self.homeModules.ssh
+      inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
+      inputs.self.homeModules.yakuake
+      inputs.self.homeModules.zshell
+      inputs.self.homeModules.themes-parrotsec
+
+      # libraries
+      inputs.nix-index.homeModules.default
+      inputs.agenix.homeManagerModules.default
+      inputs.plasma.homeModules.plasma-manager
+      inputs.stylix.homeModules.stylix
+      inputs.nixvim.homeModules.nixvim
+    ];
+  };
   flake.homeConfigurations.kyle = mkHome { name="kyle"; addModules = [
       inputs.self.homeModules.ai
       inputs.self.homeModules.ckb-next
