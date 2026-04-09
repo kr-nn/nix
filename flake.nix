@@ -41,6 +41,7 @@
        ./hosts/_mods/xremap.nix
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
+       ./hosts/_mods/docker.nix
        nixos-hardware.nixosModules.framework-13-7040-amd /*stylix.nixosModules.stylix*/ ] ++ commonModules;
     };
   };
