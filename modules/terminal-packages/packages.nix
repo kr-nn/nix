@@ -9,6 +9,7 @@ in
       tmux
       bat
       fzf
+      manix
       fd
       parallel
       ctpv
@@ -40,12 +41,13 @@ in
       (pkgs.writeShellScriptBin "git-chop"  (builtins.readFile ./git-chop) )
       (pkgs.writeShellScriptBin "gitauth" (builtins.readFile ./gitauth) )
 
-      (pkgs.writeShellScriptBin "nosw"  ''nixos-rebuild switch'')
-      (pkgs.writeShellScriptBin "note"  ''nixos-rebuild test'')
-      (pkgs.writeShellScriptBin "nobo"  ''nixos-rebuild boot'')
-      (pkgs.writeShellScriptBin "nobu"  ''nixos-rebuild build'')
+      (pkgs.writeShellScriptBin "nosw"    ''nixos-rebuild switch'')
+      (pkgs.writeShellScriptBin "note"    ''nixos-rebuild test'')
+      (pkgs.writeShellScriptBin "nobo"    ''nixos-rebuild boot'')
+      (pkgs.writeShellScriptBin "nobu"    ''nixos-rebuild build'')
 
-      (pkgs.writeShellScriptBin "nr"    ''nix run github:nixos/nixpkgs/master#"$1" -- ''${@:2}'')
+      (pkgs.writeShellScriptBin "nr"      ''nix run github:nixos/nixpkgs/master#"$1" -- ''${@:2}'')
+      (pkgs.writeShellScriptBin "nixdoc"  ''manix "" | sed -n 's/^# \(.*\) \?.*/\1/p' | fzf --preview="manix '''{}'''" | xargs manix'')
     ];
   };
 }
