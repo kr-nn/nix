@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
 
-  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
