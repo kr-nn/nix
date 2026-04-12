@@ -53,6 +53,7 @@ in {
       hlsearch = true; # highlight search matches
     };
     keymaps = [
+
       # hlsearch clear highlight
       { key = "<Esc>";                mode = "n";  action = "<cmd>nohlsearch<CR>";         options = { desc = "Clears highlight when pressing Esc"; }; }
 
@@ -131,14 +132,18 @@ in {
           "<M-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's', 'c'})";
           "<M-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's', 'c'})";
           "<M-q>" = "cmp.mapping.close()";
-          "<CR>" = "cmp.mapping.confirm({ select = true })"; }; }; };
+          "<CR>"  = "cmp.mapping.confirm({ select = true })"; }; }; };
 
       # Language Servers
       lsp = { enable = true; inlayHints = true;
         capabilities = "require('cmp_nvim_lsp').default_capabilities()";
         servers = {
           bashls = { enable = true; };
-          nixd = { enable = true; };
+          nixd = { enable = true;
+            #settings.options.nixd.home-manager.expr = "(builtins.getFlake (toString ./.)).homeConfigurations.kyle.options";
+            #settings.options.nixd.nixos.expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.$HOSTNAME.options";
+            #settings.options.nixd.flake_parts.expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.$USER.options";
+          };
           gopls = { enable = true; }; };
         keymaps = {
           lspBuf = {
