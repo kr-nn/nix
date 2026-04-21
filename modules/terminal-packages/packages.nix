@@ -26,6 +26,7 @@ in
       gum
       superfile
       inputs.neix.packages.x86_64-linux.default
+      comma
 
       # Terminal Apps
       rbw
