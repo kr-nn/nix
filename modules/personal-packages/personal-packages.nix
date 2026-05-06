@@ -19,7 +19,7 @@ in
 
       # admin things
       bitwarden-desktop
-      rustdesk
+      mypkgs.pkgs-rustdesk.rustdesk
       remmina
 
       # Browser

@@ -15,6 +15,7 @@
     ## packages
     nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
+    nixpkgs-rustdesk.url = "github:nixos/nixpkgs/master";
     neix.url = "github:Hovirix/neix";
 
     # Modules
@@ -33,6 +34,7 @@
         mypkgs = {
           pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };
+          pkgs-rustdesk = import inputs.nixpkgs-rustdesk { system = "x86_64-linux"; config.allowUnfree = true; };
         };
       };
     }

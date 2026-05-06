@@ -27,6 +27,9 @@ in
       superfile
       inputs.neix.packages.x86_64-linux.default
       comma
+      nurl
+      nix-init
+      statix
 
       # Terminal Apps
       rbw

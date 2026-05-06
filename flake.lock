@@ -504,6 +504,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-rustdesk": {
+      "locked": {
+        "lastModified": 1778095403,
+        "narHash": "sha256-EZLTMgoHjRMpD4QJG6/2ti/tIGc6H+/8V+HpsqbeE04=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a699b0f200f1aa8dd5fa6754b1acf3276f7e35bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-signal": {
       "locked": {
         "lastModified": 1771443387,
@@ -665,6 +681,7 @@
         "nix-index": "nix-index",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bleeding": "nixpkgs-bleeding",
+        "nixpkgs-rustdesk": "nixpkgs-rustdesk",
         "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
