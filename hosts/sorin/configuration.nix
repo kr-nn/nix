@@ -18,7 +18,7 @@ let
   # OS things ==================================================
   main = lib.mkMerge [ /*theme*/ {
 
-    environment.systemPackages = with pkgs; [ lockscreenWallpaper fwupd framework-tool ];
+    environment.systemPackages = with pkgs; [ networkmanager-openvpn lockscreenWallpaper fwupd framework-tool ];
 
     ## Bootloader ==============================================================
     boot.kernelPackages = pkgs.linuxPackages;
