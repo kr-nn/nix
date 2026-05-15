@@ -19,7 +19,6 @@ in
 
       # admin things
       bitwarden-desktop
-      remmina
 
       # Browser
       mypkgs.pkgs-vivaldi.vivaldi

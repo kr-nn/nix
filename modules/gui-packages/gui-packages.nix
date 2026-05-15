@@ -10,7 +10,6 @@ in
       kdePackages.plasma-browser-integration
       bitwarden-desktop
       simple-scan
-      remmina
       appimage-run
       steam-run
 

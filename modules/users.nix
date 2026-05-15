@@ -33,6 +33,7 @@ in
       inputs.self.homeModules.yakuake
       inputs.self.homeModules.zshell
       inputs.self.homeModules.themes-parrotsec
+      inputs.self.homeModules.remmina
 
       # libraries
       inputs.nix-index.homeModules.default
@@ -60,6 +61,7 @@ in
       inputs.self.homeModules.yakuake
       inputs.self.homeModules.zshell
       inputs.self.homeModules.themes-rockstar
+      inputs.self.homeModules.remmina
 
       # libraries
       inputs.nix-index.homeModules.default
