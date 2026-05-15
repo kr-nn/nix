@@ -44,6 +44,7 @@
        ./hosts/_mods/xremap.nix
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
+       ./hosts/_mods/lpavpn.nix
        ./hosts/_mods/docker.nix
 
        agenix.nixosModules.default
