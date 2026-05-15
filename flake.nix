@@ -15,9 +15,12 @@
     # xremap
     xremap.url = "github:xremap/nix-flake";
 
+    # agenix
+    agenix.url = "github:ryantm/agenix";
+
   };
 
-  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, ... }:
+  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, agenix, ... }:
 
   # ARGS ========================================================================
     let
@@ -42,6 +45,8 @@
        ./hosts/_mods/syncthing.nix
        ./hosts/_mods/zerotier.nix
        ./hosts/_mods/docker.nix
+
+       agenix.nixosModules.default
        nixos-hardware.nixosModules.framework-13-7040-amd /*stylix.nixosModules.stylix*/ ] ++ commonModules;
     };
   };
