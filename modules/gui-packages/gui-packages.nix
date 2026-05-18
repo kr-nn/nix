@@ -13,6 +13,7 @@ in
       appimage-run
       steam-run
 
+      mypkgs.pkgs-rustdesk.rustdesk
       mypkgs.pkgs-vivaldi.vivaldi
       mypkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
       mypkgs.pkgs-vivaldi.widevine-cdm
