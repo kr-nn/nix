@@ -13,6 +13,7 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     ## packages
+    nixpkgs-freerdp.url = "github:nixos/nixpkgs/master";
     nixpkgs-rustdesk.url = "github:nixos/nixpkgs/master";
     nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
@@ -32,6 +33,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; specialArgs = {
         mylib = import ./libs/lib.nix { lib = inputs.nixpkgs-unstable.lib; };
         mypkgs = {
+          pkgs-freerdp = import inputs.nixpkgs-freerdp { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-rustdesk = import inputs.nixpkgs-rustdesk { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
           pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };

@@ -12,8 +12,8 @@ in
       simple-scan
       appimage-run
       steam-run
-      freerdp
 
+      mypkgs.pkgs-freerdp.freerdp
       mypkgs.pkgs-rustdesk.rustdesk
       mypkgs.pkgs-vivaldi.vivaldi
       mypkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
