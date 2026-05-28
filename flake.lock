@@ -472,6 +472,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-freerdp": {
+      "locked": {
+        "lastModified": 1779988648,
+        "narHash": "sha256-b61COrMfA7M+z+NpVD49v1plErpNd3+ixo82JkDH4dI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7301327f3552dc7de82a2c09d8b25f10d4462a21",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1777168982,
@@ -664,6 +680,7 @@
         "nix-index": "nix-index",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bleeding": "nixpkgs-bleeding",
+        "nixpkgs-freerdp": "nixpkgs-freerdp",
         "nixpkgs-rustdesk": "nixpkgs-rustdesk",
         "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-stable": "nixpkgs-stable",
