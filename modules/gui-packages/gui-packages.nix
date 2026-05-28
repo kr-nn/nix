@@ -12,6 +12,7 @@ in
       simple-scan
       appimage-run
       steam-run
+      freerdp
 
       mypkgs.pkgs-rustdesk.rustdesk
       mypkgs.pkgs-vivaldi.vivaldi
