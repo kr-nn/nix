@@ -266,6 +266,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-freerdp": {
+      "locked": {
+        "lastModified": 1780878183,
+        "narHash": "sha256-tlPLZv7QeIK3wE1wPaWffGJY7I5/e9/O3l6e28Uc1Qg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a3a21e784b13943045ff784e9f85eac23fd81586",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -359,6 +375,7 @@
       "inputs": {
         "agenix": "agenix",
         "nixos-hardware": "nixos-hardware",
+        "nixpkgs-freerdp": "nixpkgs-freerdp",
         "nixpkgs-sorin": "nixpkgs-sorin",
         "stylix": "stylix",
         "xremap": "xremap"

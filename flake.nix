@@ -5,6 +5,7 @@
 
     # NIXPKGS
     nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-freerdp.url = "github:nixos/nixpkgs/master";
 
     # HARDWARE
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -20,19 +21,21 @@
 
   };
 
-  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, agenix, ... }:
+  outputs = { self, nixpkgs-sorin, nixpkgs-freerdp, stylix, xremap, nixos-hardware, agenix, ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
       revision = if self ? rev then self.rev else self.dirtyRev;
       commonModules = [ ./hosts/common.nix xremap.nixosModules.default { system.configurationRevision = revision; } ];
+      newpkgs = nixpkgs-freerdp.legacyPackages.x86_64-linux;
     in {
   # NIXOS ========================================================================
 
     # Framework laptop
     nixosConfigurations."sorin" = nixpkgs-sorin.lib.nixosSystem {
      inherit system;
+     specialArgs = { inherit newpkgs; };
      modules = [
        # Core Modules
        ./hosts/sorin/configuration.nix
