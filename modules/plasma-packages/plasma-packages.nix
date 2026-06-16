@@ -5,6 +5,7 @@ in
 {
   flake.homeModules.${comp} = { config, pkgs, lib, ... }: {
     home.packages = with pkgs; [
+      kdePackages.plasma-vault
       kdePackages.kwallet-pam
       lxqt.lxqt-sudo # This allows me to use gui elevation easily
     ];
