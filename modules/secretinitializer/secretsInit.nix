@@ -56,6 +56,8 @@ in {
       fi
       if ! [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
         ln -s $AGEPATH $AGELINK
+      elif [ -L $AGELINK ] && [ -f $AGEPATH ] && [ -n "$(head -n 1 $AGEPATH)" ]; then
+        echo "Secrets are fine. Doing nothing."
       else
         echo "Something strange happened"
         echo "check the age key"
