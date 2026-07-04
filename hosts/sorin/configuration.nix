@@ -14,7 +14,15 @@ let
       background=${wallpaper}
       type=image
     '');
-  ckb-next = pkgs.ckb-next.overrideAttrs (old: { cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DUSE_DBUS_MENU=0" ]; });
+  ckb-next = pkgs.ckb-next.overrideAttrs (old: {
+    cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DUSE_DBUS_MENU=0" ];
+    src = pkgs.fetchFromGitHub {
+      owner = "cloudbells";
+      repo = "ckb-next";
+      rev = "39bf3c94c563efa77e5d60c94c0ccefced343875";
+      hash = "sha256-1hEzon5d2fWitAeVdCMwIG6Ir2kL8O8+wWsGFsOitEA=";
+    };
+  });
 
   # OS things ==================================================
   main = lib.mkMerge [ /*theme*/ {
