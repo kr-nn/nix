@@ -30,7 +30,7 @@ let
 
     ## Specific Drivers ========================================================
     services.fprintd.enable = false;
-    systemd.services.ckb-next.serviceConfig.ExecStart = "${ckb-next}/bin/ckb-next-daemon --enable-experimental"; # Remove once this is merged into nixpkgs
+    systemd.services.ckb-next.serviceConfig.ExecStart = lib.mkForce "${ckb-next}/bin/ckb-next-daemon --enable-experimental"; # Remove once this is merged into nixpkgs
     hardware.ckb-next = {
       enable = true;
       package = ckb-next;
