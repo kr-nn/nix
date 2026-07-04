@@ -14,6 +14,7 @@ let
       background=${wallpaper}
       type=image
     '');
+  ckb-next = pkgs.ckb-next.overrideAttrs (old: { cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DUSE_DBUS_MENU=0" ]; });
 
   # OS things ==================================================
   main = lib.mkMerge [ /*theme*/ {
@@ -29,9 +30,10 @@ let
 
     ## Specific Drivers ========================================================
     services.fprintd.enable = false;
+    systemd.services.ckb-next.serviceConfig.ExecStart = "${ckb-next}/bin/ckb-next-daemon --enable-experimental"; # Remove once this is merged into nixpkgs
     hardware.ckb-next = {
       enable = true;
-      package = pkgs.ckb-next.overrideAttrs (old: { cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DUSE_DBUS_MENU=0" ]; });
+      package = ckb-next;
     };
     services.touchegg.enable = true;
     # For printers and scanners
