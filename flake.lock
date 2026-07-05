@@ -505,11 +505,11 @@
     },
     "nixpkgs-rustdesk": {
       "locked": {
-        "lastModified": 1779133660,
-        "narHash": "sha256-n5cj1a6+iXJFHrxC1BVQ4SXpZ8ul2SW96298PCvA3wY=",
+        "lastModified": 1783210315,
+        "narHash": "sha256-MUBMGyo2Wn+ctgF8WEf/+JTPd5STWmYYo8WkENS9Ngk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "93ff109c4c20467489fa6d627e00732bb130915c",
+        "rev": "7d5d19274b9f6f7498f7af01063f3b3def9bd0fc",
         "type": "github"
       },
       "original": {
