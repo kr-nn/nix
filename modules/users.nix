@@ -16,7 +16,6 @@ let
 in
 {
   flake.homeConfigurations.kyle-parrot = mkHome { name="kyle"; addModules = [
-      inputs.self.homeModules.ai
       inputs.self.homeModules.dotfiles
       inputs.self.homeModules.framework
       inputs.self.homeModules.git
@@ -43,7 +42,6 @@ in
     ];
   };
   flake.homeConfigurations.kyle = mkHome { name="kyle"; addModules = [
-      inputs.self.homeModules.ai
       inputs.self.homeModules.dotfiles
       inputs.self.homeModules.framework
       inputs.self.homeModules.git
