@@ -13,58 +13,78 @@ let
       }
     ] ++ addModules;
   };
+  mkProfile = { name, addModules ? [] }: mkHome { name = name; addModules = [
+      inputs.self.homeModules.dotfiles
+      inputs.self.homeModules.secrets
+      inputs.self.homeModules.zshell
+      inputs.self.homeModules.neovim
+      inputs.self.homeModules.ssh
+      inputs.self.homeModules.git
+      inputs.self.homeModules.terminal-packages
+      inputs.nix-index.homeModules.default
+      inputs.agenix.homeManagerModules.default
+      inputs.nixvim.homeModules.nixvim
+    ] ++ addModules;
+  };
+  mkGuiProfile = { name, addModules ? [], theme }: mkProfile { name = name; addModules = [
+      inputs.self.homeModules.yakuake
+      inputs.self.homeModules.gui-packages
+      inputs.self.homeModules.plasma-packages
+      inputs.self.homeModules."themes-${theme}"
+      inputs.plasma.homeModules.plasma-manager
+      inputs.stylix.homeModules.stylix
+    ] ++ addModules;
+  };
 in
 {
-  flake.homeConfigurations.kyle-parrot = mkHome { name="kyle"; addModules = [
-      inputs.self.homeModules.dotfiles
-      inputs.self.homeModules.framework
-      inputs.self.homeModules.git
-      inputs.self.homeModules.personal-packages
-      inputs.self.homeModules.gui-packages
-      inputs.self.homeModules.plasma-packages
-      inputs.self.homeModules.terminal-packages
-      inputs.self.homeModules.minio
-      inputs.self.homeModules.neovim
-      inputs.self.homeModules.secrets
-      inputs.self.homeModules.ssh
-      inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
-      inputs.self.homeModules.yakuake
-      inputs.self.homeModules.zshell
-      inputs.self.homeModules.themes-parrotsec
-      inputs.self.homeModules.remmina
+  flake.homeConfigurations = let
+    names = [ "kyle" "root" "krobinson" ];
+    themes = [ "parrotsec" "rockstar" "" ];
+    derivatives = [ [ "framework" "minio" "personal-packages" ] ]; # framework minio remmina touchegg personal-packages
+  in
+  inputs.nixpkgs.lib.mergeAttrsList
+  (map # for each possible build
+    (x: if x.theme != "" # if this is a gui profile or not
+      then { ${x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkGuiProfile { name=x.name; theme=x.theme; addModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
+      else { ${x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkProfile { name=x.name; addModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
+    )
+    (inputs.nixpkgs.lib.crossLists ( names: themes: derivatives: { name=names; theme=themes; derivative=derivatives; } ) [ names themes derivatives ] )
+  );
 
-      # libraries
-      inputs.nix-index.homeModules.default
-      inputs.agenix.homeManagerModules.default
-      inputs.plasma.homeModules.plasma-manager
-      inputs.stylix.homeModules.stylix
-      inputs.nixvim.homeModules.nixvim
-    ];
-  };
-  flake.homeConfigurations.kyle = mkHome { name="kyle"; addModules = [
-      inputs.self.homeModules.dotfiles
-      inputs.self.homeModules.framework
-      inputs.self.homeModules.git
-      inputs.self.homeModules.personal-packages
-      inputs.self.homeModules.gui-packages
-      inputs.self.homeModules.plasma-packages
-      inputs.self.homeModules.terminal-packages
-      inputs.self.homeModules.minio
-      inputs.self.homeModules.neovim
-      inputs.self.homeModules.secrets
-      inputs.self.homeModules.ssh
-      inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
-      inputs.self.homeModules.yakuake
-      inputs.self.homeModules.zshell
-      inputs.self.homeModules.themes-rockstar
-      inputs.self.homeModules.remmina
-
-      # libraries
-      inputs.nix-index.homeModules.default
-      inputs.agenix.homeManagerModules.default
-      inputs.plasma.homeModules.plasma-manager
-      inputs.stylix.homeModules.stylix
-      inputs.nixvim.homeModules.nixvim
-    ];
-  };
 }
+#{
+#  #flake.homeConfigurations.kyle-parrot = mkGuiProfile { name="kyle"; theme = inputs.self.homeModules.themes-parrotsec; addModules = [
+#  #    inputs.self.homeModules.framework
+#  #    inputs.self.homeModules.personal-packages
+#  #    inputs.self.homeModules.minio
+#  #    inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
+#  #    inputs.self.homeModules.remmina
+#  #  ];
+#  #};
+#  #flake.homeConfigurations.kyle = mkHome { name="kyle"; addModules = [
+#  #    inputs.self.homeModules.dotfiles
+#  #    inputs.self.homeModules.framework
+#  #    inputs.self.homeModules.git
+#  #    inputs.self.homeModules.personal-packages
+#  #    inputs.self.homeModules.gui-packages
+#  #    inputs.self.homeModules.plasma-packages
+#  #    inputs.self.homeModules.terminal-packages
+#  #    inputs.self.homeModules.minio
+#  #    inputs.self.homeModules.neovim
+#  #    inputs.self.homeModules.secrets
+#  #    inputs.self.homeModules.ssh
+#  #    inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
+#  #    inputs.self.homeModules.yakuake
+#  #    inputs.self.homeModules.zshell
+#  #    inputs.self.homeModules.themes-rockstar
+#  #    inputs.self.homeModules.remmina
+#
+#  #    # libraries
+#  #    inputs.nix-index.homeModules.default
+#  #    inputs.agenix.homeManagerModules.default
+#  #    inputs.plasma.homeModules.plasma-manager
+#  #    inputs.stylix.homeModules.stylix
+#  #    inputs.nixvim.homeModules.nixvim
+#  #  ];
+#  #};
+#}
