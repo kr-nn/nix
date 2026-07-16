@@ -13,7 +13,7 @@ let
       }
     ] ++ addModules;
   };
-  mkProfile = { name, addModules ? [] }: mkHome { name = name; addModules = [
+  mkProfile = { name, extraModules ? [] }: mkHome { name = name; addModules = [
       inputs.self.homeModules.dotfiles
       inputs.self.homeModules.secrets
       inputs.self.homeModules.zshell
@@ -24,16 +24,16 @@ let
       inputs.nix-index.homeModules.default
       inputs.agenix.homeManagerModules.default
       inputs.nixvim.homeModules.nixvim
-    ] ++ addModules;
+    ] ++ extraModules;
   };
-  mkGuiProfile = { name, addModules ? [], theme }: mkProfile { name = name; addModules = [
+  mkGuiProfile = { name, extraModules ? [], theme }: mkProfile { name = name; extraModules = [
       inputs.self.homeModules.yakuake
       inputs.self.homeModules.gui-packages
       inputs.self.homeModules.plasma-packages
       inputs.self.homeModules."themes-${theme}"
       inputs.plasma.homeModules.plasma-manager
       inputs.stylix.homeModules.stylix
-    ] ++ addModules;
+    ] ++ extraModules;
   };
 in
 {
@@ -45,8 +45,8 @@ in
   inputs.nixpkgs.lib.mergeAttrsList
   (map # for each possible build
     (x: if x.theme != "" # if this is a gui profile or not
-      then { ${x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkGuiProfile { name=x.name; theme=x.theme; addModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
-      else { ${x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkProfile { name=x.name; addModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
+      then { ${x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkGuiProfile { name=x.name; theme=x.theme; extraModules = map (x: inputs.self.homeModules.${x}) x.derivative; }; }
+      else { ${x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkProfile { name=x.name; extraModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
     )
     (inputs.nixpkgs.lib.crossLists ( names: themes: derivatives: { name=names; theme=themes; derivative=derivatives; } ) [ names themes derivatives ] )
   );
