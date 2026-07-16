@@ -22,7 +22,7 @@ load_profile() {
 }
 
 get_profile() {
-  profile=$(gum choose --header "Choose your profile: " $(get_configs))
+  profile=$(get_configs | fzf)
 }
 
 main() {

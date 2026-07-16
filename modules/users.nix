@@ -1,5 +1,6 @@
 { inputs, ... }:
 let
+  powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
     modules = [
@@ -40,13 +41,13 @@ in
   flake.homeConfigurations = let
     names = [ "kyle" "root" "krobinson" ];
     themes = [ "parrotsec" "rockstar" "" ];
-    derivatives = [ [ "framework" "minio" "personal-packages" ] ]; # framework minio remmina touchegg personal-packages
+    derivatives = powerSet [ "framework" "minio" "personal-packages" "touchegg" "remmina" ]; # framework minio remmina touchegg personal-packages
   in
   inputs.nixpkgs.lib.mergeAttrsList
-  (map # for each possible build
-    (x: if x.theme != "" # if this is a gui profile or not
-      then { ${x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkGuiProfile { name=x.name; theme=x.theme; extraModules = map (x: inputs.self.homeModules.${x}) x.derivative; }; }
-      else { ${x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative) } = mkProfile { name=x.name; extraModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
+  (map
+    (x: if x.theme != ""
+      then {  ${inputs.nixpkgs.lib.removeSuffix "-" (x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative)) } = mkGuiProfile { name=x.name; theme=x.theme; extraModules = map (x: inputs.self.homeModules.${x}) x.derivative; }; }
+      else {  ${inputs.nixpkgs.lib.removeSuffix "-" (x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative)) } = mkProfile { name=x.name; extraModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
     )
     (inputs.nixpkgs.lib.crossLists ( names: themes: derivatives: { name=names; theme=themes; derivative=derivatives; } ) [ names themes derivatives ] )
   );

@@ -14,7 +14,7 @@ let
     pname = "hmpr";
     version = "1.0";
     nativeBuildInputs = [ pkgs.makeWrapper ];
-    buildInputs = [ pkgs.jq pkgs.gum pkgs.home-manager ];
+    buildInputs = [ pkgs.jq pkgs.fzf /*pkgs.gum*/ pkgs.home-manager ];
     dontUnpack = true;
     installPhase = ''
       mkdir -p $out/bin
