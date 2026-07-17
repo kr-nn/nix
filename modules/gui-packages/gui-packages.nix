@@ -12,6 +12,7 @@ in
       simple-scan
       appimage-run
       steam-run
+      deskflow
 
       mypkgs.pkgs-freerdp.freerdp
       mypkgs.pkgs-rustdesk.rustdesk
