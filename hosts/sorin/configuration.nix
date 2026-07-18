@@ -29,9 +29,6 @@ let
 
     environment.systemPackages = with pkgs; [ networkmanager-openvpn lockscreenWallpaper fwupd framework-tool ];
 
-    ## Bootloader ==============================================================
-    boot.kernelPackages = pkgs.linuxPackages;
-
     ## Networking ==============================================================
     networking.hostName = "sorin";
     hardware.bluetooth.enable = true;
