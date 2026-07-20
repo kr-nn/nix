@@ -39,7 +39,7 @@ let
 in
 {
   flake.homeConfigurations = let
-    names = [ "kyle" "root" "krobinson" "lpa" ];
+    names = [ "kyle" "root" "krobinson" "lpa" "user" ];
     themes = [ "parrotsec" "rockstar" "" ];
     derivatives = powerSet [ "framework" "minio" "personal-packages" "touchegg" "remmina" ]; # framework minio remmina touchegg personal-packages
   in
