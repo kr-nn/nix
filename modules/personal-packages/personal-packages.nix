@@ -28,6 +28,7 @@ in
       # Entertainment
       mpv
       steam
+      prismlauncher
 
     ];
   };
