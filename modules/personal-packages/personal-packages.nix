@@ -29,6 +29,7 @@ in
       mpv
       steam
       prismlauncher
+      deluge
 
     ];
   };
