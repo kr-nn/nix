@@ -15,6 +15,9 @@ in
         sha256 = "1vnpvsa47a5vxr044r4zladz660xz867kc518j298l940s39s1lk";
       };
     };
+    home.sessionVariables = {
+      SDL_VIDEO_FULLSCREEN_DISPLAY = "3";
+    };
     programs.plasma = {
       input.touchpads = [
         {
