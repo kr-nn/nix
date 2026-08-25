@@ -456,22 +456,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-bleeding": {
-      "locked": {
-        "lastModified": 1778096995,
-        "narHash": "sha256-g8XR05uWlfjWjIeMEmuEEVEYpFiqof/dntKHVIpfIus=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a3995cf54cd61937b2e9acfafa1cc70c6214a4a0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-freerdp": {
       "locked": {
         "lastModified": 1779988648,
@@ -535,22 +519,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1767313136,
-        "narHash": "sha256-16KkgfdYqjaeRGBaYsNrhPRRENs0qzkQVUooNHtoy2w=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ac62194c3917d5f474c1a844b6fd6da2db95077d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1777954456,
@@ -569,16 +537,16 @@
     },
     "nixpkgs-vivaldi": {
       "locked": {
-        "lastModified": 1767313136,
-        "narHash": "sha256-16KkgfdYqjaeRGBaYsNrhPRRENs0qzkQVUooNHtoy2w=",
+        "lastModified": 1787498568,
+        "narHash": "sha256-9i/VTdusq/+NM/tz+J1Re+ojkMB8MBf0QshnYfzHz30=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ac62194c3917d5f474c1a844b6fd6da2db95077d",
+        "rev": "56c02bc00adcf003215cc4bd996d6efaf4cff188",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-25.05",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -679,11 +647,9 @@
         "neix": "neix",
         "nix-index": "nix-index",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-bleeding": "nixpkgs-bleeding",
         "nixpkgs-freerdp": "nixpkgs-freerdp",
         "nixpkgs-rustdesk": "nixpkgs-rustdesk",
         "nixpkgs-signal": "nixpkgs-signal",
-        "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-vivaldi": "nixpkgs-vivaldi",
         "nixvim": "nixvim",

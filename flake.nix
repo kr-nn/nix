@@ -9,13 +9,11 @@
     ## generic channels
     nixpkgs.url = "github:nixos/nixpkgs/master"; # for shells
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-bleeding.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     ## packages
     nixpkgs-freerdp.url = "github:nixos/nixpkgs/master";
     nixpkgs-rustdesk.url = "github:nixos/nixpkgs/master";
-    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-signal.url = "github:nixos/nixpkgs/master";
     neix.url = "github:Hovirix/neix";
 
