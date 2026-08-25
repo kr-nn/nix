@@ -9,8 +9,6 @@ in
       # docs
       obsidian
       onlyoffice-desktopeditors
-      kdePackages.kate
-      kdePackages.kompare
 
       # Social
       vesktop
@@ -19,11 +17,6 @@ in
 
       # admin things
       bitwarden-desktop
-
-      # Browser
-      mypkgs.pkgs-vivaldi.vivaldi
-      mypkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
-      mypkgs.pkgs-vivaldi.widevine-cdm
 
       # Entertainment
       mpv
