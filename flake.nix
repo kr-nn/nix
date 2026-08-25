@@ -9,7 +9,6 @@
 
     # HARDWARE
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     # Stylix
     stylix.url = "github:nix-community/stylix/release-25.05";
@@ -22,7 +21,7 @@
 
   };
 
-  outputs = { self, nixpkgs-sorin, nixpkgs-freerdp, stylix, xremap, nixos-hardware, agenix, cachyos-kernel, ... }:
+  outputs = { self, nixpkgs-sorin, nixpkgs-freerdp, stylix, xremap, nixos-hardware, agenix, ... }:
 
   # ARGS ========================================================================
     let
@@ -36,7 +35,7 @@
     # Framework laptop
     nixosConfigurations."sorin" = nixpkgs-sorin.lib.nixosSystem {
      inherit system;
-     specialArgs = { inherit newpkgs; inherit cachyos-kernel; };
+     specialArgs = { inherit newpkgs; };
      modules = [
        # Core Modules
        ./hosts/sorin/configuration.nix

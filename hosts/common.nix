@@ -1,4 +1,4 @@
-{ pkgs, cachyos-kernel, ... }:
+{ pkgs, ... }:
 {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -37,8 +37,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
-  nixpkgs.overlays = [ cachyos-kernel.overlays.pinned ];
 
   # zsh needs this:
   programs.zsh.enable = true;
