@@ -40,7 +40,7 @@ in
 {
   flake.homeConfigurations = let
     names = [ "kyle" "root" "krobinson" "lpa" "user" ];
-    themes = [ "parrotsec" "rockstar" "" ];
+    themes = [ "parrotsec" "rockstar" "casino" "" ];
     derivatives = powerSet [ "framework" "minio" "personal-packages" "touchegg" "remmina" ]; # framework minio remmina touchegg personal-packages
   in
   inputs.nixpkgs.lib.mergeAttrsList
