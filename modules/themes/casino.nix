@@ -7,7 +7,7 @@ in
   let
     wallpaper = pkgs.fetchurl {
       url = "https://w.wallhaven.cc/full/3l/wallhaven-3l9p1v.jpg";
-      sha256 = "";
+      sha256 = "sha256-wNqg/2MmDQPfdSvV+9zXZGcK6h8khFnG+2bOdNO3Vaw=";
     };
   in
   {
