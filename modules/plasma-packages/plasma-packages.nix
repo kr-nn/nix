@@ -6,6 +6,11 @@ in
   flake.homeModules.${comp} = { config, pkgs, lib, ... }: {
     home.packages = with pkgs; [
       kdePackages.plasma-vault
+      kdePackages.kompare
+      kdePackages.kfind
+      kdePackages.plasma-browser-integration
+      kdePackages.filelight
+      kdePackages.merkuro
       kdePackages.kwallet-pam
       lxqt.lxqt-sudo # This allows me to use gui elevation easily
     ];
