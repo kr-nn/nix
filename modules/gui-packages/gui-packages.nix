@@ -1,4 +1,4 @@
-{ inputs, mypkgs, mv, ... }:
+{ inputs, mv, ... }:
 let
   comp = "gui-packages";
 in
@@ -13,9 +13,9 @@ in
       deskflow
 
       (mv.version "rustdesk" "1.4.8")
-      (mv.version "vivaldi" "56c02bc00adc")
-      (mv.version "vivaldi-ffmpeg-codecs" "56c02bc00adc")
-      (mv.version "widevine-cdm" "56c02bc00adc")
+      (mv.at "56c02bc00adc").vivaldi
+      (mv.at "56c02bc00adc").vivaldi-ffmpeg-codecs
+      (mv.at "56c02bc00adc").widevine-cdm
     ];
   };
 }
