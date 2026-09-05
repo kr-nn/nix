@@ -24,7 +24,7 @@
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; specialArgs = {
         mylib = import ./libs/lib.nix { lib = inputs.nixpkgs.lib; };
-        mv = inputs.multiverse.multiverse.x86_64-linux;
+        mvpkgs = inputs.multiverse.multiverse.x86_64-linux;
       };
     }
     (inputs.import-tree [

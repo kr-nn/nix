@@ -1,9 +1,7 @@
-{ inputs, mv, ... }:
-let
-  comp = "gui-packages";
-in
-{
-  flake.homeModules.${comp} = { pkgs, ... }: {
+{ ... }: {
+
+  flake.homeModules.gui-packages = { pkgs, mv, ... }: {
+
     home.packages = with pkgs; [
       kdePackages.kate
       bitwarden-desktop
@@ -17,5 +15,7 @@ in
       (mv.at "56c02bc00adc").vivaldi-ffmpeg-codecs
       (mv.at "56c02bc00adc").widevine-cdm
     ];
+
   };
+
 }

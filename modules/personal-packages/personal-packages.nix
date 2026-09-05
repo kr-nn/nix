@@ -1,9 +1,7 @@
-{ inputs, mv, ... }:
-let
-  comp = "personal-packages";
-in
-{
-  flake.homeModules.${comp} = { pkgs, ... }: {
+{ ... }: {
+
+  flake.homeModules.personal-packages = { pkgs, mv, ... }: {
+
     home.packages = with pkgs; [
 
       # docs
@@ -25,5 +23,7 @@ in
       deluge
 
     ];
+
   };
+
 }

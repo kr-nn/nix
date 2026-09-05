@@ -1,19 +1,23 @@
-{ inputs, ... }:
+{ inputs, mvpkgs, ... }:
 let
   powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = inputs.multiverse.multiverse.x86_64-linux.at "26.05";
+    pkgs = mvpkgs.at "26.05";
     modules = [
-      {
+      ({ config, ... }: {
         config = {
+          _module.args.mv = config.multiverse.instance; # make mv available everywhere
           home.username = name;
           home.homeDirectory = "/home/${name}";
           home.stateVersion = "26.05";
           programs.home-manager.enable = true;
           nixpkgs.config.allowUnfree = true;
-          multiverse.config.allowUnfree = true;
+          multiverse = {
+            enable = true;
+            config.allowUnfree = true;
+          };
         };
-      }
+      })
     ] ++ addModules;
   };
   mkProfile = { name, extraModules ? [] }: mkHome { name = name; addModules = [
@@ -48,47 +52,16 @@ in
   in
   inputs.nixpkgs.lib.mergeAttrsList
   (map
-    (x: if x.theme != ""
-      then {  ${inputs.nixpkgs.lib.removeSuffix "-" (x.name + "-" + x.theme + "-" + (inputs.nixpkgs.lib.join "-" x.derivative)) } = mkGuiProfile { name=x.name; theme=x.theme; extraModules = map (x: inputs.self.homeModules.${x}) x.derivative; }; }
-      else {  ${inputs.nixpkgs.lib.removeSuffix "-" (x.name + "-" + (inputs.nixpkgs.lib.join "-" x.derivative)) } = mkProfile { name=x.name; extraModules = map (x: [ inputs.self.homeModules.${x} ]) x.derivative; }; }
+    (profile: if profile.theme != "" # If theme is empty
+
+      # eval non-gui profiles
+      then {  ${inputs.nixpkgs.lib.removeSuffix "-" (profile.name + "-" + profile.theme + "-" + (inputs.nixpkgs.lib.join "-" profile.derivative)) } = mkGuiProfile { name=profile.name; theme=profile.theme; extraModules = map (profile: inputs.self.homeModules.${profile}) profile.derivative; }; }
+
+      # eval gui profiles
+      else {  ${inputs.nixpkgs.lib.removeSuffix "-" (profile.name + "-" + (inputs.nixpkgs.lib.join "-" profile.derivative)) } = mkProfile { name=profile.name; extraModules = map (profile: [ inputs.self.homeModules.${profile} ]) profile.derivative; }; }
+
     )
     (inputs.nixpkgs.lib.crossLists ( names: themes: derivatives: { name=names; theme=themes; derivative=derivatives; } ) [ names themes derivatives ] )
   );
 
 }
-#{
-#  #flake.homeConfigurations.kyle-parrot = mkGuiProfile { name="kyle"; theme = inputs.self.homeModules.themes-parrotsec; addModules = [
-#  #    inputs.self.homeModules.framework
-#  #    inputs.self.homeModules.personal-packages
-#  #    inputs.self.homeModules.minio
-#  #    inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
-#  #    inputs.self.homeModules.remmina
-#  #  ];
-#  #};
-#  #flake.homeConfigurations.kyle = mkHome { name="kyle"; addModules = [
-#  #    inputs.self.homeModules.dotfiles
-#  #    inputs.self.homeModules.framework
-#  #    inputs.self.homeModules.git
-#  #    inputs.self.homeModules.personal-packages
-#  #    inputs.self.homeModules.gui-packages
-#  #    inputs.self.homeModules.plasma-packages
-#  #    inputs.self.homeModules.terminal-packages
-#  #    inputs.self.homeModules.minio
-#  #    inputs.self.homeModules.neovim
-#  #    inputs.self.homeModules.secrets
-#  #    inputs.self.homeModules.ssh
-#  #    inputs.self.homeModules.touchegg # replace with https://github.com/taj-ny/InputActions
-#  #    inputs.self.homeModules.yakuake
-#  #    inputs.self.homeModules.zshell
-#  #    inputs.self.homeModules.themes-rockstar
-#  #    inputs.self.homeModules.remmina
-#
-#  #    # libraries
-#  #    inputs.nix-index.homeModules.default
-#  #    inputs.agenix.homeManagerModules.default
-#  #    inputs.plasma.homeModules.plasma-manager
-#  #    inputs.stylix.homeModules.stylix
-#  #    inputs.nixvim.homeModules.nixvim
-#  #  ];
-#  #};
-#}
