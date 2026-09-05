@@ -39,7 +39,7 @@ let
       inputs.self.homeModules.gui-packages
       inputs.self.homeModules.plasma-packages
       inputs.self.homeModules."themes-${theme}"
-      inputs.plasma.homeModules.plasma-manager
+      inputs.plasma-manager.homeModules.plasma-manager
       inputs.stylix.homeModules.stylix
     ] ++ extraModules;
   };
