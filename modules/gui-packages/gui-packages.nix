@@ -7,6 +7,7 @@ in
     home.packages = with pkgs; [
       kdePackages.kate
       kdePackages.kompare
+      kdePackages.kfind
       kdePackages.merkuro
       kdePackages.plasma-browser-integration
       bitwarden-desktop
