@@ -28,8 +28,8 @@ let
       inputs.self.homeModules.ssh
       inputs.self.homeModules.git
       inputs.self.homeModules.terminal-packages
-      inputs.nix-index.homeModules.default
-      inputs.multiverse.homeManagerModules.default
+      inputs.nix-index-database.homeModules.default
+      inputs.nixpkgs-multiverse.homeManagerModules.default
       inputs.agenix.homeManagerModules.default
       inputs.nixvim.homeModules.nixvim
     ] ++ extraModules;
