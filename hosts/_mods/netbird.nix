@@ -13,7 +13,7 @@
         state=/run/lan-routing.rules
 
         if test -f "$state"; then
-          cat "$state" | while read destination; do
+          cat "$state" | while read -r destination; do
             ip rule delete priority "$priority" to "$destination" lookup main
           done
         fi
