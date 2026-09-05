@@ -5,6 +5,8 @@
       runtimeInputs = with pkgs; [
         iproute2
         nix
+        gawk
+        coreutils
       ];
 
       text = ''
