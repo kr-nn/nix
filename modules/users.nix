@@ -2,7 +2,9 @@
 let
   powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
+    #pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
+    #pkgs = import inputs.multiverse.multiverse.latest { system = "x86_64-linux"; config.allowUnfree = true; };
+    pkgs = inputs.multiverse.multiverse.x86_64-linux.at "26.05";
     modules = [
       {
         config = {
@@ -10,6 +12,10 @@ let
           home.homeDirectory = "/home/${name}";
           home.stateVersion = "26.05";
           programs.home-manager.enable = true;
+          nixpkgs.config.allowUnfree = true;
+          #multiverse.config = {
+          #  allowUnfree = true;
+          #};
         };
       }
     ] ++ addModules;
@@ -23,6 +29,7 @@ let
       inputs.self.homeModules.git
       inputs.self.homeModules.terminal-packages
       inputs.nix-index.homeModules.default
+      inputs.multiverse.homeManagerModules.default
       inputs.agenix.homeManagerModules.default
       inputs.nixvim.homeModules.nixvim
     ] ++ extraModules;

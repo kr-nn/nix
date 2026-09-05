@@ -1,4 +1,4 @@
-{ inputs, mypkgs, ... }:
+{ inputs, ... }:
 let
   comp = "terminal-packages";
 in

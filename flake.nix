@@ -3,39 +3,28 @@
 
   inputs = {
 
+    ## Required
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-
-    ## generic channels
-    nixpkgs.url = "github:nixos/nixpkgs/master"; # for shells
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     ## packages
-    nixpkgs-freerdp.url = "github:nixos/nixpkgs/master";
-    nixpkgs-rustdesk.url = "github:nixos/nixpkgs/master";
-    nixpkgs-vivaldi.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-signal.url = "github:nixos/nixpkgs/master";
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
     neix.url = "github:Hovirix/neix";
 
-    # Modules
-    llm = { url = "github:numtide/llm-agents.nix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    stylix = { url = "github:nix-community/stylix"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    nixvim = { url = "github:nix-community/nixvim"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
-    plasma = { url = "github:nix-community/plasma-manager"; inputs = { nixpkgs.follows = "nixpkgs-unstable"; home-manager.follows = "home-manager"; }; };
+    ## Modules
+    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
+    home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
+    agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    stylix = { url = "github:nix-community/stylix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixvim = { url = "github:nix-community/nixvim"; inputs.nixpkgs.follows = "nixpkgs"; };
+    plasma = { url = "github:nix-community/plasma-manager"; inputs = { nixpkgs.follows = "nixpkgs"; home-manager.follows = "home-manager"; }; };
 
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; specialArgs = {
-        mylib = import ./libs/lib.nix { lib = inputs.nixpkgs-unstable.lib; };
-        mypkgs = {
-          pkgs-freerdp = import inputs.nixpkgs-freerdp { system = "x86_64-linux"; config.allowUnfree = true; };
-          pkgs-rustdesk = import inputs.nixpkgs-rustdesk { system = "x86_64-linux"; config.allowUnfree = true; };
-          pkgs-vivaldi = import inputs.nixpkgs-vivaldi { system = "x86_64-linux"; config.allowUnfree = true; };
-          pkgs-signal = import inputs.nixpkgs-signal { system = "x86_64-linux"; config.allowUnfree = true; };
-        };
+        mylib = import ./libs/lib.nix { lib = inputs.nixpkgs.lib; };
+        mv = inputs.multiverse.multiverse.x86_64-linux;
       };
     }
     (inputs.import-tree [

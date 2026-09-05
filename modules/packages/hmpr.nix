@@ -2,7 +2,7 @@
 let
   system = "x86_64-linux";
   standardOptions = { inherit system; config.allowUnfree = true; };
-  pkgs = import inputs.nixpkgs-unstable standardOptions;
+  pkgs = import inputs.multiverse.multiverse.x86_64-linux.tip;
   hmprInputs = (with pkgs; [
     coreutils
     nix

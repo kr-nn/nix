@@ -1,4 +1,4 @@
-{ inputs, mypkgs, ... }:
+{ inputs, mv, ... }:
 let
   comp = "personal-packages";
 in
@@ -13,7 +13,7 @@ in
       # Social
       vesktop
       telegram-desktop
-      mypkgs.pkgs-signal.signal-desktop
+      (mv.version "signal-desktop" "8.18.0")
 
       # admin things
       bitwarden-desktop

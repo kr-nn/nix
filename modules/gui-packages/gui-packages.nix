@@ -1,4 +1,4 @@
-{ inputs, mypkgs, ... }:
+{ inputs, mypkgs, mv, ... }:
 let
   comp = "gui-packages";
 in
@@ -12,11 +12,10 @@ in
       steam-run
       deskflow
 
-      mypkgs.pkgs-freerdp.freerdp
-      mypkgs.pkgs-rustdesk.rustdesk
-      mypkgs.pkgs-vivaldi.vivaldi
-      mypkgs.pkgs-vivaldi.vivaldi-ffmpeg-codecs
-      mypkgs.pkgs-vivaldi.widevine-cdm
+      (mv.version "rustdesk" "1.4.8")
+      (mv.version "vivaldi" "56c02bc00adc")
+      (mv.version "vivaldi-ffmpeg-codecs" "56c02bc00adc")
+      (mv.version "widevine-cdm" "56c02bc00adc")
     ];
   };
 }
