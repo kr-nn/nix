@@ -4,7 +4,7 @@ let
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
     #pkgs = import inputs.nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
     #pkgs = import inputs.multiverse.multiverse.latest { system = "x86_64-linux"; config.allowUnfree = true; };
-    pkgs = inputs.multiverse.multiverse.x86_64-linux.at "26.05";
+    pkgs = inputs.multiverse.multiverse.x86_64-linux.at "26.11";
     modules = [
       {
         config = {
