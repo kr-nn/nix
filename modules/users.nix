@@ -1,8 +1,8 @@
-{ inputs, mvpkgs, ... }:
+{ inputs, ... }:
 let
   powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = mvpkgs.at "26.05";
+    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
     modules = [
       ({ config, ... }: {
         config = {

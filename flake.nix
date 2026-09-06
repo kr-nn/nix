@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/release-26.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     omniflake = {
       url = "github:fzakaria/omniflake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +15,6 @@
     inputs.flake-parts.lib.mkFlake {
       inherit inputs;
       specialArgs = {
-          mylib = import ./libs/lib.nix { lib = inputs.nixpkgs.lib; };
           mvpkgs = inputs.nixpkgs-multiverse.multiverse.x86_64-linux;
         };
     } (

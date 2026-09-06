@@ -1,9 +1,6 @@
-{ inputs, ... }:
-let
-  comp = "neovim";
-in {
+{ inputs, ... }: {
 
-  flake.homeModules.${comp} = { pkgs, ... }: {
+  flake.homeModules.neovim = { pkgs, ... }: {
 
   home.packages = with pkgs; [
     zip
@@ -11,6 +8,8 @@ in {
     gcc
     cargo
   ];
+
+  programs.nixvim.nixpkgs.pkgs = import inputs.nixpkgs { system = "x86_64-linux"; }; # silences an error on build
 
   programs.nixvim = {
     /* mapping rules
