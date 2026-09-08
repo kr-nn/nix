@@ -2,7 +2,7 @@
 let
   powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = mvpkgs.at "26.05";
+    pkgs = mvpkgs.at "2026-09-08";
     modules = [
       ({ config, ... }: {
         config = {

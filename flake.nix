@@ -10,8 +10,8 @@
 
     ## packages
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
-    neix = { url = "github:Hovirix/neix"; inputs.nixpkgs.follows = "multiverse"; };
-    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "multiverse"; };
+    neix = { url = "github:Hovirix/neix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
 
     ## Modules
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };

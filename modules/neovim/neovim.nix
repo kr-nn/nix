@@ -13,6 +13,7 @@ in {
   ];
 
   programs.nixvim = {
+    nixpkgs.pkgs = import inputs.nixpkgs { system = "x86_64-linux"; }; # pins nixvim to nixpkgs revision
     /* mapping rules
       ALT for navigation
       Shift for alternative behavior (shifting open buffers instead of splits)
