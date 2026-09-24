@@ -2,10 +2,23 @@
 let
   powerSet = inputs.nixpkgs.lib.foldl' (acc: x: acc ++ map (subset: subset ++ [ x ]) acc) [ [] ];
   mkHome = { name, addModules }: inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = mvpkgs.at "2026-09-08";
+    pkgs = mvpkgs.at "tip";
     modules = [
       ({ config, ... }: {
         config = {
+          # NOTE: (mvpkgs)
+          # The above date represents the mvs query for package information
+          # Updating that will have very little effect on the package versions unless they follow tip
+          # The below _module.args assertion makes mv an alias to mvpkgs version dated above
+          # To update packages you can change their definition where they are declared
+          # The order of versions is: flake lock of multiverse, mvpkgs, package definition
+          # If the latest version of something can't be updated, update in that order
+          # examples:
+          # (mv.version "packagename" "version") For a specified version
+          # (mv.at "56c02bc00adc").vivaldi       For a commit version in nixpkgs
+          # (mv.at "tip").vivaldi                For the latest version according to mvpkgs
+          # Packages that use "tip" will update with the flake.lock when multiverse is updated and mvpkgs is at "tip"
+
           _module.args.mv = config.multiverse.instance; # make mv available everywhere
           home.username = name;
           home.homeDirectory = "/home/${name}";

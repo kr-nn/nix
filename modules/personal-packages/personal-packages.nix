@@ -11,7 +11,7 @@
       # Social
       vesktop
       telegram-desktop
-      (mv.version "signal-desktop" "8.18.0")
+      (mv.at "tip").signal-desktop
 
       # admin things
       bitwarden-desktop

@@ -11,9 +11,9 @@
       deskflow
 
       (mv.version "rustdesk" "1.4.8")
-      (mv.at "56c02bc00adc").vivaldi
-      (mv.at "56c02bc00adc").vivaldi-ffmpeg-codecs
-      (mv.at "56c02bc00adc").widevine-cdm
+      (mv.at "tip").vivaldi
+      (mv.at "tip").vivaldi-ffmpeg-codecs
+      (mv.at "tip").widevine-cdm
     ];
 
   };
