@@ -30,6 +30,7 @@ in
       nurl
       nix-init
       statix
+      inputs.multiverse.packages.x86_64-linux.mvs
 
       # Terminal Apps
       rbw
