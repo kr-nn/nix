@@ -5,50 +5,38 @@
 
     # NIXPKGS
     nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-freerdp.url = "github:nixos/nixpkgs/master";
-
-    # HARDWARE
+    nixpkgs-tv.url = "github:nixos/nixpkgs/nixos-26.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    # Stylix
     stylix.url = "github:nix-community/stylix/release-25.05";
-
-    # xremap
     xremap.url = "github:xremap/nix-flake";
-
-    # agenix
     agenix.url = "github:ryantm/agenix";
 
   };
 
-  outputs = { self, nixpkgs-sorin, nixpkgs-freerdp, stylix, xremap, nixos-hardware, agenix, ... }:
+  outputs = { self, nixpkgs-sorin, nixpkgs-tv, stylix, xremap, nixos-hardware, agenix, ... }:
 
   # ARGS ========================================================================
     let
       system = "x86_64-linux";
       revision = if self ? rev then self.rev else self.dirtyRev;
       commonModules = [ ./hosts/common.nix xremap.nixosModules.default { system.configurationRevision = revision; } ];
-      newpkgs = nixpkgs-freerdp.legacyPackages.x86_64-linux;
     in {
   # NIXOS ========================================================================
 
     # Framework laptop
     nixosConfigurations."sorin" = nixpkgs-sorin.lib.nixosSystem {
      inherit system;
-     specialArgs = { inherit newpkgs; };
      modules = [
        # Core Modules
        ./hosts/sorin/configuration.nix
        ./hosts/sorin/hardware-configuration.nix
 
        # Addons
+       ./hosts/_mods/displaylink.nix
        ./hosts/_mods/gui-packages.nix
        ./hosts/_mods/plasma.nix
        ./hosts/_mods/xremap.nix
-       ./hosts/_mods/syncthing.nix
-       ./hosts/_mods/zerotier.nix
        ./hosts/_mods/netbird.nix
-       ./hosts/_mods/lpavpn.nix
        ./hosts/_mods/docker.nix
 
        agenix.nixosModules.default
