@@ -11,7 +11,7 @@
     ## packages
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
     neix = { url = "github:Hovirix/neix"; inputs.nixpkgs.follows = "nixpkgs"; };
-    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nix-index = { url = "github:nix-community/nix-index-database"; inputs.nixpkgs.follows = ""; };
 
     ## Modules
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -22,14 +22,9 @@
 
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; specialArgs = {
-        mvpkgs = inputs.multiverse.multiverse.x86_64-linux;
-      };
-    }
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; }
     (inputs.import-tree [
       inputs.home-manager.flakeModules.home-manager
-        (inputs.import-tree.matchNot
-          ''.*/secrets\.nix''
-        ./modules )
+      (inputs.import-tree.matchNot ''.*/secrets\.nix'' ./modules )
     ]);
 }

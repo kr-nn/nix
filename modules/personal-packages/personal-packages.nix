@@ -1,26 +1,27 @@
 { ... }: {
 
-  flake.homeModules.personal-packages = { pkgs, mv, ... }: {
+  flake.homeModules.personal-packages = { config, pkgs, ... }: {
 
-    home.packages = with pkgs; [
+    multiverse.lock = ./multiverse.lock;
+    home.packages = [
 
       # docs
-      obsidian
-      onlyoffice-desktopeditors
+      pkgs.obsidian
+      pkgs.onlyoffice-desktopeditors
 
       # Social
-      vesktop
-      telegram-desktop
-      (mv.at "tip").signal-desktop
+      pkgs.vesktop
+      pkgs.telegram-desktop
+      config.multiverse.locked.signal-desktop
 
       # admin things
-      bitwarden-desktop
+      pkgs.bitwarden-desktop
 
       # Entertainment
-      mpv
-      steam
-      prismlauncher
-      deluge
+      pkgs.mpv
+      pkgs.steam
+      pkgs.prismlauncher
+      pkgs.deluge
 
     ];
 

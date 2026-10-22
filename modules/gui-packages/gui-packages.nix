@@ -1,19 +1,21 @@
 { ... }: {
 
-  flake.homeModules.gui-packages = { pkgs, mv, ... }: {
+  flake.homeModules.gui-packages = { config, pkgs, ... }: {
 
-    home.packages = with pkgs; [
-      kdePackages.kate
-      bitwarden-desktop
-      simple-scan
-      appimage-run
-      steam-run
-      deskflow
+    multiverse.lock = ./multiverse.lock;
+    home.packages = [
+      pkgs.kdePackages.kate
+      pkgs.bitwarden-desktop
+      pkgs.simple-scan
+      pkgs.appimage-run
+      pkgs.steam-run
+      pkgs.deskflow
 
-      (mv.version "rustdesk" "1.4.8")
-      (mv.at "tip").vivaldi
-      (mv.at "tip").vivaldi-ffmpeg-codecs
-      (mv.at "tip").widevine-cdm
+      config.multiverse.locked.rustdesk
+      config.multiverse.locked.vivaldi
+      config.multiverse.locked.vivaldi-ffmpeg-codecs
+      config.multiverse.locked.widevine-cdm
+
     ];
 
   };

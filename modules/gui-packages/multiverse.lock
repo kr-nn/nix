@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "pins": {
+    "rustdesk": {
+      "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+      "label": "2026-09-07-dc5d91f84032",
+      "version": "1.4.9",
+      "date": "2026-09-07"
+    },
+    "vivaldi": {
+      "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+      "label": "2026-09-07-dc5d91f84032",
+      "version": "8.1.4087.75",
+      "date": "2026-09-07"
+    },
+    "vivaldi-ffmpeg-codecs": {
+      "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+      "label": "2026-09-07-dc5d91f84032",
+      "version": "0-unstable-2026-05-18",
+      "date": "2026-09-07"
+    },
+    "widevine-cdm": {
+      "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+      "label": "2026-09-07-dc5d91f84032",
+      "version": "4.10.3050.0",
+      "date": "2026-09-07"
+    }
+  }
+}
