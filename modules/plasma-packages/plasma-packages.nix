@@ -10,7 +10,7 @@ in
       kdePackages.kfind
       kdePackages.plasma-browser-integration
       kdePackages.filelight
-      kdePackages.merkuro
+      kdePackages.korganizer
       kdePackages.kwallet-pam
       lxqt.lxqt-sudo # This allows me to use gui elevation easily
     ];
