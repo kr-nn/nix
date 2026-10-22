@@ -4,6 +4,7 @@
   services.desktopManager.plasma6.enable = true;
   programs.partition-manager.enable = true;
 
+  programs.kde-pim.enable = true;
   services.xserver = {
     enable = true;
     xkb.layout = "us";
