@@ -5,7 +5,6 @@
 
     # NIXPKGS
     nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-tv.url = "github:nixos/nixpkgs/nixos-26.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     stylix.url = "github:nix-community/stylix/release-25.05";
     xremap.url = "github:xremap/nix-flake";
@@ -13,7 +12,7 @@
 
   };
 
-  outputs = { self, nixpkgs-sorin, nixpkgs-tv, stylix, xremap, nixos-hardware, agenix, ... }:
+  outputs = { self, nixpkgs-sorin, stylix, xremap, nixos-hardware, agenix, ... }:
 
   # ARGS ========================================================================
     let
