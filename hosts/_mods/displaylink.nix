@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   nixpkgs.overlays = [
     (final: prev: {
@@ -7,7 +7,11 @@
       };
     })
   ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.evdi ] ;
+  boot.initrd.kernelModules = [ "evdi" ];
+  #boot.kernelPackages = inputs.nixpkgs-kernel.legacyPackages.x86_64-linux.linuxPackages_6_18; # kernel module issues: https://github.com/NixOS/nixpkgs/issues/575192
 
+  environment.variables.KWIN_DRM_PREFER_COLOR_DEPTH = "24";
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
   systemd.services.dlm.wantedBy = [ "multi-user.target" ];
   environment.systemPackages = [ pkgs.displaylink ];

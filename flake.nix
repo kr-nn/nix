@@ -4,11 +4,15 @@
   inputs = {
 
     # NIXPKGS
-    nixpkgs-sorin.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-sorin.url = "github:nixos/nixpkgs/6aa7ad7"; # kernel issues: https://github.com/NixOS/nixpkgs/issues/575192
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs-sorin";
     stylix.url = "github:nix-community/stylix/release-25.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs-sorin";
     xremap.url = "github:xremap/nix-flake";
+    xremap.inputs.nixpkgs.follows = "nixpkgs-sorin";
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs-sorin";
 
   };
 
@@ -23,8 +27,9 @@
   # NIXOS ========================================================================
 
     # Framework laptop
-    nixosConfigurations."sorin" = nixpkgs-sorin.lib.nixosSystem {
+    nixosConfigurations."sorin" = let inputs = self.inputs; in nixpkgs-sorin.lib.nixosSystem  {
      inherit system;
+     specialArgs = { inherit inputs; };
      modules = [
        # Core Modules
        ./hosts/sorin/configuration.nix
