@@ -5,7 +5,7 @@
     multiverse.lock = ./multiverse.lock;
     home.packages = [
       pkgs.kdePackages.kate
-      pkgs.bitwarden-desktop
+      pkgs.keyguard
       pkgs.simple-scan
       pkgs.appimage-run
       pkgs.steam-run

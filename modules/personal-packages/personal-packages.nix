@@ -14,9 +14,6 @@
       pkgs.telegram-desktop
       config.multiverse.locked.signal-desktop
 
-      # admin things
-      pkgs.bitwarden-desktop
-
       # Entertainment
       pkgs.mpv
       pkgs.steam
