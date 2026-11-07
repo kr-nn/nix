@@ -9,6 +9,7 @@
       pkgs.appimage-run
       pkgs.steam-run
       pkgs.deskflow
+      pkgs.chatgpt
 
       config.multiverse.locked.rustdesk
       config.multiverse.locked.vivaldi
