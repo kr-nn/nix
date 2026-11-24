@@ -13,6 +13,7 @@
   services.udev.packages = [
     pkgs.vial # KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0600", TAG+="uaccess", TAG+="udev-acl"
   ];
+  environment.systemPackages = [ pkgs.via pkgs.vial ];
 
   # Networking
   networking.networkmanager = { enable = true; };
