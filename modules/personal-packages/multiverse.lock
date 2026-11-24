@@ -2,10 +2,10 @@
   "version": 1,
   "pins": {
     "signal-desktop": {
-      "rev": "dc5d91f840324650bac8c379428c7037a416959a",
-      "label": "2026-09-07-dc5d91f84032",
-      "version": "8.25.0",
-      "date": "2026-09-07"
+      "rev": "02c087f3fe673c9e317f206a627cb6b910336dbe",
+      "label": "2026-10-20-02c087f3fe67",
+      "version": "8.31.0",
+      "date": "2026-10-20"
     }
   }
 }
