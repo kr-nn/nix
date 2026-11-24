@@ -12,6 +12,7 @@
   # enable custom keyboards/macropads
   services.udev.packages = [
     pkgs.vial # KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0600", TAG+="uaccess", TAG+="udev-acl"
+    pkgs.via  # KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   ];
   environment.systemPackages = [ pkgs.via pkgs.vial ];
 
