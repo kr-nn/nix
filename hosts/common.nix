@@ -9,6 +9,11 @@
   nix.gc.automatic = true;
   nix.gc.dates = "weekly";
 
+  # enable custom keyboards/macropads
+  services.udev.packages = [
+    pkgs.vial # KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0600", TAG+="uaccess", TAG+="udev-acl"
+  ];
+
   # Networking
   networking.networkmanager = { enable = true; };
   networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ]; # ephemeral port range
